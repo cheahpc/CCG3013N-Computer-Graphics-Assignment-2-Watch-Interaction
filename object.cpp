@@ -21,6 +21,7 @@ Object::Object()
 	this->translateFlag = false;
 	this->orbitFlag = false;
 	this->clockWiseFlag = false;
+	this->animationState = AnimationState::Idle;
 }
 
 Object::Object(GLfloat anchorX, GLfloat anchorY)

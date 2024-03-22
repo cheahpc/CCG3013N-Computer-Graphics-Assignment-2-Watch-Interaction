@@ -17,7 +17,7 @@ void setColor(const GLfloat *color, GLint alpha)
 GLfloat angle = 0.0;
 GLfloat scale = 1.0;
 
-Object obj1 = Object(300, 200);
+Object obj1 = Object();
 Object obj2 = Object();
 Object obj3 = Object();
 
@@ -53,12 +53,26 @@ void renderGrid()
     debugGrid.drawText("0", thickness);
 }
 
+void aTranslate(Object obj, GLfloat duration, GLfloat *initialPos, GLfloat *finalPos)
+{
+    // First check object animation flag
+    // If true, then animate
+    // If false, then do nothing
+    // If animation is done, set flag to false
+    if (obj.translateFlag)
+    {
+        // Check if object already started animation, if not then set the start time, else continue the animation
+    }
+    else
+    {
+        return;
+    }
+}
+
 void renderMaster()
 {
-    // Clear the canvas
-    renderInit(); // For references only
-
-    renderGrid();
+    renderInit(); // Initialize the canvas
+    renderGrid(); // For references only
 
     setColor(COLOR_RED, 50);
 
@@ -66,7 +80,7 @@ void renderMaster()
     float offsetX = obj2.anchorX;
     float offsetY = obj2.anchorY;
     float speeda = 1;
-    if (obj2.anchorX >= 300)
+    if (obj2.anchorX > 150)
         obj2.translateFlag = false;
     else if (obj2.anchorX <= 0)
         obj2.translateFlag = true;
@@ -127,7 +141,7 @@ void renderMaster()
 
     // todo implement speed interpolation
 
-    obj3.drawSineCurve(0, 360); // for fun...
+    obj3.drawSineCurve(0, 360 * 2); // for fun...
 
     glutSwapBuffers();   // Swap foreground and background frames.
     glutPostRedisplay(); // Update the canvas display.

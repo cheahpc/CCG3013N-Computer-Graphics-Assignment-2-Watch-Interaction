@@ -95,6 +95,14 @@ public:
 
 	GLfloat anchorX, anchorY, scaleX, scaleY, orientation, orbitAngle, opacity;
 	boolean scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
+	enum struct AnimationState
+	{
+		Started,
+		Ended,
+		Idle,
+		Resumed
+	};
+	AnimationState animationState;
 };
 
 #endif
