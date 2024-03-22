@@ -15,4 +15,7 @@ void init()
     glEnable(GL_BLEND);                                // Enable for proper transparency render.
     glDisable(GL_DEPTH_TEST);                          // Disable depth testing for overlap object. Use for transparency object involved.
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Enable transparency.
+
+    // Control Settings
+    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); // Disable key repeat.
 }

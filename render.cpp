@@ -53,7 +53,7 @@ void renderGrid()
     debugGrid.drawText("0", thickness);
 }
 
-void aTranslate(Object obj, GLfloat duration, GLfloat *initialPos, GLfloat *finalPos)
+void animateTranslate(Object obj, GLfloat duration, GLfloat *initialPos, GLfloat *finalPos)
 {
     // First check object animation flag
     // If true, then animate
@@ -74,8 +74,10 @@ void renderMaster()
     renderInit(); // Initialize the canvas
     renderGrid(); // For references only
 
-    setColor(COLOR_RED, 50);
+    setColor(COLOR_ORANGE, 100);
+    obj3.drawCircle_Fill(150, 0, 360); // Draw object 1
 
+    setColor(COLOR_RED, 50);
     // Translate object
     float offsetX = obj2.anchorX;
     float offsetY = obj2.anchorY;
@@ -141,7 +143,7 @@ void renderMaster()
 
     // todo implement speed interpolation
 
-    obj3.drawSineCurve(0, 360 * 2); // for fun...
+    // obj3.drawSineCurve(0, 360 * 2); // for fun...
 
     glutSwapBuffers();   // Swap foreground and background frames.
     glutPostRedisplay(); // Update the canvas display.
