@@ -31,12 +31,14 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 	this->scaleY = 1;
 	this->orientation = 0;
 	this->orbitAngle = 0;
+	this->opacity = 1;
 
 	this->scaleFlag = false;
 	this->rotateFlag = false;
 	this->translateFlag = false;
 	this->orbitFlag = false;
 	this->clockWiseFlag = false;
+	this->opacityFlag = false;
 }
 
 // Destructor

@@ -93,8 +93,8 @@ public:
 
 	void static glEndReset();
 
-	GLfloat anchorX, anchorY, scaleX, scaleY, orientation, orbitAngle;
-	boolean scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag;
+	GLfloat anchorX, anchorY, scaleX, scaleY, orientation, orbitAngle, opacity;
+	boolean scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
 };
 
 #endif

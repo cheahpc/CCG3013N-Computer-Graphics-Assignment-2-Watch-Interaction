@@ -1,16 +1,25 @@
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
+#include <chrono>
+#include <thread>
 #include <stdarg.h>
 #include "dimen.h"
 #include "object.cpp"
 #include "color.h"
+
+void setColor(const GLfloat *color, GLint alpha)
+{
+    GLfloat value = (GLfloat)alpha / 100;
+    glColor4f(color[0], color[1], color[2], value);
+}
 
 GLfloat angle = 0.0;
 GLfloat scale = 1.0;
 
 Object obj1 = Object(300, 200);
 Object obj2 = Object();
+Object obj3 = Object();
 
 void renderInit()
 {
@@ -29,17 +38,16 @@ Object debugGrid = Object();
 void renderGrid()
 {
     // Draw the grid
-    glColor4fv(COLOR_SILVER);
+    setColor(COLOR_SILVER, 100);
     debugGrid.drawGrid(10, 1, 0);
-    glColor4fv(COLOR_GRAY);
+    setColor(COLOR_GRAY, 100);
     debugGrid.drawGrid(50, 2, 0);
-    glColor4fv(COLOR_BLACK);
+    setColor(COLOR_BLACK, 100);
     debugGrid.drawGrid(100, 3, 0);
 
-    // Labling the grid
+    // Labeling the grid
     GLfloat length = 10;
     int thickness = 5;
-    glColor4fv(COLOR_BLACK);
     debugGrid.moveTo(-13, -13);
     debugGrid.scale(0.25);
     debugGrid.drawText("0", thickness);
@@ -52,7 +60,7 @@ void renderMaster()
 
     renderGrid();
 
-    glColor3fv(COLOR_BLUE);
+    setColor(COLOR_RED, 50);
 
     // Translate object
     float offsetX = obj2.anchorX;
@@ -68,9 +76,8 @@ void renderMaster()
     else
         obj2.translate(-speeda, -speeda);
 
-    glColor4f(1.0, 0.0, 0.0, 0.0);
+    setColor(COLOR_BLUE, 20);
     obj2.drawCircle_Fill(20, 0, 360);
-    glColor4fv(COLOR_BLUE);
 
     // Scale object
     float upperBound = 1.5;
@@ -104,8 +111,7 @@ void renderMaster()
 
     obj1.drawCircle_Fill(100, 0, 60);
 
-    glColor3fv(COLOR_YELLOW);
-
+    setColor(COLOR_GREEN, 50);
     // rotate object
     if (obj1.orientation >= 180)
         obj1.rotateFlag = false;
@@ -118,6 +124,10 @@ void renderMaster()
         obj1.rotate(-1);
 
     obj1.drawCircle_Fill(50, 0, 300);
+
+    // todo implement speed interpolation
+
+    obj3.drawSineCurve(0, 360); // for fun...
 
     glutSwapBuffers();   // Swap foreground and background frames.
     glutPostRedisplay(); // Update the canvas display.
