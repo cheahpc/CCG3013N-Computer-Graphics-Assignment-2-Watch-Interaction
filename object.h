@@ -8,10 +8,9 @@ using namespace std;
 class Object
 {
 public:
+	// Constructor and Destructor
 	Object();
 	Object(GLfloat anchorX, GLfloat anchorY);
-	Object(GLfloat anchorX, GLfloat anchorY, GLfloat width, GLfloat height);
-	Object(GLfloat anchorX, GLfloat anchorY, GLfloat width, GLfloat height, GLfloat xVel, GLfloat yVel);
 	~Object();
 
 	// 2D primitives
@@ -65,20 +64,17 @@ public:
 	void drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDegree);
 	void drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDegree, GLfloat thickness);
 
-	// TODO remove draw rect?
-	// void drawRect(GLfloat width, GLfloat height);
-	void drawRegularPolygon(GLfloat cx, GLfloat cy, GLfloat radius, GLint side, GLfloat orientation, GLfloat width, GLfloat height);
-
-	void drawSineCurve(GLfloat int0, GLfloat int1);
+	// Rounded Rectangle
+	void drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius);
+	void drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius, GLfloat thickness);
 
 	// 2D transformation
-	void moveTo(GLfloat x, GLfloat y);
-	void moveTo(GLfloat *p);
+	void translateTo(GLfloat x, GLfloat y);
+	void translateTo(GLfloat *p);
 	void translate(GLfloat tX, GLfloat tY);
 	void translate(GLfloat *p);
-	void rotate(GLfloat angle); // Object origin
-	void rotate(GLfloat angle, GLfloat pX, GLfloat pY);
-	void rotate(GLfloat angle, GLfloat *p);
+	void rotateTo(GLfloat angle); // Object origin
+	void rotate(GLfloat angle);	  // Object origin
 	void mirrorX();
 	void mirrorY();
 	void orbit(GLfloat radius, GLfloat speed);

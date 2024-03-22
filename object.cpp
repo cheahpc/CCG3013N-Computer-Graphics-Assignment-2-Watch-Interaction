@@ -46,7 +46,7 @@ Object::~Object() {}
 #pragma endregion Constructors
 
 // 2D drawing functions
-// Points
+#pragma region Points
 void Object::drawPoint(GLfloat size)
 {
 	glPushMatrix();
@@ -71,7 +71,9 @@ void Object::drawPoint(const GLint *v, GLfloat size)
 	glVertex2i(v[0], v[1]);
 	this->glEndReset();
 }
-// Lines
+#pragma endregion Points
+
+#pragma region Line
 void Object::drawLine(GLint x1, GLint y1, GLint x2, GLint y2, GLfloat thickness)
 {
 	glPushMatrix();
@@ -90,8 +92,9 @@ void Object::drawLine(const GLint *v1, const GLint *v2, GLfloat thickness)
 	glVertex2i(v2[0], v2[1]);
 	this->glEndReset();
 }
+#pragma endregion Line
 
-// Triangles
+#pragma region Triangle
 void Object::drawTriangle_Fill(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3)
 {
 	glPushMatrix();
@@ -130,8 +133,9 @@ void Object::drawTriangle_Line(const GLint *v1, const GLint *v2, const GLint *v3
 	glVertex2i(v3[0], v3[1]);
 	this->glEndReset();
 }
+#pragma endregion Triangle
 
-// Quads
+#pragma region Quad
 void Object::drawQuad_Fill(GLint x1, GLint y1,
 						   GLint x2, GLint y2,
 						   GLint x3, GLint y3,
@@ -188,10 +192,12 @@ void Object::drawQuad_Line(const GLint *v1,
 	glVertex2i(v4[0], v4[1]);
 	this->glEndReset();
 }
+#pragma endregion Quad
 
-// Draw Circles
+#pragma region Circle
 void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDegree)
 {
+	// !270 360 not working
 	endDegree += startDegree > endDegree ? 360 : 0;
 	GLfloat angle = (endDegree - startDegree) * M_PI / 180;	   // get the angle in radian
 	int triangleAmount = (int)((endDegree - startDegree) / 3); // Calculate the triangle amount base on the angle
@@ -199,10 +205,11 @@ void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	GLfloat cx = this->anchorX;
 	GLfloat cy = this->anchorY;
 
-	// Pre-rotate the circle to counter the drawing rotation
-	glTranslated(cx, cy, 0);
-	glRotatef(90 + startDegree, 0.0f, 0.0f, 1.0f);
-	glTranslated(-cx, -cy, 0);
+	// Rotate with orientation + offset
+	glRotatef(90 - startDegree - this->orientation, 0.0f, 0.0f, 1.0f);
+
+	// Scale
+	glScalef(this->scaleFactor, this->scaleFactor, 1);
 
 	glPushMatrix();
 	glBegin(GL_TRIANGLE_FAN);
@@ -231,10 +238,11 @@ void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	GLfloat radius_outer = scaledRadius + (scaledThickness / 2);
 	GLfloat radius_inner = scaledRadius - (scaledThickness / 2);
 
-	// Pre-rotate the circle to counter the drawing rotation
-	glTranslated(cx, cy, 0);
-	glRotatef(90 + startDegree, 0.0f, 0.0f, 1.0f);
-	glTranslated(-cx, -cy, 0);
+	// Rotate with orientation + offset
+	glRotatef(90 - startDegree - this->orientation, 0.0f, 0.0f, 1.0f);
+
+	// Scale
+	glScalef(this->scaleFactor, this->scaleFactor, 1);
 
 	glPushMatrix();
 	glBegin(GL_TRIANGLE_STRIP);
@@ -250,84 +258,92 @@ void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	}
 	this->glEndReset();
 }
+#pragma endregion Circle
 
-void Object::drawRegularPolygon(GLfloat cx, GLfloat cy, GLfloat radius, GLint side, GLfloat orientation, GLfloat width, GLfloat height)
+#pragma region Rounded Rectangle
+void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 {
-	if (side >= 3)
-	{
-		glPushMatrix();
-		GLint xp, yp; // Interpolation points
-		glBegin(GL_POLYGON);
-		for (int i = 0; i < side; i++)
-		{
-			xp = (int)(cx + width * radius * cos(orientation + 2 * M_PI / side * i));
-			yp = (int)(cy + width * radius * sin(orientation + 2 * M_PI / side * i));
-			glVertex2i(xp, yp);
-		}
-		glEnd();
-		glPopMatrix();
-	}
-	else
-	{
-		cerr << "Could not render polygon with less than three sides." << endl;
-	}
+	// TODO Implement rounded rectangle
+	GLfloat originalX = this->anchorX;
+	GLfloat originalY = this->anchorY;
+	GLfloat startX1, startX2, endX1, endX2;
+	GLfloat startY1, startY2, endY1, endY2;
+	GLfloat scaledWidth = width * this->scaleFactor;
+	GLfloat scaledHeight = height * this->scaleFactor;
+	GLfloat scaledRadius = radius * this->scaleFactor;
+	GLfloat diameter = scaledRadius * 2;
+	startX1 = this->anchorX - (scaledWidth / 2);
+	startX2 = this->anchorX - (scaledWidth / 2) + scaledRadius;
+	endX1 = this->anchorX + (scaledWidth / 2) - scaledRadius;
+	endX2 = this->anchorX + (scaledWidth / 2);
+	startY1 = this->anchorY - (scaledHeight / 2);
+	startY2 = this->anchorY - (scaledHeight / 2) + scaledRadius;
+	endY1 = this->anchorY + (scaledHeight / 2) - scaledRadius;
+	endY2 = this->anchorY + (scaledHeight / 2);
+
+	// Draw the rectangles
+	// Center rectangle
+	// this->drawQuad_Fill(startX2, startY2, endX1, startY2, endX1, endY1, startX2, endY1);
+	// Start rectangle
+	// this->drawQuad_Fill(startX1, startY2, startX2, startY2, startX2, endY1, startX1, endY1);
+	// End rectangle
+	this->drawQuad_Fill(endX1, startY2, endX2, startY2, endX2, endY1, endX1, endY1);
+	// Top rectangle
+	// this->drawQuad_Fill(startX2, endY1, endX1, endY1, endX1, endY2, startX2, endY2);
+	// Bottom rectangle
+	this->drawQuad_Fill(startX2, startY1, endX1, startY1, endX1, startY2, startX2, startY2);
+
+	// Draw the corners
+	// Top left corner
+	this->translateTo(startX2, endY1);
+	this->drawCircle_Fill(radius, 270, 360);
+
+	// Top right corner
+	this->translateTo(endX1, endY1);
+	this->drawCircle_Fill(radius, 0, 90);
+
+	// Bottom right corner
+	this->translateTo(endX1, startY2);
+	this->drawCircle_Fill(radius, 90, 180);
+
+	// Bottom left corner
+	this->translateTo(startX2, startY2);
+	this->drawCircle_Fill(radius, 180, 270);
+
+	// Reset the position
+	this->translateTo(originalX, originalY);
 }
 
-void Object::drawSineCurve(GLfloat int0, GLfloat int1)
-{
-	for (this->anchorX = int0; this->anchorX < int1; this->anchorX++)
-	{
-		this->anchorY += 2 * sin(this->anchorX * M_PI / 180);
-		this->drawPoint(this->anchorX, this->anchorY, 5.0);
-	}
-}
-// 2D transformation
-void Object::moveTo(GLfloat x, GLfloat y)
+#pragma endregion Rounded Rectangle
+
+#pragma region 2D Transformation
+// 2D Transformation
+void Object::translateTo(GLfloat x, GLfloat y)
 {
 	this->anchorX = x;
 	this->anchorY = y;
 }
-void Object::moveTo(GLfloat *p)
+void Object::translateTo(GLfloat *p)
 {
-	this->anchorX = p[0];
-	this->anchorY = p[1];
+	this->translateTo(p[0], p[1]);
 }
 void Object::translate(GLfloat tX, GLfloat tY)
 {
 	this->anchorX = this->anchorX + tX;
 	this->anchorY = this->anchorY + tY;
 }
-
 void Object::translate(GLfloat *p)
 {
-	this->anchorX = this->anchorX + p[0];
-	this->anchorY = this->anchorY + p[1];
+	this->translate(p[0], p[1]);
 }
-
+void Object::rotateTo(GLfloat angle)
+{
+	this->orientation = angle;
+}
 void Object::rotate(GLfloat angle)
 {
 	this->orientation += angle;
-	glTranslatef(this->anchorX, this->anchorY, 0);
-	glRotatef(this->orientation, 0.0f, 0.0f, 1.0f);
-	glTranslatef(-this->anchorX, -this->anchorY, 0);
 }
-
-void Object::rotate(GLfloat angle, GLfloat pX, GLfloat pY)
-{
-	this->orientation += angle;
-	glTranslated(pX, pY, 0);
-	glRotatef(this->orientation, 0.0f, 0.0f, 1.0f);
-	glTranslated(-pX, -pY, 0);
-}
-
-void Object::rotate(GLfloat angle, GLfloat *p)
-{
-	this->orientation += angle;
-	glTranslated(p[0], p[1], 0);
-	glRotatef(this->orientation, 0.0f, 0.0f, 1.0f);
-	glTranslated(-p[0], -p[1], 0);
-}
-
 void Object::mirrorX()
 {
 	glTranslated(this->anchorX, this->anchorY, 0);
@@ -340,7 +356,6 @@ void Object::mirrorY()
 	glScalef(1, -1, 1);
 	glTranslated(-this->anchorX, -this->anchorY, 0);
 }
-
 void Object::orbit(GLfloat radius, GLfloat speed)
 {
 	GLfloat currentAngle = this->orbitAngle * M_PI / 180;
@@ -351,7 +366,6 @@ void Object::orbit(GLfloat radius, GLfloat speed)
 	else
 		this->orbitAngle = 0.0;
 }
-
 void Object::orbit(GLfloat cx, GLfloat cy, GLfloat radius, GLfloat speed)
 {
 	GLfloat currentAngle = this->orbitAngle * M_PI / 180;
@@ -362,22 +376,15 @@ void Object::orbit(GLfloat cx, GLfloat cy, GLfloat radius, GLfloat speed)
 	else
 		this->orbitAngle = 0.0;
 }
-
 void Object::scaleTo(GLfloat scaleFactor)
 {
 	this->scaleFactor = scaleFactor;
-	glTranslated(this->anchorX, this->anchorY, 0);
-	glScalef(this->scaleFactor, this->scaleFactor, 1);
-	glTranslated(-this->anchorX, -this->anchorY, 0);
 }
-
 void Object::scale(GLfloat scaleFactor)
 {
 	this->scaleFactor += scaleFactor;
-	glTranslated(this->anchorX, this->anchorY, 0);
-	glScalef(this->scaleFactor, this->scaleFactor, 1);
-	glTranslated(-this->anchorX, -this->anchorY, 0);
 }
+#pragma endregion 2D Transformation
 
 // Utilities
 void Object::drawText(char *string, GLfloat size)
@@ -397,7 +404,6 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 {
 	glLineWidth(lineThickness);
 	glBegin(GL_LINES);
-
 	// Positive x-axis lines
 	for (int i = 0; i <= WINDOWS_WIDTH / 2; i += gridSpace)
 	{

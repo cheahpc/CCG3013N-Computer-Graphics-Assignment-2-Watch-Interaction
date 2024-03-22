@@ -48,8 +48,8 @@ void renderGrid()
     // Labeling the grid
     GLfloat length = 10;
     int thickness = 5;
-    debugGrid.moveTo(-13, -13);
-    debugGrid.scale(0.25);
+    debugGrid.translateTo(-13, -13);
+    debugGrid.scaleTo(0.25);
     debugGrid.drawText("0", thickness);
 }
 
@@ -75,71 +75,63 @@ void renderMaster()
     renderGrid(); // For references only
 
     setColor(COLOR_ORANGE, 100);
-    obj3.drawCircle_Fill(150, 0, 360); // Draw object 1
+    obj3.scaleTo(1.0);
+    obj3.drawCircle_Fill(100, 0, 270);
 
-    setColor(COLOR_RED, 50);
+    setColor(COLOR_BLACK, 100);
+    obj3.scaleTo(2);
+    obj3.drawCircle_Fill(100, 0, 90);
+
+    setColor(COLOR_RED, 90);
+    obj3.scaleTo(1.0);
+    obj3.drawCircle_Line(100, 0, 90, 25);
     // Translate object
-    float offsetX = obj2.anchorX;
-    float offsetY = obj2.anchorY;
-    float speeda = 1;
-    if (obj2.anchorX > 150)
-        obj2.translateFlag = false;
-    else if (obj2.anchorX <= 0)
-        obj2.translateFlag = true;
+    // float offsetX = obj2.anchorX;
+    // float offsetY = obj2.anchorY;
+    // float speeda = 1;
+    // if (obj2.anchorX > 150)
+    //     obj2.translateFlag = false;
+    // else if (obj2.anchorX <= 0)
+    //     obj2.translateFlag = true;
 
-    if (obj2.translateFlag)
-        obj2.translate(speeda, speeda);
-    else
-        obj2.translate(-speeda, -speeda);
+    // if (obj2.translateFlag)
+    //     obj2.translate(speeda, speeda);
+    // else
+    //     obj2.translate(-speeda, -speeda);
 
-    setColor(COLOR_BLUE, 20);
-    obj2.drawCircle_Fill(20, 0, 360);
+    // setColor(COLOR_BLUE, 20);
+    // obj2.drawCircle_Fill(20, 270, 360);
 
     // Scale object
-    float upperBound = 1.5;
-    float lowerBound = 0.2;
-    float step = 0.01;
-    if (obj1.scaleFactor > upperBound)
-    {
-        obj1.scaleFlag = false;
-    }
-    else if (obj1.scaleFactor < lowerBound)
-    {
-        obj1.scaleFlag = true;
-    }
-    if (obj1.scaleFlag)
-        obj1.scale(scale += step); // Enlarge
-    else
-        obj1.scale(scale -= step); // Shrink
 
     // Orbit object
-    float radius = 100;
-    float speed = 1;
-    if (obj1.orbitAngle >= 180)
-        obj1.orbitFlag = false;
-    else if (obj1.orbitAngle <= 0)
-        obj1.orbitFlag = true;
+    // float radius = 100;
+    // float speed = 0;
+    // if (obj1.orbitAngle >= 180)
+    //     obj1.orbitFlag = false;
+    // else if (obj1.orbitAngle <= 0)
+    //     obj1.orbitFlag = true;
 
-    if (obj1.orbitFlag)
-        obj1.orbit(obj2.anchorX, obj2.anchorY, radius, speed);
-    else
-        obj1.orbit(obj2.anchorX, obj2.anchorY, radius, -speed);
+    // if (obj1.orbitFlag)
+    //     obj1.orbit(obj2.anchorX, obj2.anchorY, radius, speed);
+    // else
+    //     obj1.orbit(obj2.anchorX, obj2.anchorY, radius, -speed);
 
-    obj1.drawCircle_Fill(100, 0, 60);
+    // obj1.drawCircle_Fill(100, 0, 60);
 
-    setColor(COLOR_GREEN, 50);
-    // rotate object
-    if (obj1.orientation >= 180)
-        obj1.rotateFlag = false;
-    else if (obj1.orientation <= 0)
-        obj1.rotateFlag = true;
+    // setColor(COLOR_GREEN, 50);
+    // // rotate object
+    // if (obj1.orientation >= 180)
+    //     obj1.rotateFlag = false;
+    // else if (obj1.orientation <= 0)
+    //     obj1.rotateFlag = true;
 
-    if (obj1.rotateFlag)
-        obj1.rotate(1);
-    else
-        obj1.rotate(-1);
+    // if (obj1.rotateFlag)
+    //     obj1.rotate(1);
+    // else
+    //     obj1.rotate(-1);
 
-    obj1.drawCircle_Fill(50, 0, 300);
+    // obj1.drawCircle_Fill(50, 0, 300);
 
     // todo implement speed interpolation
 
