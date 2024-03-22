@@ -84,7 +84,7 @@ public:
 	void orbit(GLfloat radius, GLfloat speed);
 	void orbit(GLfloat anchorX, GLfloat anchorY, GLfloat radius, GLfloat speed);
 	void orbit(GLfloat *anchor, GLfloat radius, GLfloat &angle, GLfloat speed);
-	void scale(GLfloat sX, GLfloat sY);
+	void scaleTo(GLfloat scaleFactor);
 	void scale(GLfloat scale);
 
 	// Utilities
@@ -93,7 +93,7 @@ public:
 
 	void static glEndReset();
 
-	GLfloat anchorX, anchorY, scaleX, scaleY, orientation, orbitAngle, opacity;
+	GLfloat anchorX, anchorY, scaleFactor, orientation, orbitAngle, opacity;
 	boolean scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
 
 	enum AnimationState

@@ -11,8 +11,7 @@ Object::Object()
 {
 	this->anchorX = 0;
 	this->anchorY = 0;
-	this->scaleX = 1;
-	this->scaleY = 1;
+	this->scaleFactor = 1;
 	this->orientation = 0;
 	this->orbitAngle = 0;
 
@@ -28,8 +27,7 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 {
 	this->anchorX = anchorX;
 	this->anchorY = anchorY;
-	this->scaleX = 1;
-	this->scaleY = 1;
+	this->scaleFactor = 1;
 	this->orientation = 0;
 	this->orbitAngle = 0;
 	this->opacity = 1;
@@ -197,6 +195,7 @@ void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	endDegree += startDegree > endDegree ? 360 : 0;
 	GLfloat angle = (endDegree - startDegree) * M_PI / 180;	   // get the angle in radian
 	int triangleAmount = (int)((endDegree - startDegree) / 3); // Calculate the triangle amount base on the angle
+	GLfloat scaledRadius = radius * this->scaleFactor;
 	GLfloat cx = this->anchorX;
 	GLfloat cy = this->anchorY;
 
@@ -213,8 +212,8 @@ void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 		GLfloat currentAngle = i * angle / triangleAmount;
 
 		glVertex2f(
-			cx + (radius * cos(currentAngle)),
-			cy - (radius * sin(currentAngle)));
+			cx + (scaledRadius * cos(currentAngle)),
+			cy - (scaledRadius * sin(currentAngle)));
 	}
 
 	this->glEndReset();
@@ -224,11 +223,13 @@ void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	endDegree += startDegree > endDegree ? 360 : 0;
 	GLfloat angle = (endDegree - startDegree) * M_PI / 180;	 // get the angle in radian
 	int triangleAmount = (int)(endDegree - startDegree) * 4; // Calculate the triangle amount base on the angle
+	GLfloat scaledRadius = radius * this->scaleFactor;
+	GLfloat scaledThickness = thickness * this->scaleFactor;
 	GLfloat cx = this->anchorX;
 	GLfloat cy = this->anchorY;
 	GLfloat currentX, currentY, currentAngle;
-	GLfloat radius_outer = radius + (thickness / 2);
-	GLfloat radius_inner = radius - (thickness / 2);
+	GLfloat radius_outer = scaledRadius + (scaledThickness / 2);
+	GLfloat radius_inner = scaledRadius - (scaledThickness / 2);
 
 	// Pre-rotate the circle to counter the drawing rotation
 	glTranslated(cx, cy, 0);
@@ -362,17 +363,20 @@ void Object::orbit(GLfloat cx, GLfloat cy, GLfloat radius, GLfloat speed)
 		this->orbitAngle = 0.0;
 }
 
-void Object::scale(GLfloat sX, GLfloat sY)
+void Object::scaleTo(GLfloat scaleFactor)
 {
-	this->scaleX = sX;
-	this->scaleY = sY;
+	this->scaleFactor = scaleFactor;
 	glTranslated(this->anchorX, this->anchorY, 0);
-	glScalef(this->scaleX, this->scaleY, 1);
+	glScalef(this->scaleFactor, this->scaleFactor, 1);
 	glTranslated(-this->anchorX, -this->anchorY, 0);
 }
-void Object::scale(GLfloat scale)
+
+void Object::scale(GLfloat scaleFactor)
 {
-	this->scale(scale, scale);
+	this->scaleFactor += scaleFactor;
+	glTranslated(this->anchorX, this->anchorY, 0);
+	glScalef(this->scaleFactor, this->scaleFactor, 1);
+	glTranslated(-this->anchorX, -this->anchorY, 0);
 }
 
 // Utilities

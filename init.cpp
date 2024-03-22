@@ -17,5 +17,5 @@ void init()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Enable transparency.
 
     // Control Settings
-    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); // Disable key repeat.
+    // glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); // Disable key repeat.
 }

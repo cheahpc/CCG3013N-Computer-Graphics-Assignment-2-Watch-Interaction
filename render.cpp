@@ -99,11 +99,11 @@ void renderMaster()
     float upperBound = 1.5;
     float lowerBound = 0.2;
     float step = 0.01;
-    if (obj1.scaleX > upperBound || obj1.scaleY > upperBound)
+    if (obj1.scaleFactor > upperBound)
     {
         obj1.scaleFlag = false;
     }
-    else if (obj1.scaleX < lowerBound || obj1.scaleY < lowerBound)
+    else if (obj1.scaleFactor < lowerBound)
     {
         obj1.scaleFlag = true;
     }
