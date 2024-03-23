@@ -74,17 +74,34 @@ void renderMaster()
     renderInit(); // Initialize the canvas
     renderGrid(); // For references only
 
-    setColor(COLOR_ORANGE, 100);
-    obj3.scaleTo(1.0);
-    obj3.drawCircle_Fill(100, 0, 270);
+    GLint x[4] = {-150, 150, 150, -150};
+    GLint y[4] = {150, 150, -150, -150};
+    obj3.setColor(COLOR_RED, 100);
+    // obj3.setOpacity(40);
+    obj3.scaleTo(2.4);
+    obj3.rotateTo(45);
+    obj3.translateTo(100, 0);
 
-    setColor(COLOR_BLACK, 100);
-    obj3.scaleTo(2);
-    obj3.drawCircle_Fill(100, 0, 90);
+    obj3.setColor(COLOR_ORANGE, 50);
+    obj3.drawPoint(0, 0, 20);
+    // obj3.drawLine(x, y, 10);
+    // obj3.drawTriangle_Fill(x, y);
+    // obj3.drawTriangle_Line(x, y, 10);
+    // obj3.drawQuad_Fill(x, y);
+    // obj3.drawQuad_Line(x, y, 10);
+    // obj3.drawCircle_Fill(200, 270, 340);
+    // obj3.drawCircle_Line(100, 0, 270, 10);
+    // obj3.setColor(COLOR_BRONZE, 30);
+    // obj3.drawRoundedRect_Fill(200, 200, 40);
+    obj3.drawRoundedRect_Line(200, 200, 40, 40);
 
-    setColor(COLOR_RED, 90);
-    obj3.scaleTo(1.0);
-    obj3.drawCircle_Line(100, 0, 90, 25);
+    // setColor(COLOR_BLACK, 100);
+    // obj3.scaleTo(2);
+    // obj3.drawCircle_Fill(100, 0, 90);
+
+    // setColor(COLOR_RED, 90);
+    // obj3.scaleTo(1.0);
+    // obj3.drawCircle_Line(100, 0, 90, 25);
     // Translate object
     // float offsetX = obj2.anchorX;
     // float offsetY = obj2.anchorY;

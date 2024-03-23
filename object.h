@@ -15,49 +15,37 @@ public:
 
 	// 2D primitives
 	// Points
-	void drawPoint(GLfloat size);
 	void drawPoint(GLint x, GLint y, GLfloat size);
 	void drawPoint(const GLint *v, GLfloat size);
 	// Line
 	void drawLine(GLint x1, GLint y1,
 				  GLint x2, GLint y2,
 				  GLfloat thickness);
-	void drawLine(const GLint *v1,
-				  const GLint *v2,
-				  GLfloat thickness);
+	void drawLine(const GLint *v1, const GLint *v2, GLfloat thickness);
 	// Triangle
 	void drawTriangle_Fill(GLint x1, GLint y1,
 						   GLint x2, GLint y2,
 						   GLint x3, GLint y3);
-	void drawTriangle_Fill(const GLint *v1,
-						   const GLint *v2,
-						   const GLint *v3);
+	void drawTriangle_Fill(const GLint *x, const GLint *y);
 	void drawTriangle_Line(GLint x1, GLint y1,
 						   GLint x2, GLint y2,
 						   GLint x3, GLint y3,
 						   GLfloat thickness);
-	void drawTriangle_Line(const GLint *v1,
-						   const GLint *v2,
-						   const GLint *v3,
-						   GLfloat thickness);
+	void drawTriangle_Line(const GLint *x, const GLint *y, GLfloat thickness);
 	// Quad
 	void drawQuad_Fill(GLint x1, GLint y1,
 					   GLint x2, GLint y2,
 					   GLint x3, GLint y3,
 					   GLint x4, GLint y4);
-	void drawQuad_Fill(const GLint *v1,
-					   const GLint *v2,
-					   const GLint *v3,
-					   const GLint *v4);
+	void drawQuad_Fill(const GLint *x,
+					   const GLint *y);
 	void drawQuad_Line(GLint x1, GLint y1,
 					   GLint x2, GLint y2,
 					   GLint x3, GLint y3,
 					   GLint x4, GLint y4,
 					   GLfloat thickness);
-	void drawQuad_Line(const GLint *v1,
-					   const GLint *v2,
-					   const GLint *v3,
-					   const GLint *v4,
+	void drawQuad_Line(const GLint *x,
+					   const GLint *y,
 					   GLfloat thickness);
 
 	// Circles
@@ -87,9 +75,15 @@ public:
 	void drawText(char *string, GLfloat size);
 	void drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length);
 
-	void static glEndReset();
+	// Other Control
+	void setOpacity(GLfloat opacity);
+	void setColor(const GLfloat *color, GLfloat a);
 
-	GLfloat anchorX, anchorY, scaleFactor, orientation, orbitAngle, opacity;
+	void glStartInit();
+	void glEndReset();
+
+	GLfloat anchorX, anchorY, scaleFactor, orientation, orbitAngle;
+	GLfloat color[3], opacity;
 	boolean scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
 
 	enum AnimationState

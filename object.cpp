@@ -1,5 +1,5 @@
 #include "object.h"
-
+#include "color.h"
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433
 #endif
@@ -14,6 +14,7 @@ Object::Object()
 	this->scaleFactor = 1;
 	this->orientation = 0;
 	this->orbitAngle = 0;
+	this->opacity = 1;
 
 	this->scaleFlag = false;
 	this->rotateFlag = false;
@@ -47,91 +48,64 @@ Object::~Object() {}
 
 // 2D drawing functions
 #pragma region Points
-void Object::drawPoint(GLfloat size)
-{
-	glPushMatrix();
-	glPointSize(size);
-	glBegin(GL_POINTS);
-	glVertex2i(this->anchorX, this->anchorY);
-	this->glEndReset();
-}
+
 void Object::drawPoint(GLint x, GLint y, GLfloat size)
 {
-	glPushMatrix();
-	glPointSize(size);
+	glStartInit();
+	glPointSize(size * scaleFactor);
 	glBegin(GL_POINTS);
 	glVertex2i(x, y);
-	this->glEndReset();
+	glEndReset();
 }
 void Object::drawPoint(const GLint *v, GLfloat size)
 {
-	glPushMatrix();
-	glPointSize(size);
-	glBegin(GL_POINTS);
-	glVertex2i(v[0], v[1]);
-	this->glEndReset();
+	drawPoint(v[0], v[1], size);
 }
 #pragma endregion Points
 
 #pragma region Line
 void Object::drawLine(GLint x1, GLint y1, GLint x2, GLint y2, GLfloat thickness)
 {
-	glPushMatrix();
+	glStartInit();
 	glLineWidth(thickness);
 	glBegin(GL_LINES);
 	glVertex2i(x1, y1);
 	glVertex2i(x2, y2);
-	this->glEndReset();
+	glEndReset();
 }
 void Object::drawLine(const GLint *v1, const GLint *v2, GLfloat thickness)
 {
-	glPushMatrix();
-	glLineWidth(thickness);
-	glBegin(GL_LINES);
-	glVertex2i(v1[0], v1[1]);
-	glVertex2i(v2[0], v2[1]);
-	this->glEndReset();
+	drawLine(v1[0], v1[1], v2[0], v2[1], thickness);
 }
 #pragma endregion Line
 
 #pragma region Triangle
 void Object::drawTriangle_Fill(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3)
 {
-	glPushMatrix();
+	glStartInit();
 	glBegin(GL_TRIANGLES);
 	glVertex2i(x1, y1);
 	glVertex2i(x2, y2);
 	glVertex2i(x3, y3);
-	this->glEndReset();
+	glEndReset();
 }
-void Object::drawTriangle_Fill(const GLint *v1, const GLint *v2, const GLint *v3)
+void Object::drawTriangle_Fill(const GLint *x, const GLint *y)
 {
-	glPushMatrix();
-	glBegin(GL_TRIANGLES);
-	glVertex2i(v1[0], v1[1]);
-	glVertex2i(v2[0], v2[1]);
-	glVertex2i(v3[0], v3[1]);
-	this->glEndReset();
+	drawTriangle_Fill(x[0], y[0], x[1], y[1], x[2], y[2]);
 }
 void Object::drawTriangle_Line(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3, GLfloat thickness)
 {
-	glPushMatrix();
+	glStartInit();
 	glLineWidth(thickness);
 	glBegin(GL_LINE_LOOP);
 	glVertex2i(x1, y1);
 	glVertex2i(x2, y2);
 	glVertex2i(x3, y3);
-	this->glEndReset();
+	glEndReset();
 }
-void Object::drawTriangle_Line(const GLint *v1, const GLint *v2, const GLint *v3, GLfloat thickness)
+void Object::drawTriangle_Line(const GLint *x, const GLint *y, GLfloat thickness)
 {
-	glPushMatrix();
-	glLineWidth(thickness);
-	glBegin(GL_LINE_LOOP);
-	glVertex2i(v1[0], v1[1]);
-	glVertex2i(v2[0], v2[1]);
-	glVertex2i(v3[0], v3[1]);
-	this->glEndReset();
+	drawTriangle_Line(x[0], y[0], x[1], y[1], x[2], y[2], thickness);
 }
 #pragma endregion Triangle
 
@@ -141,26 +115,19 @@ void Object::drawQuad_Fill(GLint x1, GLint y1,
 						   GLint x3, GLint y3,
 						   GLint x4, GLint y4)
 {
+	glStartInit(); // Apply settings
+
 	glPushMatrix();
 	glBegin(GL_QUADS);
 	glVertex2i(x1, y1);
 	glVertex2i(x2, y2);
 	glVertex2i(x3, y3);
 	glVertex2i(x4, y4);
-	this->glEndReset();
+	glEndReset();
 }
-void Object::drawQuad_Fill(const GLint *v1,
-						   const GLint *v2,
-						   const GLint *v3,
-						   const GLint *v4)
+void Object::drawQuad_Fill(const GLint *x, const GLint *y)
 {
-	glPushMatrix();
-	glBegin(GL_QUADS);
-	glVertex2i(v1[0], v1[1]);
-	glVertex2i(v2[0], v2[1]);
-	glVertex2i(v3[0], v3[1]);
-	glVertex2i(v4[0], v4[1]);
-	this->glEndReset();
+	this->drawQuad_Fill(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3]);
 }
 void Object::drawQuad_Line(GLint x1, GLint y1,
 						   GLint x2, GLint y2,
@@ -168,59 +135,49 @@ void Object::drawQuad_Line(GLint x1, GLint y1,
 						   GLint x4, GLint y4,
 						   GLfloat thickness)
 {
-	glPushMatrix();
-	glPointSize(thickness);
-	glBegin(GL_POINTS);
+	glStartInit(); // Apply settings
+
+	glLineWidth(thickness);
+	glBegin(GL_LINES);
 	glVertex2i(x1, y1);
 	glVertex2i(x2, y2);
+
+	glVertex2i(x2, y2);
+	glVertex2i(x3, y3);
+
 	glVertex2i(x3, y3);
 	glVertex2i(x4, y4);
-	this->glEndReset();
+
+	glVertex2i(x4, y4);
+	glVertex2i(x1, y1);
+	glEndReset();
 }
-void Object::drawQuad_Line(const GLint *v1,
-						   const GLint *v2,
-						   const GLint *v3,
-						   const GLint *v4,
+void Object::drawQuad_Line(const GLint *x,
+						   const GLint *y,
 						   GLfloat thickness)
 {
-	glPushMatrix();
-	glPointSize(thickness);
-	glBegin(GL_POINTS);
-	glVertex2i(v1[0], v1[1]);
-	glVertex2i(v2[0], v2[1]);
-	glVertex2i(v3[0], v3[1]);
-	glVertex2i(v4[0], v4[1]);
-	this->glEndReset();
+	drawQuad_Line(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3], thickness);
 }
 #pragma endregion Quad
 
 #pragma region Circle
 void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDegree)
 {
-	// !270 360 not working
 	endDegree += startDegree > endDegree ? 360 : 0;
 	GLfloat angle = (endDegree - startDegree) * M_PI / 180;	   // get the angle in radian
 	int triangleAmount = (int)((endDegree - startDegree) / 3); // Calculate the triangle amount base on the angle
-	GLfloat scaledRadius = radius * this->scaleFactor;
-	GLfloat cx = this->anchorX;
-	GLfloat cy = this->anchorY;
 
-	// Rotate with orientation + offset
-	glRotatef(90 - startDegree - this->orientation, 0.0f, 0.0f, 1.0f);
+	glStartInit();
+	glRotatef(90 - startDegree, 0.0f, 0.0f, 1.0f); // Offset
 
-	// Scale
-	glScalef(this->scaleFactor, this->scaleFactor, 1);
-
-	glPushMatrix();
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex2f(cx, cy); // center of circle
+	glVertex2f(0, 0); // center of circle
 	for (int i = 0; i <= triangleAmount; i++)
 	{
 		GLfloat currentAngle = i * angle / triangleAmount;
 
-		glVertex2f(
-			cx + (scaledRadius * cos(currentAngle)),
-			cy - (scaledRadius * sin(currentAngle)));
+		glVertex2f((radius * cos(currentAngle)),
+				   -(radius * sin(currentAngle)));
 	}
 
 	this->glEndReset();
@@ -230,31 +187,22 @@ void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	endDegree += startDegree > endDegree ? 360 : 0;
 	GLfloat angle = (endDegree - startDegree) * M_PI / 180;	 // get the angle in radian
 	int triangleAmount = (int)(endDegree - startDegree) * 4; // Calculate the triangle amount base on the angle
-	GLfloat scaledRadius = radius * this->scaleFactor;
-	GLfloat scaledThickness = thickness * this->scaleFactor;
-	GLfloat cx = this->anchorX;
-	GLfloat cy = this->anchorY;
-	GLfloat currentX, currentY, currentAngle;
-	GLfloat radius_outer = scaledRadius + (scaledThickness / 2);
-	GLfloat radius_inner = scaledRadius - (scaledThickness / 2);
+	GLfloat currentAngle;
+	GLfloat radius_outer = radius + (thickness / 2);
+	GLfloat radius_inner = radius - (thickness / 2);
 
-	// Rotate with orientation + offset
-	glRotatef(90 - startDegree - this->orientation, 0.0f, 0.0f, 1.0f);
-
-	// Scale
-	glScalef(this->scaleFactor, this->scaleFactor, 1);
+	glStartInit();
+	glRotatef(90 - startDegree, 0.0f, 0.0f, 1.0f);
 
 	glPushMatrix();
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= triangleAmount; i++)
 	{
 		currentAngle = i * angle / triangleAmount;
-		glVertex2f(
-			cx + (radius_outer * cos(currentAngle)),
-			cy - (radius_outer * sin(currentAngle)));
-		glVertex2f(
-			cx + (radius_inner * cos(currentAngle)),
-			cy - (radius_inner * sin(currentAngle)));
+		glVertex2f((radius_outer * cos(currentAngle)),
+				   -(radius_outer * sin(currentAngle)));
+		glVertex2f((radius_inner * cos(currentAngle)),
+				   -(radius_inner * sin(currentAngle)));
 	}
 	this->glEndReset();
 }
@@ -263,55 +211,193 @@ void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 #pragma region Rounded Rectangle
 void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 {
-	// TODO Implement rounded rectangle
-	GLfloat originalX = this->anchorX;
-	GLfloat originalY = this->anchorY;
-	GLfloat startX1, startX2, endX1, endX2;
-	GLfloat startY1, startY2, endY1, endY2;
-	GLfloat scaledWidth = width * this->scaleFactor;
-	GLfloat scaledHeight = height * this->scaleFactor;
-	GLfloat scaledRadius = radius * this->scaleFactor;
-	GLfloat diameter = scaledRadius * 2;
-	startX1 = this->anchorX - (scaledWidth / 2);
-	startX2 = this->anchorX - (scaledWidth / 2) + scaledRadius;
-	endX1 = this->anchorX + (scaledWidth / 2) - scaledRadius;
-	endX2 = this->anchorX + (scaledWidth / 2);
-	startY1 = this->anchorY - (scaledHeight / 2);
-	startY2 = this->anchorY - (scaledHeight / 2) + scaledRadius;
-	endY1 = this->anchorY + (scaledHeight / 2) - scaledRadius;
-	endY2 = this->anchorY + (scaledHeight / 2);
+	GLfloat angle = 90 * M_PI / 180; // get the angle in radian
+	GLfloat x[4], y[4], currentAngle;
+	x[0] = -(width / 2);
+	x[1] = -(width / 2) + radius;
+	x[2] = (width / 2) - radius;
+	x[3] = (width / 2);
+	y[0] = -(height / 2);
+	y[1] = -(height / 2) + radius;
+	y[2] = (height / 2) - radius;
+	y[3] = (height / 2);
 
 	// Draw the rectangles
+	glStartInit();
+	glBegin(GL_QUADS);
 	// Center rectangle
-	// this->drawQuad_Fill(startX2, startY2, endX1, startY2, endX1, endY1, startX2, endY1);
+	glVertex2f(x[1], y[1]);
+	glVertex2f(x[2], y[1]);
+	glVertex2f(x[2], y[2]);
+	glVertex2f(x[1], y[2]);
+
 	// Start rectangle
-	// this->drawQuad_Fill(startX1, startY2, startX2, startY2, startX2, endY1, startX1, endY1);
+	glVertex2f(x[0], y[1]);
+	glVertex2f(x[1], y[1]);
+	glVertex2f(x[1], y[2]);
+	glVertex2f(x[0], y[2]);
+
 	// End rectangle
-	this->drawQuad_Fill(endX1, startY2, endX2, startY2, endX2, endY1, endX1, endY1);
+	glVertex2f(x[2], y[1]);
+	glVertex2f(x[3], y[1]);
+	glVertex2f(x[3], y[2]);
+	glVertex2f(x[2], y[2]);
+
 	// Top rectangle
-	// this->drawQuad_Fill(startX2, endY1, endX1, endY1, endX1, endY2, startX2, endY2);
+	glVertex2f(x[1], y[2]);
+	glVertex2f(x[2], y[2]);
+	glVertex2f(x[2], y[3]);
+	glVertex2f(x[1], y[3]);
+
 	// Bottom rectangle
-	this->drawQuad_Fill(startX2, startY1, endX1, startY1, endX1, startY2, startX2, startY2);
+	glVertex2f(x[1], y[0]);
+	glVertex2f(x[2], y[0]);
+	glVertex2f(x[2], y[1]);
+	glVertex2f(x[1], y[1]);
+	glEnd();
 
 	// Draw the corners
 	// Top left corner
-	this->translateTo(startX2, endY1);
-	this->drawCircle_Fill(radius, 270, 360);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x[1], y[2]);
+	for (int i = 0; i <= 30; i++)
+	{
+		 currentAngle = i * angle / 30;
+		glVertex2f(x[1] - (radius * cos(currentAngle)),
+				   y[2] + (radius * sin(currentAngle)));
+	}
+	glEnd();
 
 	// Top right corner
-	this->translateTo(endX1, endY1);
-	this->drawCircle_Fill(radius, 0, 90);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x[2], y[2]);
+	for (int i = 0; i <= 30; i++)
+	{
+		 currentAngle = i * angle / 30;
+		glVertex2f(x[2] + (radius * cos(currentAngle)),
+				   y[2] + (radius * sin(currentAngle)));
+	}
+	glEnd();
 
 	// Bottom right corner
-	this->translateTo(endX1, startY2);
-	this->drawCircle_Fill(radius, 90, 180);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x[2], y[1]);
+	for (int i = 0; i <= 30; i++)
+	{
+		 currentAngle = i * angle / 30;
+		glVertex2f(x[2] + (radius * cos(currentAngle)),
+				   y[1] - (radius * sin(currentAngle)));
+	}
+	glEnd();
 
 	// Bottom left corner
-	this->translateTo(startX2, startY2);
-	this->drawCircle_Fill(radius, 180, 270);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x[1], y[1]);
+	for (int i = 0; i <= 30; i++)
+	{
+		 currentAngle = i * angle / 30;
+		glVertex2f(x[1] - (radius * cos(currentAngle)),
+				   y[1] - (radius * sin(currentAngle)));
+	}
+	glEnd();
+	glEndReset();
+}
 
-	// Reset the position
-	this->translateTo(originalX, originalY);
+void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius, GLfloat thickness)
+{
+	GLfloat angle = 90 * M_PI / 180; // get the angle in radian
+	GLfloat x[4], y[4], currentAngle;
+	GLfloat outerRadius = -(thickness / 2) - (thickness / 2);
+	GLfloat innerRadius = -(thickness / 2) + (thickness / 2);
+	x[0] = -(width / 2) - (thickness / 2);
+	x[1] = -(width / 2) + (thickness / 2);
+	x[2] = (width / 2) - (thickness / 2);
+	x[3] = (width / 2) + (thickness / 2);
+	y[0] = -(height / 2) - (thickness / 2);
+	y[1] = -(height / 2) + (thickness / 2);
+	y[2] = (height / 2) - (thickness / 2);
+	y[3] = (height / 2) + (thickness / 2);
+
+	// Draw the rectangles
+	glStartInit();
+	glBegin(GL_QUADS);
+	// Start rectangle
+	glVertex2f(x[0], y[1]);
+	glVertex2f(x[1], y[1]);
+	glVertex2f(x[1], y[2]);
+	glVertex2f(x[0], y[2]);
+
+	// End rectangle
+	glVertex2f(x[2], y[1]);
+	glVertex2f(x[3], y[1]);
+	glVertex2f(x[3], y[2]);
+	glVertex2f(x[2], y[2]);
+
+	// Top rectangle
+	glVertex2f(x[1], y[2]);
+	glVertex2f(x[2], y[2]);
+	glVertex2f(x[2], y[3]);
+	glVertex2f(x[1], y[3]);
+
+	// Bottom rectangle
+	glVertex2f(x[1], y[0]);
+	glVertex2f(x[2], y[0]);
+	glVertex2f(x[2], y[1]);
+	glVertex2f(x[1], y[1]);
+	glEnd();
+
+	// Draw the corners
+	// Top left corner
+	// glRotatef(90 - startDegree, 0.0f, 0.0f, 1.0f);
+	
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i <= 30; i++)
+	{
+		currentAngle = i * angle / 30;
+		glVertex2f(x[1] + (outerRadius * cos(currentAngle)),
+				   y[2] - (outerRadius * sin(currentAngle)));
+		glVertex2f(x[1] + (innerRadius * cos(currentAngle)),
+				   y[2] - (innerRadius * sin(currentAngle)));
+	}
+	glEnd();
+
+	// Top right corner
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i <= 30; i++)
+	{
+		currentAngle = i * angle / 30;
+		glVertex2f(x[2] - (outerRadius * cos(currentAngle)),
+				   y[2] - (outerRadius * sin(currentAngle)));
+		glVertex2f(x[2] - (innerRadius * cos(currentAngle)),
+				   y[2] - (innerRadius * sin(currentAngle)));
+	}
+	glEnd();
+
+	// Bottom right corner
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i <= 30; i++)
+	{
+		currentAngle = i * angle / 30;
+		glVertex2f(x[2] - (outerRadius * cos(currentAngle)),
+				   y[1] + (outerRadius * sin(currentAngle)));
+		glVertex2f(x[2] - (innerRadius * cos(currentAngle)),
+				   y[1] + (innerRadius * sin(currentAngle)));
+	}
+	glEnd();
+
+	// Bottom left corner
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i = 0; i <= 30; i++)
+	{
+		currentAngle = i * angle / 30;
+		glVertex2f(x[1] + (outerRadius * cos(currentAngle)),
+				   y[1] + (outerRadius * sin(currentAngle)));
+		glVertex2f(x[1] + (innerRadius * cos(currentAngle)),
+				   y[1] + (innerRadius * sin(currentAngle)));
+	}
+	glEnd();
+
+	glEndReset();
 }
 
 #pragma endregion Rounded Rectangle
@@ -464,11 +550,45 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 	glEnd();
 }
 
+// Other control
+void Object::setOpacity(GLfloat opacity)
+{
+	this->opacity = opacity;
+}
+
+void Object::setColor(const GLfloat *color, GLfloat a = 100)
+{
+	this->color[0] = color[0];
+	this->color[1] = color[1];
+	this->color[2] = color[2];
+	setOpacity(a);
+}
+
+void Object::glStartInit()
+{
+
+	// Set color
+	glColor4f(this->color[0], this->color[1], this->color[2], this->opacity / 100);
+
+	// Rotate with orientation
+	glTranslatef(this->anchorX, this->anchorY, 0);
+	glRotatef(-(this->orientation), 0.0f, 0.0f, 1.0f);
+	glTranslatef(-this->anchorX, -this->anchorY, 0);
+
+	// Move
+	glTranslatef(this->anchorX, this->anchorY, 0);
+
+	// Scale
+	glScalef(this->scaleFactor, this->scaleFactor, 1);
+
+	// Push the matrix
+	glPushMatrix();
+}
+
 void Object::glEndReset()
 {
 	glEnd();
 	glPopMatrix();
-	// gluOrtho2D(0, WINDOWS_WIDTH, 0, WINDOWS_HEIGHT); // Set canvas to windows width and height.
 	glLoadIdentity();
 	gluOrtho2D(-(WINDOWS_WIDTH / 2), WINDOWS_WIDTH / 2, -(WINDOWS_HEIGHT / 2), WINDOWS_HEIGHT / 2); // Set canvas to windows width and height.
 }

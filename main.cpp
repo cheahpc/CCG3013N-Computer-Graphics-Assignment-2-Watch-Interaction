@@ -44,9 +44,9 @@ void kbControl(unsigned char key, int x, int y)
 }
 int main()
 {
-	init();								   // Load settings.
-	glutDisplayFunc(renderMaster);		   // Load render function.
-	// glutKeyboardFunc(kbControl);
+	init();						   // Load settings.
+	glutDisplayFunc(renderMaster); // Load render function.
+	glutKeyboardFunc(kbControl);
 	// glutSpecialFunc(kbControl);
 	glutMainLoop(); // Loop frame forever.
 
