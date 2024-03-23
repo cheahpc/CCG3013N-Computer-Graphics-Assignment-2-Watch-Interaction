@@ -262,7 +262,7 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 	glVertex2f(x[1], y[2]);
 	for (int i = 0; i <= 30; i++)
 	{
-		 currentAngle = i * angle / 30;
+		currentAngle = i * angle / 30;
 		glVertex2f(x[1] - (radius * cos(currentAngle)),
 				   y[2] + (radius * sin(currentAngle)));
 	}
@@ -273,7 +273,7 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 	glVertex2f(x[2], y[2]);
 	for (int i = 0; i <= 30; i++)
 	{
-		 currentAngle = i * angle / 30;
+		currentAngle = i * angle / 30;
 		glVertex2f(x[2] + (radius * cos(currentAngle)),
 				   y[2] + (radius * sin(currentAngle)));
 	}
@@ -284,7 +284,7 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 	glVertex2f(x[2], y[1]);
 	for (int i = 0; i <= 30; i++)
 	{
-		 currentAngle = i * angle / 30;
+		currentAngle = i * angle / 30;
 		glVertex2f(x[2] + (radius * cos(currentAngle)),
 				   y[1] - (radius * sin(currentAngle)));
 	}
@@ -295,7 +295,7 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 	glVertex2f(x[1], y[1]);
 	for (int i = 0; i <= 30; i++)
 	{
-		 currentAngle = i * angle / 30;
+		currentAngle = i * angle / 30;
 		glVertex2f(x[1] - (radius * cos(currentAngle)),
 				   y[1] - (radius * sin(currentAngle)));
 	}
@@ -348,8 +348,6 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 
 	// Draw the corners
 	// Top left corner
-	// glRotatef(90 - startDegree, 0.0f, 0.0f, 1.0f);
-	
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= 30; i++)
 	{
@@ -476,10 +474,17 @@ void Object::scale(GLfloat scaleFactor)
 void Object::drawText(char *string, GLfloat size)
 {
 	char *p;
-	glPushMatrix();
-	glLineWidth(size);
+	// !ToFix: Text not rotate properly
+	// Rotate with orientation
+	// glTranslatef(this->anchorX, this->anchorY, 0);
+	// glRotatef(-(this->orientation), 0.0f, 0.0f, 1.0f);
+	// glTranslatef(-this->anchorX, -this->anchorY, 0);
+	// glTranslatef(this->anchorX, this->anchorY, 0);
+	// glScalef(this->scaleFactor, this->scaleFactor, 1);
+	// glPushMatrix();
 
-	glTranslatef(this->anchorX, this->anchorY, 0);
+	glStartInit();
+	glLineWidth(size);
 	for (p = string; *p; p++)
 		glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, *p);
 
@@ -488,6 +493,7 @@ void Object::drawText(char *string, GLfloat size)
 
 void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 {
+	glStartInit();
 	glLineWidth(lineThickness);
 	glBegin(GL_LINES);
 	// Positive x-axis lines
@@ -547,7 +553,7 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 		}
 	}
 
-	glEnd();
+	glEndReset();
 }
 
 // Other control

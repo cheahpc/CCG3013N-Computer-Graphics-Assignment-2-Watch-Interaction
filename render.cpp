@@ -38,19 +38,22 @@ Object debugGrid = Object();
 void renderGrid()
 {
     // Draw the grid
-    setColor(COLOR_SILVER, 100);
+    debugGrid.scaleTo(1);
+    debugGrid.translateTo(0, 0);
+    debugGrid.setColor(COLOR_SILVER, 100);
     debugGrid.drawGrid(10, 1, 0);
-    setColor(COLOR_GRAY, 100);
-    debugGrid.drawGrid(50, 2, 0);
-    setColor(COLOR_BLACK, 100);
-    debugGrid.drawGrid(100, 3, 0);
+    debugGrid.setColor(COLOR_GRAY, 100);
+    debugGrid.drawGrid(50, 1, 0);
+    debugGrid.setColor(COLOR_BLACK, 100);
+    debugGrid.drawGrid(100, 1, 0);
 
-    // Labeling the grid
-    GLfloat length = 10;
-    int thickness = 5;
-    debugGrid.translateTo(-13, -13);
-    debugGrid.scaleTo(0.25);
-    debugGrid.drawText("0", thickness);
+    debugGrid.setColor(COLOR_RED, 100);
+    // Center Line
+    debugGrid.drawLine(-WINDOWS_WIDTH / 2, 0, WINDOWS_WIDTH / 2, 0, 2);
+    debugGrid.drawLine(0, -WINDOWS_HEIGHT / 2, 0, WINDOWS_HEIGHT / 2, 2);
+
+    // Center point
+    debugGrid.drawCircle_Fill(5, 0, 360);
 }
 
 void animateTranslate(Object obj, GLfloat duration, GLfloat *initialPos, GLfloat *finalPos)
@@ -76,13 +79,13 @@ void renderMaster()
 
     GLint x[4] = {-150, 150, 150, -150};
     GLint y[4] = {150, 150, -150, -150};
-    obj3.setColor(COLOR_RED, 100);
+    // obj3.setColor(COLOR_RED, 100);
     // obj3.setOpacity(40);
     obj3.scaleTo(2.4);
     obj3.rotateTo(45);
     obj3.translateTo(100, 0);
 
-    obj3.setColor(COLOR_ORANGE, 50);
+    // obj3.setColor(COLOR_ORANGE, 50);
     obj3.drawPoint(0, 0, 20);
     // obj3.drawLine(x, y, 10);
     // obj3.drawTriangle_Fill(x, y);
