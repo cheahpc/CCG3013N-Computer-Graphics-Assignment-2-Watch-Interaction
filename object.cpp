@@ -1,3 +1,5 @@
+#ifndef OBJECT_CPP
+#define OBJECT_CPP
 #include "object.h"
 #include "color.h"
 #ifndef M_PI
@@ -474,15 +476,6 @@ void Object::scale(GLfloat scaleFactor)
 void Object::drawText(char *string, GLfloat size)
 {
 	char *p;
-	// !ToFix: Text not rotate properly
-	// Rotate with orientation
-	// glTranslatef(this->anchorX, this->anchorY, 0);
-	// glRotatef(-(this->orientation), 0.0f, 0.0f, 1.0f);
-	// glTranslatef(-this->anchorX, -this->anchorY, 0);
-	// glTranslatef(this->anchorX, this->anchorY, 0);
-	// glScalef(this->scaleFactor, this->scaleFactor, 1);
-	// glPushMatrix();
-
 	glStartInit();
 	glLineWidth(size);
 	for (p = string; *p; p++)
@@ -572,7 +565,6 @@ void Object::setColor(const GLfloat *color, GLfloat a = 100)
 
 void Object::glStartInit()
 {
-
 	// Set color
 	glColor4f(this->color[0], this->color[1], this->color[2], this->opacity / 100);
 
@@ -598,3 +590,5 @@ void Object::glEndReset()
 	glLoadIdentity();
 	gluOrtho2D(-(WINDOWS_WIDTH / 2), WINDOWS_WIDTH / 2, -(WINDOWS_HEIGHT / 2), WINDOWS_HEIGHT / 2); // Set canvas to windows width and height.
 }
+
+#endif

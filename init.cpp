@@ -1,6 +1,5 @@
 #include <GL/glut.h>
 #include "dimen.h"
-#include "color.h"
 
 void init()
 {
