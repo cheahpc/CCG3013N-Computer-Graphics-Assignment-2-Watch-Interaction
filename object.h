@@ -2,6 +2,7 @@
 #define _OBJECT_H_
 #include <iostream>
 #include <GL/glut.h>
+#include <chrono>
 #include "math.h"
 
 using namespace std;
@@ -84,7 +85,12 @@ public:
 
 	GLfloat anchorX, anchorY, scaleFactor, orientation, orbitAngle;
 	GLfloat color[3], opacity;
-	boolean scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
+	bool scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
+
+	// Properties for translate animation
+	GLfloat initialPos[2], finalPos[2];
+
+	chrono::high_resolution_clock::time_point startTime, duration;
 
 	enum AnimationState
 	{

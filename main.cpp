@@ -12,36 +12,71 @@ void kbControl(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'w':
-		obj3.translate(0, translateStep);
+		obj1.translate(0, translateStep);
 		break;
 	case 'a':
-		obj3.translate(-translateStep, 0);
+		obj1.translate(-translateStep, 0);
 		break;
 	case 's':
-		obj3.translate(0, -translateStep);
+		obj1.translate(0, -translateStep);
 		break;
 	case 'd':
-		obj3.translate(translateStep, 0);
+		obj1.translate(translateStep, 0);
 		break;
 	case 'q':
-		obj3.rotate(rotateStep);
+		obj1.rotate(rotateStep);
 		break;
 	case 'e':
-		obj3.rotate(-rotateStep);
+		obj1.rotate(-rotateStep);
 		break;
 	case 'r':
-		obj3.scale(scaleStep);
+		obj1.scale(scaleStep);
 		break;
 	case 'f':
-		obj3.scale(-scaleStep);
+		obj1.scale(-scaleStep);
 		break;
 	case 'z':
+		if (obj1.translateFlag == false){
+			obj1.translateFlag = true;
+		} else {
+			obj1.translateFlag = false;
+			obj1.animationState = obj1.IDLE;
+		}
+		break;
+	case 'A':
+		obj1.translate(-translateStep * 10, 0);
+		break;
+	case 'D':
+		obj1.translate(translateStep * 10, 0);
+		break;
+	case 'W':
+		obj1.translate(0, translateStep * 10);
+		break;
 
+	case 'S':
+		obj1.translate(0, -translateStep * 10);
+		break;
+	case 'Q':
+		obj1.rotate(rotateStep * 10);
+		break;
+	case 'E':
+		obj1.rotate(-rotateStep * 10);
+		break;
+	case 'R':
+		obj1.scale(scaleStep * 10);
+		break;
+	case 'F':
+		obj1.scale(-scaleStep * 10);
+		break;
+	case 'Z': // Reset
+		obj1.translateTo(obj1.initialPos[0], obj1.initialPos[1]);
+		break;
 	case 27: // Escape key
 		exit(0);
 		break;
 	}
 }
+
 int main()
 {
 	init();						   // Load settings.

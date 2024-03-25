@@ -4,11 +4,15 @@
 #include <chrono>
 #include <thread>
 #include <stdarg.h>
+// custom
+#include "animate.cpp"
 #include "dimen.h"
 #include "color.h"
+#include "object.cpp"
+// #include "animate.cpp"
 #include "renderdebug.cpp"
 
-Object obj1 = Object();
+Object obj1 = Object(100, 100);
 Object obj2 = Object();
 Object obj3 = Object();
 
@@ -24,29 +28,25 @@ void renderInit()
     gluOrtho2D(-(WINDOWS_WIDTH / 2), WINDOWS_WIDTH / 2, -(WINDOWS_HEIGHT / 2), WINDOWS_HEIGHT / 2); // Set canvas to windows width and height.
 }
 
-void animateTranslate(Object obj, GLfloat duration, GLfloat *initialPos, GLfloat *finalPos)
+void renderBackground()
 {
-    // First check object animation flag
-    // If true, then animate
-    // If false, then do nothing
-    // If animation is done, set flag to false
-    if (obj.translateFlag)
-    {
-        // Check if object already started animation, if not then set the start time, else continue the animation
-    }
-    else
-    {
-        return;
-    }
+    // Draw the background
 }
 
 void renderMaster()
 {
-    renderInit();  // Initialize the canvas
-    
+    renderInit(); // Initialize the canvas
+
     // Debugging
-    renderGrid();  // For references only
-    renderDebug(); // For debugging only
+    renderGrid(); // For references only
+    // renderDebug(); // For debugging only
+
+    GLint x[4] = {-50, -50, 50, 50};
+    GLint y[4] = {-50, 50, 50, -50};
+    obj1.setColor(COLOR_RED, 100);
+
+    obj1.drawQuad_Fill(x, y);
+    animateTranslate(obj1, 500, 100, 100);
 
     // todo implement speed interpolation
 

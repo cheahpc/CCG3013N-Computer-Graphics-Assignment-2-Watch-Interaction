@@ -127,6 +127,7 @@ void Object::drawQuad_Fill(GLint x1, GLint y1,
 	glVertex2i(x4, y4);
 	glEndReset();
 }
+
 void Object::drawQuad_Fill(const GLint *x, const GLint *y)
 {
 	this->drawQuad_Fill(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3]);

@@ -44,7 +44,7 @@ void renderDebug()
     // debug.drawLine(x, y, 10);
     // debug.drawTriangle_Fill(x, y);
     // debug.drawTriangle_Line(x, y, 10);
-    // debug.drawQuad_Fill(x, y);
+    debug.drawQuad_Fill(x, y);
     // debug.drawQuad_Line(x, y, 10);
     debug.drawCircle_Fill(200, 270, 340);
     // debug.drawCircle_Line(100, 0, 270, 10);
