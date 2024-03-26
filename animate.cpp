@@ -132,3 +132,89 @@ void animateScale(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloa
         }
     }
 }
+
+void animateOpacity(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloat opacity)
+{
+    if (obj.opacityFlag || obj.aOpacityState == obj.BUSY)
+    {
+        if (obj.aOpacityState == obj.IDLE)
+        {
+            // Set the start time, initial position, and flag of the animation
+            obj.aOpacityStartTime = std::chrono::high_resolution_clock::now();
+            obj.aOpacityState = obj.BUSY;
+            obj.initialOpacity = obj.opacity;
+            obj.animationTaskCount++;
+        }
+
+        // Get the current time
+        auto currentTime = high_resolution_clock::now();
+        // Calculate elapsed time
+        auto elapsedTime = duration_cast<milliseconds>(currentTime - obj.aOpacityStartTime).count();
+
+        // Compare if elapsed time is greater than the duration
+        if (elapsedTime >= duration)
+        {
+            // End the animation
+            obj.setOpacity(obj.initialOpacity + opacity);
+            obj.aOpacityState = obj.IDLE;
+            obj.opacityFlag = false;
+            obj.animationTaskCount--;
+            return;
+        }
+        else
+        {
+            // cubic bezier interpolation
+            BezierEasing bezier_test({easing[0], easing[1]}, {easing[2], easing[3]});
+            GLfloat progress = bezier_test.GetEasingProgress(elapsedTime / duration);
+            GLfloat currentOpacity = obj.initialOpacity + opacity * progress;
+
+            // Update the object's opacity
+            obj.setOpacity(currentOpacity);
+        }
+    }
+}
+
+void animateOrbit(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloat anchorX, GLfloat anchorY, GLfloat radius, GLfloat angle)
+{
+    if (obj.orbitFlag || obj.aOrbitState == obj.BUSY)
+    {
+        if (obj.aOrbitState == obj.IDLE)
+        {
+            // Set the start time, initial position, and flag of the animation
+            obj.aOrbitStartTime = std::chrono::high_resolution_clock::now();
+            obj.aOrbitState = obj.BUSY;
+            obj.initialOrbitAngle = obj.orbitAngle;
+            obj.animationTaskCount++;
+        }
+
+        // Get the current time
+        auto currentTime = high_resolution_clock::now();
+        // Calculate elapsed time
+        auto elapsedTime = duration_cast<milliseconds>(currentTime - obj.aOrbitStartTime).count();
+
+        // Compare if elapsed time is greater than the duration
+        if (elapsedTime >= duration)
+        {
+            // End the animation
+            obj.orbitTo(anchorX, anchorY, radius, obj.initialOrbitAngle + angle);
+            obj.aOrbitState = obj.IDLE;
+            obj.orbitFlag = false;
+            obj.animationTaskCount--;
+            return;
+        }
+        else
+        {
+            // cubic bezier interpolation
+            BezierEasing bezier_test({easing[0], easing[1]}, {easing[2], easing[3]});
+            GLfloat progress = bezier_test.GetEasingProgress(elapsedTime / duration);
+            GLfloat currentAngle = obj.initialOrbitAngle + angle * progress;
+
+            // Update the object's orbit
+            obj.orbitTo(anchorX, anchorY, radius, currentAngle);
+        }
+    }
+    else if (obj.orbited)
+    {
+        obj.orbitTo(anchorX, anchorY, radius, obj.orbitAngle);
+    }
+}

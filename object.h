@@ -13,10 +13,12 @@ public:
 	Object();
 	Object(GLfloat anchorX, GLfloat anchorY);
 	Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity);
+	Object (GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity, GLfloat orbitRadius, GLfloat orbitAngle);
 	~Object();
 
 	// 2D primitives
 	// Points
+	void drawPoint(GLfloat size);
 	void drawPoint(GLint x, GLint y, GLfloat size);
 	void drawPoint(const GLint *v, GLfloat size);
 	// Line
@@ -39,16 +41,13 @@ public:
 					   GLint x2, GLint y2,
 					   GLint x3, GLint y3,
 					   GLint x4, GLint y4);
-	void drawQuad_Fill(const GLint *x,
-					   const GLint *y);
+	void drawQuad_Fill(const GLint *x, const GLint *y);
 	void drawQuad_Line(GLint x1, GLint y1,
 					   GLint x2, GLint y2,
 					   GLint x3, GLint y3,
 					   GLint x4, GLint y4,
 					   GLfloat thickness);
-	void drawQuad_Line(const GLint *x,
-					   const GLint *y,
-					   GLfloat thickness);
+	void drawQuad_Line(const GLint *x, const GLint *y, GLfloat thickness);
 
 	// Circles
 	void drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDegree);
@@ -63,13 +62,14 @@ public:
 	void translateTo(GLfloat *p);
 	void translate(GLfloat tX, GLfloat tY);
 	void translate(GLfloat *p);
-	void rotateTo(GLfloat angle); // Object origin
-	void rotate(GLfloat angle);	  // Object origin
-	void mirrorX();
-	void mirrorY();
+	void rotateTo(GLfloat angle);
+	void rotate(GLfloat angle);
+	void orbitTo(GLfloat anchorX, GLfloat anchorY, GLfloat radius, GLfloat angle);
 	void orbit(GLfloat radius, GLfloat speed);
 	void orbit(GLfloat anchorX, GLfloat anchorY, GLfloat radius, GLfloat speed);
-	void orbit(GLfloat *anchor, GLfloat radius, GLfloat &angle, GLfloat speed);
+	void mirrorX();
+	void mirrorY();
+
 	void scaleTo(GLfloat scaleFactor);
 	void scale(GLfloat scale);
 
@@ -87,6 +87,7 @@ public:
 	GLfloat anchorX, anchorY, scaleFactor, orientation, orbitAngle;
 	GLfloat color[3], opacity;
 	bool scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
+	bool orbited;
 
 	// Properties for translate animation
 	GLfloat initialPos[2];

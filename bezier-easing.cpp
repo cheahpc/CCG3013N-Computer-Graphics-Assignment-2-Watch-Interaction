@@ -1,13 +1,13 @@
 #include "bezier-easing.h"
 #include <math.h>
 
-#define NEWTON_ITERATIONS 5
+#define NEWTON_ITERATIONS 4
 #define NEWTON_MIN_SLOPE 0.001f
 #define SUBDIVISION_PRECISION 0.0000001f
-#define SUBDIVISION_MAX_ITERATIONS 20
+#define SUBDIVISION_MAX_ITERATIONS 10
 
-#define SAMPLES_SIZE 53
-#define SAMPLES_STEP (0.1 / (SAMPLES_SIZE - 1))
+#define SAMPLES_SIZE 11
+#define SAMPLES_STEP (1.0f / (SAMPLES_SIZE - 1))
 
 BezierEasing::BezierEasing(fPoint p1, fPoint p2) : p1(p1), p2(p2)
 {

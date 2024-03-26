@@ -36,49 +36,33 @@ void kbControl(unsigned char key, int x, int y)
 		obj1.scale(-scaleStep);
 		break;
 	case 'z':
-		if (obj1.translateFlag == false)
-		{
-			obj1.translateFlag = true;
-		}
-		else
-		{
-			obj1.translateFlag = false;
-		}
+		obj2.translateFlag = !obj1.translateFlag;
 		break;
 	case 'x':
-		if (obj1.rotateFlag == false)
-			obj1.rotateFlag = true;
-		else
-			obj1.rotateFlag = false;
+		obj1.rotateFlag = !obj1.rotateFlag;
 		break;
 	case 'c':
-		if (obj1.scaleFlag == false)
-		{
-			obj1.scaleFlag = true;
-		}
-		else
-		{
-			obj1.scaleFlag = false;
-		}
+		obj1.scaleFlag = !obj1.scaleFlag;
 		break;
-
-	case 'v': // Combine rotate and translate
-		if (obj1.rotateFlag == false || obj1.translateFlag == false || obj1.scaleFlag == false)
-		{
-			obj1.rotateFlag = true;
-			obj1.translateFlag = true;
-			obj1.scaleFlag = true;
-		}
-		else
-		{
-			obj1.rotateFlag = false;
-			obj1.translateFlag = false;
-			obj1.scaleFlag = false;
-		}
+	case 'v':
+		obj1.opacityFlag = !obj1.opacityFlag;
+		break;
+	case 'b':
+		obj1.orbitFlag = !obj1.orbitFlag;
+		break;
+	case 'h':
+		obj1.clockWiseFlag = !obj1.clockWiseFlag;
+		break;
+	case 'n':
+		obj2.translateFlag = !obj1.translateFlag;
+		obj1.rotateFlag = !obj1.rotateFlag;
+		obj1.scaleFlag = !obj1.scaleFlag;
+		obj1.opacityFlag = !obj1.opacityFlag;
+		obj1.orbitFlag = !obj1.orbitFlag;
 		break;
 
 	case 'A':
-		obj1.translate(-translateStep * 10, 0);
+		obj2.translate(-translateStep * 10, 0);
 		break;
 	case 'D':
 		obj1.translate(translateStep * 10, 0);
@@ -102,13 +86,27 @@ void kbControl(unsigned char key, int x, int y)
 		obj1.scale(-scaleStep * 10);
 		break;
 	case 'Z': // Reset
-		obj1.translateTo(0, 0);
+		obj1.translateTo(100, 100);
 	case 'X': // Reset
-		obj1.rotateTo(0);
+		obj1.rotateTo(-45);
 		break;
 	case 'C': // Reset
 		obj1.scaleTo(1);
 		break;
+	case 'V': // Reset
+		obj1.opacity = 100;
+		break;
+	case 'B': // Reset
+		obj1.orbitTo(obj1.anchorX, obj1.anchorY, 100, 0);
+		break;
+	case 'N': // Reset
+		obj1.translateTo(100, 100);
+		obj1.rotateTo(-45);
+		obj1.scaleTo(1);
+		obj1.opacity = 100;
+		obj1.orbitTo(obj1.anchorX, obj1.anchorY, 100, 0);
+		break;
+
 	case 27: // Escape key
 		exit(0);
 		break;

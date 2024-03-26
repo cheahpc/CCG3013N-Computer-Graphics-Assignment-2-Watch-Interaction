@@ -27,6 +27,8 @@ Object::Object()
 	this->orbitFlag = false;
 	this->clockWiseFlag = false;
 
+	this->orbited = false;
+
 	// Animation properties
 	this->initialPos[0] = 0;
 	this->initialPos[1] = 0;
@@ -62,6 +64,8 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 	this->orbitFlag = false;
 	this->clockWiseFlag = false;
 	this->opacityFlag = false;
+
+	this->orbited = false;
 
 	// Animation properties
 	this->initialPos[0] = 0;
@@ -99,6 +103,46 @@ Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat or
 	this->clockWiseFlag = false;
 	this->opacityFlag = false;
 
+	this->orbited = false;
+
+	// Animation properties
+	this->initialPos[0] = 0;
+	this->initialPos[1] = 0;
+	this->initialOrientation = 0;
+	this->initialScale = 0;
+	this->initialOpacity = 0;
+	this->initialOrbitAngle = 0;
+	this->animationTaskCount = 0;
+
+	// Animation State
+	this->aTranslateState = this->IDLE;
+	this->aRotateState = this->IDLE;
+	this->aScaleState = this->IDLE;
+	this->aOpacityState = this->IDLE;
+	this->aOrbitState = this->IDLE;
+}
+
+Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity, GLfloat orbitRadius, GLfloat orbitAngle)
+{
+	this->anchorX = anchorX;
+	this->anchorY = anchorY;
+	this->scaleFactor = scaleFactor;
+	this->orientation = orientation;
+	this->orbitAngle = orbitAngle;
+	this->opacity = opacity;
+	this->color[0] = color[0];
+	this->color[1] = color[1];
+	this->color[2] = color[2];
+
+	this->scaleFlag = false;
+	this->rotateFlag = false;
+	this->translateFlag = false;
+	this->orbitFlag = false;
+	this->clockWiseFlag = false;
+	this->opacityFlag = false;
+
+	this->orbited = true;
+
 	// Animation properties
 	this->initialPos[0] = 0;
 	this->initialPos[1] = 0;
@@ -125,6 +169,15 @@ Object::~Object()
 
 // 2D drawing functions
 #pragma region Points
+
+void Object::drawPoint(GLfloat size)
+{
+	glStartInit();
+	glPointSize(size * scaleFactor);
+	glBegin(GL_POINTS);
+	glVertex2i(this->anchorX, this->anchorY);
+	glEndReset();
+}
 
 void Object::drawPoint(GLint x, GLint y, GLfloat size)
 {
@@ -518,6 +571,19 @@ void Object::mirrorY()
 	glScalef(1, -1, 1);
 	glTranslated(-this->anchorX, -this->anchorY, 0);
 }
+
+void Object::orbitTo(GLfloat anchorX, GLfloat anchorY, GLfloat radius, GLfloat angle)
+{
+	this->orbitAngle = angle;
+	if (this->orbitAngle > 360)
+		this->orbitAngle -= 360;
+	else if (this->orbitAngle < 0)
+		this->orbitAngle += 360;
+	GLfloat currentAngle = this->orbitAngle * M_PI / 180;
+	this->anchorX = anchorX + radius * cos(currentAngle);
+	this->anchorY = anchorY + radius * sin(currentAngle);
+}
+
 void Object::orbit(GLfloat radius, GLfloat speed)
 {
 	GLfloat currentAngle = this->orbitAngle * M_PI / 180;
@@ -538,6 +604,7 @@ void Object::orbit(GLfloat cx, GLfloat cy, GLfloat radius, GLfloat speed)
 	else
 		this->orbitAngle = 0.0;
 }
+
 void Object::scaleTo(GLfloat scaleFactor)
 {
 	this->scaleFactor = scaleFactor;

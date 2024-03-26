@@ -12,9 +12,11 @@
 #include "object.cpp"
 #include "renderdebug.cpp"
 
-Object obj1 = Object(100, 100, 1, 0, COLOR_BLUE, 100);
-Object obj2 = Object();
+Object obj1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
+Object obj2 = Object(100, 100, 1, -45, COLOR_BLUE, 0);
 Object obj3 = Object();
+
+GLfloat xVal, yVal, rotateVal, scaleVal, opacityVal, orbitVal;
 
 void renderInit()
 {
@@ -44,38 +46,42 @@ void renderMaster()
     GLint x[4] = {-10, -10, 10, 10};
     GLint y[4] = {-10, 10, 10, -10};
 
-    obj1.drawQuad_Fill(x, y);
-    // animateTranslate(obj1, 1000, EASEOUT1, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT2, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT3, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT4, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT5, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT6, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT7, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT8, 50, 50);
-    // animateTranslate(obj1, 1000, EASEOUT9, 50, 50);
+    // obj1.drawQuad_Fill(x, y);
+    obj1.drawCircle_Fill(50, 25, 330);
+    obj2.drawPoint(10);
 
-    // animateTranslate(obj1, 1000, EASEIN1, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN2, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN3, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN4, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN5, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN6, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN7, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN8, 50, 50);
-    // animateTranslate(obj1, 1000, EASEIN9, 50, 50);
+    if (obj2.anchorX == 100 && obj2.anchorY == 100)
+        xVal = yVal = -200;
+    else if (obj2.anchorX == -100 && obj2.anchorY == -100)
+        xVal = yVal = 200;
 
-    // animateTranslate(obj1, 1000, EASEINOUT1, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT2, 50, 50);
-    animateTranslate(obj1, 1000, EASEINOUT3, 50, 50);
-    animateRotate(obj1, 1000, EASEINOUT3, 90);
-    animateScale(obj1, 1000, EASEINOUT3, 0.5);
-    // animateTranslate(obj1, 1000, EASEINOUT4, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT5, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT6, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT7, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT8, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT9, 50, 50);
+    if (obj1.orientation == -45)
+        rotateVal = 90;
+    else if (obj1.orientation == 45)
+        rotateVal = -90;
+    if (obj1.scaleFactor == 1)
+        scaleVal = 4;
+    else if (obj1.scaleFactor == 5)
+        scaleVal = -4;
+
+    if (obj1.opacity == 100)
+        opacityVal = -80;
+    else if (obj1.opacity == 20)
+        opacityVal = 80;
+
+    if (obj1.clockWiseFlag)
+        orbitVal = 100;
+    else if (!obj1.clockWiseFlag)
+        orbitVal = -100;
+
+    // animateTranslate(obj1, 1000, EASEOUT5, 100, 100);
+    animateTranslate(obj2, 1000, EASEOUT5, xVal, yVal);
+    animateTranslate(obj1, 1000, EASEOUT5, xVal, yVal);
+    animateRotate(obj1, 1000, EASEOUT5, rotateVal);
+    animateScale(obj1, 1000, EASEOUT5, scaleVal);
+    animateOpacity(obj1, 1000, EASEOUT5, opacityVal);
+    // obj1.orbit(obj2.anchorX, obj2.anchorY, 100, 1);
+    animateOrbit(obj1, 1000, EASEOUT5, obj2.anchorX, obj2.anchorY, 100, orbitVal);
 
     // todo implement speed interpolation
 
