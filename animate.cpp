@@ -5,7 +5,6 @@
 #include <cmath>
 #include "object.cpp"
 #include "bezier-easing.cpp"
-// #include "bezier.cpp"
 
 using namespace std::chrono;
 
@@ -44,15 +43,10 @@ void animateTranslate(Object &obj, GLfloat duration, const GLfloat bezierPoints[
             // bezierPoints[3] = final time = obj.startTime + duration
 
             // bezier.cpp version
-            // BezierEasing bezier_test({bezierPoints[0], bezierPoints[1]}, {bezierPoints[2], bezierPoints[3]});
-            // GLfloat currentX = bezier_test.GetEasingProgress(elapsedTime / duration) * dx + obj.initialPos[0];
-            // GLfloat currentY = bezier_test.GetEasingProgress(elapsedTime / duration) * dy + obj.initialPos[1];
+            BezierEasing bezier_test({bezierPoints[0], bezierPoints[1]}, {bezierPoints[2], bezierPoints[3]});
+            GLfloat currentX = bezier_test.GetEasingProgress(elapsedTime / duration) * dx + obj.initialPos[0];
+            GLfloat currentY = bezier_test.GetEasingProgress(elapsedTime / duration) * dy + obj.initialPos[1];
 
-            // Create a BezierEasing object with control points (0.25, 0.1) and (0.25, 1.0)
-            BezierEasing easing({bezierPoints[0], bezierPoints[1]}, {bezierPoints[2], bezierPoints[3]});
-
-            // Get the easing value for x = 0.5
-            double easingValue = easing.BezierEasingGet(0.5);
             
 
             // Update the object's position

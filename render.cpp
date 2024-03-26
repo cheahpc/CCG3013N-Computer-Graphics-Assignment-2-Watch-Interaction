@@ -5,12 +5,11 @@
 #include <thread>
 #include <stdarg.h>
 // custom
-#include "animate.cpp"
 #include "dimen.h"
 #include "color.h"
 #include "easing.h"
+#include "animate.cpp"
 #include "object.cpp"
-// #include "animate.cpp"
 #include "renderdebug.cpp"
 
 Object obj1 = Object(100, 100);
@@ -42,13 +41,40 @@ void renderMaster()
     renderGrid(); // For references only
     // renderDebug(); // For debugging only
 
-    GLint x[4] = {-50, -50, 50, 50};
-    GLint y[4] = {-50, 50, 50, -50};
-    obj1.setColor(COLOR_RED, 100);
+    GLint x[4] = {-10, -10, 10, 10};
+    GLint y[4] = {-10, 10, 10, -10};
+    obj1.setColor(COLOR_RED, 60);
 
     obj1.drawQuad_Fill(x, y);
-    // animateTranslate(obj1, 500, bezierLinear, 100, 100);
-    animateTranslate(obj1, 1000, bezier, 100, 100);
+    // animateTranslate(obj1, 1000, EASEOUT1, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT2, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT3, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT4, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT5, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT6, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT7, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT8, 50, 50);
+    // animateTranslate(obj1, 1000, EASEOUT9, 50, 50);
+
+    // animateTranslate(obj1, 1000, EASEIN1, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN2, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN3, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN4, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN5, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN6, 50, 50);
+    animateTranslate(obj1, 1000, EASEIN7, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN8, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN9, 50, 50);
+
+    // animateTranslate(obj1, 1000, EASEINOUT1, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT2, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT3, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT4, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT5, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT6, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT7, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT8, 50, 50);
+    // animateTranslate(obj1, 1000, EASEINOUT9, 50, 50);
 
     // todo implement speed interpolation
 

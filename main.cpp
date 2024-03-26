@@ -36,9 +36,12 @@ void kbControl(unsigned char key, int x, int y)
 		obj1.scale(-scaleStep);
 		break;
 	case 'z':
-		if (obj1.translateFlag == false){
+		if (obj1.translateFlag == false)
+		{
 			obj1.translateFlag = true;
-		} else {
+		}
+		else
+		{
 			obj1.translateFlag = false;
 			obj1.animationState = obj1.IDLE;
 		}

@@ -1,7 +1,7 @@
 #ifndef _BEZIEREASING_H_
 #define _BEZIEREASING_H_
 
-#include "p2p.h"
+#include "p2point.h"
 #include <vector>
 
 class BezierEasing
@@ -9,7 +9,6 @@ class BezierEasing
 public:
     // Create a cubic Bezier easing for any p1 and p2 with components between 0 and 1
     BezierEasing(fPoint p1, fPoint p2);
-
     ~BezierEasing();
 
     // Return progress for desired time if valid curve. -1 if invalid.
