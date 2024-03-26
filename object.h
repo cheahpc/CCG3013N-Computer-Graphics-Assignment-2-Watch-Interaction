@@ -12,6 +12,7 @@ public:
 	// Constructor and Destructor
 	Object();
 	Object(GLfloat anchorX, GLfloat anchorY);
+	Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity);
 	~Object();
 
 	// 2D primitives
@@ -92,17 +93,18 @@ public:
 	GLfloat initialOrientation;
 	GLfloat initialScale;
 	GLfloat initialOpacity;
-	GLfloat initialOribitAngle;
+	GLfloat initialOrbitAngle;
+	int animationTaskCount;
 
-	chrono::high_resolution_clock::time_point startTime, duration;
+	chrono::high_resolution_clock::time_point aTranslateStartTime, aRotateStartTime, aScaleStartTime, aOpacityStartTime, aOrbitStartTime;
 
 	enum AnimationState
 	{
-		IDLE,
-		STARTED
+		BUSY,
+		IDLE
 	};
 
-	AnimationState animationState;
+	AnimationState aRotateState, aTranslateState, aScaleState, aOpacityState, aOrbitState;
 };
 
 #endif

@@ -12,7 +12,7 @@
 #include "object.cpp"
 #include "renderdebug.cpp"
 
-Object obj1 = Object(100, 100);
+Object obj1 = Object(100, 100, 1, 0, COLOR_BLUE, 100);
 Object obj2 = Object();
 Object obj3 = Object();
 
@@ -43,7 +43,6 @@ void renderMaster()
 
     GLint x[4] = {-10, -10, 10, 10};
     GLint y[4] = {-10, 10, 10, -10};
-    obj1.setColor(COLOR_RED, 60);
 
     obj1.drawQuad_Fill(x, y);
     // animateTranslate(obj1, 1000, EASEOUT1, 50, 50);
@@ -70,6 +69,7 @@ void renderMaster()
     // animateTranslate(obj1, 1000, EASEINOUT2, 50, 50);
     animateTranslate(obj1, 1000, EASEINOUT3, 50, 50);
     animateRotate(obj1, 1000, EASEINOUT3, 90);
+    animateScale(obj1, 1000, EASEINOUT3, 0.5);
     // animateTranslate(obj1, 1000, EASEINOUT4, 50, 50);
     // animateTranslate(obj1, 1000, EASEINOUT5, 50, 50);
     // animateTranslate(obj1, 1000, EASEINOUT6, 50, 50);

@@ -49,4 +49,4 @@ private:
     bool valid = true;
 };
 
-#endif // !_BEZIEREASING_H_
+#endif 

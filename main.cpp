@@ -43,32 +43,37 @@ void kbControl(unsigned char key, int x, int y)
 		else
 		{
 			obj1.translateFlag = false;
-			obj1.animationState = obj1.IDLE;
 		}
 		break;
 	case 'x':
 		if (obj1.rotateFlag == false)
-		{
 			obj1.rotateFlag = true;
+		else
+			obj1.rotateFlag = false;
+		break;
+	case 'c':
+		if (obj1.scaleFlag == false)
+		{
+			obj1.scaleFlag = true;
 		}
 		else
 		{
-			obj1.rotateFlag = false;
-			obj1.animationState = obj1.IDLE;
+			obj1.scaleFlag = false;
 		}
 		break;
 
-	case 'c': // Combine rotate and translate
-		if (obj1.rotateFlag == false && obj1.translateFlag == false)
+	case 'v': // Combine rotate and translate
+		if (obj1.rotateFlag == false || obj1.translateFlag == false || obj1.scaleFlag == false)
 		{
 			obj1.rotateFlag = true;
 			obj1.translateFlag = true;
+			obj1.scaleFlag = true;
 		}
 		else
 		{
 			obj1.rotateFlag = false;
 			obj1.translateFlag = false;
-			obj1.animationState = obj1.IDLE;
+			obj1.scaleFlag = false;
 		}
 		break;
 
@@ -100,6 +105,9 @@ void kbControl(unsigned char key, int x, int y)
 		obj1.translateTo(0, 0);
 	case 'X': // Reset
 		obj1.rotateTo(0);
+		break;
+	case 'C': // Reset
+		obj1.scaleTo(1);
 		break;
 	case 27: // Escape key
 		exit(0);

@@ -16,14 +16,32 @@ Object::Object()
 	this->scaleFactor = 1;
 	this->orientation = 0;
 	this->orbitAngle = 0;
-	this->opacity = 1;
+	this->opacity = 100;
+	this->color[0] = 0;
+	this->color[1] = 0;
+	this->color[2] = 0;
 
 	this->scaleFlag = false;
 	this->rotateFlag = false;
 	this->translateFlag = false;
 	this->orbitFlag = false;
 	this->clockWiseFlag = false;
-	this->animationState = IDLE;
+
+	// Animation properties
+	this->initialPos[0] = 0;
+	this->initialPos[1] = 0;
+	this->initialOrientation = 0;
+	this->initialScale = 0;
+	this->initialOpacity = 0;
+	this->initialOrbitAngle = 0;
+	this->animationTaskCount = 0;
+
+	// Animation State
+	this->aTranslateState = this->IDLE;
+	this->aRotateState = this->IDLE;
+	this->aScaleState = this->IDLE;
+	this->aOpacityState = this->IDLE;
+	this->aOrbitState = this->IDLE;
 }
 
 Object::Object(GLfloat anchorX, GLfloat anchorY)
@@ -33,7 +51,10 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 	this->scaleFactor = 1;
 	this->orientation = 0;
 	this->orbitAngle = 0;
-	this->opacity = 1;
+	this->opacity = 100;
+	this->color[0] = 0;
+	this->color[1] = 0;
+	this->color[2] = 0;
 
 	this->scaleFlag = false;
 	this->rotateFlag = false;
@@ -41,10 +62,64 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 	this->orbitFlag = false;
 	this->clockWiseFlag = false;
 	this->opacityFlag = false;
+
+	// Animation properties
+	this->initialPos[0] = 0;
+	this->initialPos[1] = 0;
+	this->initialOrientation = 0;
+	this->initialScale = 0;
+	this->initialOpacity = 0;
+	this->initialOrbitAngle = 0;
+	this->animationTaskCount = 0;
+
+	// Animation State
+	this->aTranslateState = this->IDLE;
+	this->aRotateState = this->IDLE;
+	this->aScaleState = this->IDLE;
+	this->aOpacityState = this->IDLE;
+	this->aOrbitState = this->IDLE;
+}
+
+Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity)
+{
+	this->anchorX = anchorX;
+	this->anchorY = anchorY;
+	this->scaleFactor = scaleFactor;
+	this->orientation = orientation;
+	this->orbitAngle = 0;
+	this->opacity = opacity;
+	this->color[0] = color[0];
+	this->color[1] = color[1];
+	this->color[2] = color[2];
+
+	this->scaleFlag = false;
+	this->rotateFlag = false;
+	this->translateFlag = false;
+	this->orbitFlag = false;
+	this->clockWiseFlag = false;
+	this->opacityFlag = false;
+
+	// Animation properties
+	this->initialPos[0] = 0;
+	this->initialPos[1] = 0;
+	this->initialOrientation = 0;
+	this->initialScale = 0;
+	this->initialOpacity = 0;
+	this->initialOrbitAngle = 0;
+	this->animationTaskCount = 0;
+
+	// Animation State
+	this->aTranslateState = this->IDLE;
+	this->aRotateState = this->IDLE;
+	this->aScaleState = this->IDLE;
+	this->aOpacityState = this->IDLE;
+	this->aOrbitState = this->IDLE;
 }
 
 // Destructor
-Object::~Object() {}
+Object::~Object()
+{
+}
 
 #pragma endregion Constructors
 
