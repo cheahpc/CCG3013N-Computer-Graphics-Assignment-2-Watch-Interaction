@@ -1,26 +1,25 @@
 #include "bezier-easing.h"
 #include <math.h>
 
-#define NEWTON_ITERATIONS 4
+#define NEWTON_ITERATIONS 5
 #define NEWTON_MIN_SLOPE 0.001f
 #define SUBDIVISION_PRECISION 0.0000001f
-#define SUBDIVISION_MAX_ITERATIONS 10
+#define SUBDIVISION_MAX_ITERATIONS 20
 
-#define SAMPLES_SIZE 21
-#define SAMPLES_STEP (1.0 / (SAMPLES_SIZE - 1))
+#define SAMPLES_SIZE 53
+#define SAMPLES_STEP (0.1 / (SAMPLES_SIZE - 1))
 
 BezierEasing::BezierEasing(fPoint p1, fPoint p2) : p1(p1), p2(p2)
 {
     valid = CheckPoints(p1, p2);
 
     // Precompute the Samples for this Bezier curve if no linear
-    // cout << "Precomputing samples for Bezier curve" << endl;
     // if (valid && p1.x != p1.y && p2.x != p2.y)
     // {
-    for (int i = 0; i < SAMPLES_SIZE; ++i)
-    {
-        sample_values.push_back(CalcBezier(i * SAMPLES_STEP, p1.x, p2.x));
-    }
+        for (int i = 0; i < SAMPLES_SIZE; ++i)
+        {
+            sample_values.push_back(CalcBezier(i * SAMPLES_STEP, p1.x, p2.x));
+        }
     // }
 }
 

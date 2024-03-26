@@ -88,7 +88,11 @@ public:
 	bool scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
 
 	// Properties for translate animation
-	GLfloat initialPos[2], finalPos[2];
+	GLfloat initialPos[2];
+	GLfloat initialOrientation;
+	GLfloat initialScale;
+	GLfloat initialOpacity;
+	GLfloat initialOribitAngle;
 
 	chrono::high_resolution_clock::time_point startTime, duration;
 

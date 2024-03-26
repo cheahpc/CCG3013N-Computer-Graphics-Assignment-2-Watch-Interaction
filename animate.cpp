@@ -8,7 +8,7 @@
 
 using namespace std::chrono;
 
-void animateTranslate(Object &obj, GLfloat duration, const GLfloat bezierPoints[4], GLfloat dx, GLfloat dy)
+void animateTranslate(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloat dx, GLfloat dy)
 {
     // Check if the animation flag is turned on
     if (obj.translateFlag == true)
@@ -37,20 +37,57 @@ void animateTranslate(Object &obj, GLfloat duration, const GLfloat bezierPoints[
         else
         {
             // cubic bezier interpolation
-            // bezierPoints[0] = initial time = obj.startTime
-            // bezierPoints[1] = initial value = obj.initialPos[0]
-            // bezierPoints[2] = final value = obj.initialPos[0] + dx / dy
-            // bezierPoints[3] = final time = obj.startTime + duration
-
-            // bezier.cpp version
-            BezierEasing bezier_test({bezierPoints[0], bezierPoints[1]}, {bezierPoints[2], bezierPoints[3]});
+            // easing[0] = initial time = obj.startTime
+            // easing[1] = initial value = obj.initialPos[0]
+            // easing[2] = final value = obj.initialPos[0] + dx / dy
+            // easing[3] = final time = obj.startTime + duration
+            BezierEasing bezier_test({easing[0], easing[1]}, {easing[2], easing[3]});
             GLfloat currentX = bezier_test.GetEasingProgress(elapsedTime / duration) * dx + obj.initialPos[0];
             GLfloat currentY = bezier_test.GetEasingProgress(elapsedTime / duration) * dy + obj.initialPos[1];
 
-            
-
             // Update the object's position
             obj.translateTo(currentX, currentY);
+        }
+    }
+}
+
+void animateRotate(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloat angle)
+{
+    // Check if the animation flag is turned on
+    if (obj.rotateFlag == true)
+    {
+        // ! solve the animation reset problem when 2 and more animation is called
+        if (obj.animationState != obj.STARTED)
+        {
+            // Set the start time of the animation
+            obj.startTime = std::chrono::high_resolution_clock::now();
+            obj.animationState = obj.STARTED;
+            obj.initialOrientation = obj.orientation;
+        }
+
+        // Get the current time
+        auto currentTime = high_resolution_clock::now();
+        // get elapsed time and cast it to compare with the duration in glfloat
+        auto elapsedTime = duration_cast<milliseconds>(currentTime - obj.startTime).count();
+        if (elapsedTime >= duration)
+        {
+            // End the animation
+            obj.rotateFlag = false;
+            obj.animationState = obj.IDLE;
+            return;
+        }
+        else
+        {
+            // cubic bezier interpolation
+            // easing[0] = initial time = obj.startTime
+            // easing[1] = initial value = obj.initialOrientation
+            // easing[2] = final value = obj.initialOrientation + angle
+            // easing[3] = final time = obj.startTime + duration
+            BezierEasing bezier_test({easing[0], easing[1]}, {easing[2], easing[3]});
+            GLfloat currentAngle = bezier_test.GetEasingProgress(elapsedTime / duration) * angle + obj.initialOrientation;
+
+            // Update the object's position
+            obj.rotateTo(currentAngle);
         }
     }
 }

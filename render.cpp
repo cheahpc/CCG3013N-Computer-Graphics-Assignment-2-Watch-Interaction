@@ -62,13 +62,14 @@ void renderMaster()
     // animateTranslate(obj1, 1000, EASEIN4, 50, 50);
     // animateTranslate(obj1, 1000, EASEIN5, 50, 50);
     // animateTranslate(obj1, 1000, EASEIN6, 50, 50);
-    animateTranslate(obj1, 1000, EASEIN7, 50, 50);
+    // animateTranslate(obj1, 1000, EASEIN7, 50, 50);
     // animateTranslate(obj1, 1000, EASEIN8, 50, 50);
     // animateTranslate(obj1, 1000, EASEIN9, 50, 50);
 
     // animateTranslate(obj1, 1000, EASEINOUT1, 50, 50);
     // animateTranslate(obj1, 1000, EASEINOUT2, 50, 50);
-    // animateTranslate(obj1, 1000, EASEINOUT3, 50, 50);
+    animateTranslate(obj1, 1000, EASEINOUT3, 50, 50);
+    animateRotate(obj1, 1000, EASEINOUT3, 90);
     // animateTranslate(obj1, 1000, EASEINOUT4, 50, 50);
     // animateTranslate(obj1, 1000, EASEINOUT5, 50, 50);
     // animateTranslate(obj1, 1000, EASEINOUT6, 50, 50);
