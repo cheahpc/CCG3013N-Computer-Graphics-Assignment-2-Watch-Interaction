@@ -28,6 +28,7 @@ Object::Object()
 	this->clockWiseFlag = false;
 
 	this->orbited = false;
+	this->orbitRadius = orbitRadius;
 
 	// Animation properties
 	this->initialPos[0] = 0;
@@ -66,6 +67,7 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 	this->opacityFlag = false;
 
 	this->orbited = false;
+	this->orbitRadius = 0;
 
 	// Animation properties
 	this->initialPos[0] = 0;
@@ -104,6 +106,7 @@ Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat or
 	this->opacityFlag = false;
 
 	this->orbited = false;
+	this->orbitRadius = 0;
 
 	// Animation properties
 	this->initialPos[0] = 0;
@@ -142,6 +145,7 @@ Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat or
 	this->opacityFlag = false;
 
 	this->orbited = true;
+	this->orbitRadius = orbitRadius;
 
 	// Animation properties
 	this->initialPos[0] = 0;

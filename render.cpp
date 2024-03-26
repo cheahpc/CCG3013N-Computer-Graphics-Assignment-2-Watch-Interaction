@@ -12,6 +12,7 @@
 #include "object.cpp"
 #include "renderdebug.cpp"
 
+// Object  anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 Object obj1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
 Object obj2 = Object(100, 100, 1, -45, COLOR_BLUE, 0);
 Object obj3 = Object();
@@ -30,9 +31,13 @@ void renderInit()
     gluOrtho2D(-(WINDOWS_WIDTH / 2), WINDOWS_WIDTH / 2, -(WINDOWS_HEIGHT / 2), WINDOWS_HEIGHT / 2); // Set canvas to windows width and height.
 }
 
+Object backgroundObj1 = Object();
 void renderBackground()
 {
     // Draw the background
+
+
+
 }
 
 void renderMaster()
@@ -47,7 +52,7 @@ void renderMaster()
     GLint y[4] = {-10, 10, 10, -10};
 
     // obj1.drawQuad_Fill(x, y);
-    obj1.drawCircle_Fill(50, 25, 330);
+    obj1.drawCircle_Line(50, 25, 330,80);
     obj2.drawPoint(10);
 
     if (obj2.anchorX == 100 && obj2.anchorY == 100)
@@ -69,10 +74,15 @@ void renderMaster()
     else if (obj1.opacity == 20)
         opacityVal = 80;
 
+    // if (obj1.clockWiseFlag)
+    //     orbitVal = 1;
+    // else if (!obj1.clockWiseFlag)
+    //     orbitVal = -1;
+
     if (obj1.clockWiseFlag)
-        orbitVal = 100;
+        orbitVal = 180;
     else if (!obj1.clockWiseFlag)
-        orbitVal = -100;
+        orbitVal = -180;
 
     // animateTranslate(obj1, 1000, EASEOUT5, 100, 100);
     animateTranslate(obj2, 1000, EASEOUT5, xVal, yVal);
@@ -80,10 +90,8 @@ void renderMaster()
     animateRotate(obj1, 1000, EASEOUT5, rotateVal);
     animateScale(obj1, 1000, EASEOUT5, scaleVal);
     animateOpacity(obj1, 1000, EASEOUT5, opacityVal);
-    // obj1.orbit(obj2.anchorX, obj2.anchorY, 100, 1);
-    animateOrbit(obj1, 1000, EASEOUT5, obj2.anchorX, obj2.anchorY, 100, orbitVal);
-
-    // todo implement speed interpolation
+    // obj1.orbit(obj2.anchorX, obj2.anchorY, 100, orbitVal);
+    animateOrbit(obj1, 1000, EASEINOUT1, obj2.anchorX, obj2.anchorY, 100, orbitVal);
 
     glutSwapBuffers();   // Swap foreground and background frames.
     glutPostRedisplay(); // Update the canvas display.

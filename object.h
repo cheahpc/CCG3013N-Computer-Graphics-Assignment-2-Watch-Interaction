@@ -87,7 +87,7 @@ public:
 	GLfloat anchorX, anchorY, scaleFactor, orientation, orbitAngle;
 	GLfloat color[3], opacity;
 	bool scaleFlag, rotateFlag, translateFlag, orbitFlag, clockWiseFlag, opacityFlag;
-	bool orbited;
+	bool orbited, orbitRadius;
 
 	// Properties for translate animation
 	GLfloat initialPos[2];
