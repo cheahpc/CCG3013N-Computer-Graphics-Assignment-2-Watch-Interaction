@@ -8,6 +8,7 @@
 #include "animate.cpp"
 #include "dimen.h"
 #include "color.h"
+#include "easing.h"
 #include "object.cpp"
 // #include "animate.cpp"
 #include "renderdebug.cpp"
@@ -46,7 +47,8 @@ void renderMaster()
     obj1.setColor(COLOR_RED, 100);
 
     obj1.drawQuad_Fill(x, y);
-    animateTranslate(obj1, 500, 100, 100);
+    // animateTranslate(obj1, 500, bezierLinear, 100, 100);
+    animateTranslate(obj1, 1000, bezier, 100, 100);
 
     // todo implement speed interpolation
 

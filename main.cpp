@@ -69,7 +69,7 @@ void kbControl(unsigned char key, int x, int y)
 		obj1.scale(-scaleStep * 10);
 		break;
 	case 'Z': // Reset
-		obj1.translateTo(obj1.initialPos[0], obj1.initialPos[1]);
+		obj1.translateTo(0, 0);
 		break;
 	case 27: // Escape key
 		exit(0);

@@ -2,11 +2,14 @@
 #include <ratio>
 #include <iostream>
 #include <ctime>
+#include <cmath>
 #include "object.cpp"
+#include "bezier-easing.cpp"
+// #include "bezier.cpp"
 
 using namespace std::chrono;
 
-void animateTranslate(Object &obj, GLfloat duration, GLfloat dx, GLfloat dy)
+void animateTranslate(Object &obj, GLfloat duration, const GLfloat bezierPoints[4], GLfloat dx, GLfloat dy)
 {
     // Check if the animation flag is turned on
     if (obj.translateFlag == true)
@@ -34,12 +37,23 @@ void animateTranslate(Object &obj, GLfloat duration, GLfloat dx, GLfloat dy)
         }
         else
         {
-            // Linear interpolation
-            GLfloat finalX = obj.initialPos[0] + dx;
-            GLfloat finalY = obj.initialPos[1] + dy;
-            // Calculate the current x and y position of the object base on the elapsed time
-            GLfloat currentX = obj.initialPos[0] + (finalX - obj.initialPos[0]) * (elapsedTime / duration);
-            GLfloat currentY = obj.initialPos[1] + (finalY - obj.initialPos[1]) * (elapsedTime / duration);
+            // cubic bezier interpolation
+            // bezierPoints[0] = initial time = obj.startTime
+            // bezierPoints[1] = initial value = obj.initialPos[0]
+            // bezierPoints[2] = final value = obj.initialPos[0] + dx / dy
+            // bezierPoints[3] = final time = obj.startTime + duration
+
+            // bezier.cpp version
+            // BezierEasing bezier_test({bezierPoints[0], bezierPoints[1]}, {bezierPoints[2], bezierPoints[3]});
+            // GLfloat currentX = bezier_test.GetEasingProgress(elapsedTime / duration) * dx + obj.initialPos[0];
+            // GLfloat currentY = bezier_test.GetEasingProgress(elapsedTime / duration) * dy + obj.initialPos[1];
+
+            // Create a BezierEasing object with control points (0.25, 0.1) and (0.25, 1.0)
+            BezierEasing easing({bezierPoints[0], bezierPoints[1]}, {bezierPoints[2], bezierPoints[3]});
+
+            // Get the easing value for x = 0.5
+            double easingValue = easing.BezierEasingGet(0.5);
+            
 
             // Update the object's position
             obj.translateTo(currentX, currentY);

@@ -12,6 +12,7 @@
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
 				"-lopengl32",
 				"-lglu32",
+				"-lm",
 				"-lglut32"
 			],
 			"options": {
