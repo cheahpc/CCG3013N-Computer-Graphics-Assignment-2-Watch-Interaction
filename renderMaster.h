@@ -1,3 +1,5 @@
+#ifndef RENDERMASTER_H
+#define RENDERMASTER_H
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
@@ -5,12 +7,15 @@
 #include <thread>
 #include <stdarg.h>
 // custom
+#include "object.cpp"
 #include "dimen.h"
 #include "color.h"
 #include "easing.h"
-#include "animate.cpp"
-#include "object.cpp"
-#include "renderdebug.cpp"
+#include "animate.h"
+// Renders
+#include "renderdebug.h"
+#include "renderBackground.h"
+#include "renderLegend.h"
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 
@@ -26,16 +31,12 @@ void renderInit()
     gluOrtho2D(-(WINDOWS_WIDTH / 2), WINDOWS_WIDTH / 2, -(WINDOWS_HEIGHT / 2), WINDOWS_HEIGHT / 2); // Set canvas to windows width and height.
 }
 
-Object bg = Object();
-void renderBackground()
+void renderFinish()
 {
-    // Coordinates
-    GLint x[4] = {-WINDOWS_WIDTH / 2, -WINDOWS_WIDTH / 2, WINDOWS_WIDTH / 2, WINDOWS_WIDTH / 2};
-    GLint y[4] = {-WINDOWS_HEIGHT / 2, WINDOWS_HEIGHT / 2, WINDOWS_HEIGHT / 2, -WINDOWS_HEIGHT / 2};
-
-    // Draw the background
-    bg.setColor(COLOR_THEME_GREEN_1, 100);
-    bg.drawQuad_Fill(x, y);
+    glutSwapBuffers();   // Swap foreground and background frames.
+    glutPostRedisplay(); // Update the canvas display.
+    glFlush();
+    glFinish();
 }
 
 void renderMaster()
@@ -48,10 +49,10 @@ void renderMaster()
 
     // Background
     renderBackground(); // Draw the background
+    renderLegend();     // Draw the legend
     renderGrid();       // Draw the grid
 
-    glutSwapBuffers();   // Swap foreground and background frames.
-    glutPostRedisplay(); // Update the canvas display.
-    glFlush();
-    glFinish();
+    renderFinish(); // Finish the rendering
 }
+
+#endif

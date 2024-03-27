@@ -177,7 +177,7 @@ Object::~Object()
 void Object::drawPoint(GLfloat size)
 {
 	glStartInit();
-	glPointSize(size );
+	glPointSize(size);
 	glBegin(GL_POINTS);
 	glVertex2i(0, 0);
 	glEndReset();
@@ -186,7 +186,7 @@ void Object::drawPoint(GLfloat size)
 void Object::drawPoint(GLint x, GLint y, GLfloat size)
 {
 	glStartInit();
-	glPointSize(size );
+	glPointSize(size);
 	glBegin(GL_POINTS);
 	glVertex2i(x, y);
 	glEndReset();
@@ -702,12 +702,11 @@ void Object::setOpacity(GLfloat opacity)
 	this->opacity = opacity;
 }
 
-void Object::setColor(const GLfloat *color, GLfloat a = 100)
+void Object::setColor(const GLfloat *color)
 {
 	this->color[0] = color[0];
 	this->color[1] = color[1];
 	this->color[2] = color[2];
-	setOpacity(a);
 }
 
 void Object::glStartInit()

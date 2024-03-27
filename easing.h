@@ -1,3 +1,6 @@
+#ifndef _EASING_H_
+#define _EASING_H_
+
 const float LINEAR[4] = {0.0, 0.0, 1.0, 1.0}; // Linear effect
 
 const float EASEOUT1[4] = {0.0, 0.9, 0.0, 1.0};
@@ -29,3 +32,5 @@ const float EASEINOUT6[4] = {0.4, 0.0, 0.6, 1.0};
 const float EASEINOUT7[4] = {0.3, 0.0, 0.7, 1.0};
 const float EASEINOUT8[4] = {0.2, 0.0, 0.8, 1.0};
 const float EASEINOUT9[4] = {0.1, 0.0, 0.9, 1.0};
+
+#endif

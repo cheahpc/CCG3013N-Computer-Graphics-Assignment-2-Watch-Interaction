@@ -26,6 +26,13 @@ const float COLOR_SILVER[] = {0.75, 0.75, 0.75};
 const float COLOR_GOLD[] = {1.0, 0.84, 0.0};
 const float COLOR_BRONZE[] = {0.8, 0.5, 0.2};
 
-const float COLOR_THEME_GREEN_1[] = {0.117647, 0.639216, 0.4};
+// Theme Green
+const float COLOR_THEME_GREEN_DARK_1[] = {0.02, 0.13, 0.08};
+const float COLOR_THEME_GREEN_DARK_2[] = {0.05, 0.25, 0.16};
+const float COLOR_THEME_GREEN_DARK_3[] = {0.07, 0.38, 0.24};
+const float COLOR_THEME_GREEN[] = {0.12, 0.64, 0.40};
+const float COLOR_THEME_GREEN_LIGHT_1[] = {0.38, 0.75, 0.58};
+const float COLOR_THEME_GREEN_LIGHT_2[] = {0.65, 0.85, 0.76};
+const float COLOR_THEME_GREEN_LIGHT_3[] = {0.91, 0.96, 0.94};
 
 #endif

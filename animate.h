@@ -1,3 +1,5 @@
+#ifndef ANIMATE_CPP
+#define ANIMATE_CPP
 #include <chrono>
 #include <ratio>
 #include <iostream>
@@ -218,4 +220,4 @@ void animateOrbit(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloa
         obj.orbitTo(anchorX, anchorY, radius, obj.orbitAngle);
     }
 }
-
+#endif

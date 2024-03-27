@@ -13,7 +13,7 @@ public:
 	Object();
 	Object(GLfloat anchorX, GLfloat anchorY);
 	Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity);
-	Object (GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity, GLfloat orbitRadius, GLfloat orbitAngle);
+	Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity, GLfloat orbitRadius, GLfloat orbitAngle);
 	~Object();
 
 	// 2D primitives
@@ -79,7 +79,7 @@ public:
 
 	// Other Control
 	void setOpacity(GLfloat opacity);
-	void setColor(const GLfloat *color, GLfloat a);
+	void setColor(const GLfloat *color);
 
 	void glStartInit();
 	void glEndReset();

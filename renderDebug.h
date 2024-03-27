@@ -1,6 +1,5 @@
-#ifndef _RENDER_DEBUG_H_
-#define _RENDER_DEBUG_H_
-
+#ifndef RENDER_DEBUG_H
+#define RENDER_DEBUG_H
 #include "object.cpp"
 #include "color.h"
 #include "dimen.h"
@@ -11,19 +10,21 @@ Object debug = Object();
 void renderGrid()
 {
     // Draw the grid
+    
+    debugGrid.setOpacity(100);
     debugGrid.scaleTo(1);
     debugGrid.translateTo(0, 0);
     // Sub 10
-    debugGrid.setColor(COLOR_SILVER, 100);
+    debugGrid.setColor(COLOR_SILVER);
     debugGrid.drawGrid(10, 1, 0);
     // Sub 50
-    debugGrid.setColor(COLOR_GRAY, 100);
+    debugGrid.setColor(COLOR_GRAY);
     debugGrid.drawGrid(50, 1, 0);
     // Main 100
-    debugGrid.setColor(COLOR_BLACK, 100);
+    debugGrid.setColor(COLOR_BLACK);
     debugGrid.drawGrid(100, 1, 0);
 
-    debugGrid.setColor(COLOR_RED, 100);
+    debugGrid.setColor(COLOR_RED);
     // Center Line
     debugGrid.drawLine(-WINDOWS_WIDTH / 2, 0, WINDOWS_WIDTH / 2, 0, 2);
     debugGrid.drawLine(0, -WINDOWS_HEIGHT / 2, 0, WINDOWS_HEIGHT / 2, 2);
@@ -36,7 +37,7 @@ void renderDebug()
 {
     GLint x[4] = {-150, 150, 150, -150};
     GLint y[4] = {150, 150, -150, -150};
-    debug.setColor(COLOR_RED, 30);
+    debug.setColor(COLOR_RED);
     // debug.setOpacity(40);
     // debug.scaleTo(0.4);
     // debug.rotateTo(25);
@@ -52,7 +53,7 @@ void renderDebug()
     // debug.drawQuad_Line(x, y, 10);
     debug.drawCircle_Fill(200, 270, 340);
     // debug.drawCircle_Line(100, 0, 270, 10);
-    // debug.setColor(COLOR_BRONZE, 30);
+    // debug.setColor(COLOR_BRONZE);
     // debug.drawRoundedRect_Fill(200, 200, 40);
     // debug.drawRoundedRect_Line(200, 200, 40, 40);
     // debug.drawText("Hello World", 20);

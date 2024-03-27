@@ -1,3 +1,5 @@
+#ifndef _BEZIER_EASING_CPP_
+#define _BEZIER_EASING_CPP_
 #include "bezier-easing.h"
 #include <math.h>
 
@@ -16,10 +18,10 @@ BezierEasing::BezierEasing(fPoint p1, fPoint p2) : p1(p1), p2(p2)
     // Precompute the Samples for this Bezier curve if no linear
     // if (valid && p1.x != p1.y && p2.x != p2.y)
     // {
-        for (int i = 0; i < SAMPLES_SIZE; ++i)
-        {
-            sample_values.push_back(CalcBezier(i * SAMPLES_STEP, p1.x, p2.x));
-        }
+    for (int i = 0; i < SAMPLES_SIZE; ++i)
+    {
+        sample_values.push_back(CalcBezier(i * SAMPLES_STEP, p1.x, p2.x));
+    }
     // }
 }
 
@@ -157,3 +159,5 @@ bool BezierEasing::CheckPoints(fPoint p1, fPoint p2)
 {
     return ((p1.x >= 0 && p1.x <= 1) && (p1.y >= 0 && p1.y <= 1) && (p2.x >= 0 && p2.x <= 1) && (p2.y >= 0 && p2.y <= 1));
 }
+
+#endif
