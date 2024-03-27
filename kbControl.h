@@ -23,13 +23,9 @@ void toggle(Object &obj, bool translate, bool rotate, bool scale, bool opacity, 
 bool isBusy(Object &obj)
 {
     if (obj.aTranslateState == obj.BUSY || obj.aRotateState == obj.BUSY || obj.aScaleState == obj.BUSY || obj.aOpacityState == obj.BUSY || obj.aOrbitState == obj.BUSY)
-    {
         return true;
-    }
     else
-    {
         return false;
-    }
 }
 
 void kbControl_Debug_Control(unsigned char key, int x, int y)
@@ -72,6 +68,13 @@ void kbControl_Main(unsigned char key, int x, int y)
 {
     switch (key)
     {
+    case 'g': // Toggle grid
+        if (debugGrid.opacity == 0)
+            debugGrid.opacity = 100;
+        else
+            debugGrid.opacity = 0;
+
+        break;
     case 'h': // Help - legend
         if (!isBusy(legendHelpText) || !isBusy(legendBg))
         {
@@ -79,7 +82,6 @@ void kbControl_Main(unsigned char key, int x, int y)
             toggle(legendHelpText, true, false, false, true, false);
             toggle(legendBg, true, false, false, true, false);
         }
-
         break;
     case 27: // Escape key
         exit(0);

@@ -1,21 +1,12 @@
 #ifndef RENDERMASTER_H
 #define RENDERMASTER_H
-#include <windows.h>
-#include <string.h>
-#include <stdio.h>
-#include <chrono>
-#include <thread>
-#include <stdarg.h>
-// custom
-#include "object.cpp"
-#include "dimen.h"
-#include "color.h"
-#include "easing.h"
-#include "animate.h"
+
 // Renders
 #include "renderdebug.h"
 #include "renderBackground.h"
 #include "renderLegend.h"
+#include "renderWatch.h"
+#include "renderUI.h"
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 
@@ -49,8 +40,21 @@ void renderMaster()
 
     // Background
     renderBackground(); // Draw the background
-    renderLegend();     // Draw the legend
-    // renderGrid();       // Draw the grid
+
+    // Watch
+    renderWatchStrap();
+    renderWatchDial();   // Draw the watch dial
+    renderWatchButton(); // Draw the watch button
+    renderWatchBody();   // Draw the watch body
+
+    // UI
+    renderUI_BG();
+
+    // Legend
+    renderLegend(); // Draw the legend
+
+    // Grid Overlay
+    renderGrid(); // Draw the grid
 
     renderFinish(); // Finish the rendering
 }

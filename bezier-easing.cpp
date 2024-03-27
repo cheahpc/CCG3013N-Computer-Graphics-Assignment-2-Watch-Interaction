@@ -1,7 +1,6 @@
 #ifndef _BEZIER_EASING_CPP_
 #define _BEZIER_EASING_CPP_
 #include "bezier-easing.h"
-#include <math.h>
 
 #define NEWTON_ITERATIONS 4
 #define NEWTON_MIN_SLOPE 0.001f

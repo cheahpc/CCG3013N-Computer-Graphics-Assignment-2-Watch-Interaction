@@ -1,19 +1,12 @@
 #ifndef RENDER_DEBUG_H
 #define RENDER_DEBUG_H
-#include "object.cpp"
-#include "color.h"
-#include "dimen.h"
 
-Object debugGrid = Object();
+// anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
+Object debugGrid = Object(0, 0, 1, 0, COLOR_BLACK, 0);
 Object debug = Object();
 
 void renderGrid()
 {
-    // Draw the grid
-    
-    debugGrid.setOpacity(100);
-    debugGrid.scaleTo(1);
-    debugGrid.translateTo(0, 0);
     // Sub 10
     debugGrid.setColor(COLOR_SILVER);
     debugGrid.drawGrid(10, 1, 0);

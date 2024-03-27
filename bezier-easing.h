@@ -2,7 +2,6 @@
 #define _BEZIEREASING_H_
 
 #include "p2point.h"
-#include <vector>
 
 class BezierEasing
 {
@@ -49,4 +48,4 @@ private:
     bool valid = true;
 };
 
-#endif 
+#endif

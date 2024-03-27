@@ -1,6 +1,5 @@
 #ifndef RENDER_BACKGROUND_H
 #define RENDER_BACKGROUND_H
-#include "object.cpp"
 
 Object bg = Object();
 

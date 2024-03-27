@@ -1,8 +1,6 @@
 #ifndef RENDERLEGEND_H
 #define RENDERLEGEND_H
 
-#include "Object.cpp"
-#include "animate.h"
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 Object legendHelpText = Object(-700, 160, 0.10, 0, COLOR_THEME_GREEN_DARK_1, 100);
 Object legendBg = Object(-650, 0, 1, 0, COLOR_THEME_GREEN_DARK_2, 0);
@@ -18,12 +16,15 @@ void renderLegend()
     GLfloat legendHelpTextOpacVal, legendHelpTextTransVal;
     GLfloat legendBgOpacVal, legendBgTransVal;
 
-    legendHelpText.drawText("Press 'h' for legend.", 3);
+    // 1. Help Text
+    legendHelpText.drawText("Press 'h' for legend", LEGEND_HELP_TEXT_SIZE);
+
+    // 2. Legend Box
     legendBg.setColor(COLOR_THEME_GREEN_DARK_2);
-    legendBg.drawRoundedRect_Fill(510, 510, 25);
+    legendBg.drawRoundedRect_Fill(LEGEND_BOX_WIDTH, LEGEND_BOX_HEIGHT, 25);
 
     legendBg.setColor(COLOR_THEME_GREEN_LIGHT_1);
-    legendBg.drawRoundedRect_Fill(500, 500, 20);
+    legendBg.drawRoundedRect_Line(LEGEND_BOX_WIDTH, LEGEND_BOX_HEIGHT, 25, LEGEND_BOX_OUTLINE_SIZE);
 
     if (legendShow)
     {
@@ -56,5 +57,4 @@ void renderLegend()
     // C - show clock
     // A - toggle always on display (AOD)
 }
-
 #endif

@@ -1,11 +1,6 @@
 #ifndef ANIMATE_CPP
 #define ANIMATE_CPP
-#include <chrono>
-#include <ratio>
-#include <iostream>
-#include <ctime>
-#include <cmath>
-#include "object.cpp"
+
 #include "bezier-easing.cpp"
 
 using namespace std::chrono;

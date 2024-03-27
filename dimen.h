@@ -3,7 +3,7 @@
 
 #include <GL/glut.h>
 
-const float WINDOWS_WIDTH = 1440;
+const float WINDOWS_WIDTH = 1600;
 const float WINDOWS_HEIGHT = 900;
 // const float WINDOWS_WIDTH = 800;
 // const float WINDOWS_HEIGHT = 600;
@@ -14,5 +14,37 @@ const float SCREEN_CENTER_X = glutGet(GLUT_SCREEN_WIDTH) / 2;
 const float SCREEN_CENTER_Y = glutGet(GLUT_SCREEN_HEIGHT) / 2;
 const float WINDOWS_INITIAL_POS_X = SCREEN_CENTER_X - (WINDOWS_WIDTH / 2);
 const float WINDOWS_INITIAL_POS_Y = SCREEN_CENTER_Y - (WINDOWS_HEIGHT / 2);
+
+// Legend
+const float LEGEND_HELP_TEXT_SIZE = 2;
+const float LEGEND_BOX_WIDTH = 200;
+const float LEGEND_BOX_HEIGHT = 200;
+const float LEGEND_BOX_OUTLINE_SIZE = 25;
+
+// Watch
+// - Strap
+const float WATCH_STRAP_WIDTH = 200;
+const float WATCH_STRAP_HEIGHT = WINDOWS_WIDTH;
+// - Body
+const float WATCH_BODY_WIDTH = 450;
+const float WATCH_BODY_HEIGHT = 550;
+const float WATCH_BODY_ROUND_RADIUS = 75;
+// - Dial
+const float WATCH_DIAL_WIDTH = 30;
+const float WATCH_DIAL_HEIGHT = 100;
+const float WATCH_DIAL_ROUND_RADIUS = 15;
+const float WATCH_DIAL_CENTER_X = WATCH_BODY_WIDTH / 2 + WATCH_DIAL_WIDTH / 2;
+const float WATCH_DIAL_CENTER_Y = WATCH_BODY_HEIGHT / 4;
+// - Button
+const float WATCH_BUTTON_WIDTH = 25;
+const float WATCH_BUTTON_HEIGHT = 220;
+const float WATCH_BUTTON_ROUND_RADIUS = 10;
+const float WATCH_BUTTON_CENTER_X = WATCH_BODY_WIDTH / 2;
+const float WATCH_BUTTON_CENTER_Y = -70;
+
+// - UI
+const float UI_SCREEN_WIDTH = WATCH_BODY_WIDTH - 40;
+const float UI_SCREEN_HEIGHT = WATCH_BODY_HEIGHT - 40;
+const float UI_SCREEN_ROUND_RADIUS = WATCH_BODY_ROUND_RADIUS - (WATCH_BODY_WIDTH - UI_SCREEN_WIDTH) / 2;
 
 #endif

@@ -1,4 +1,24 @@
+#include <chrono>
+#include <cmath>
+#include <ctime>
+#include <iostream>
+#include <math.h>
+#include <ratio>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include <thread>
+#include <vector>
+#include <windows.h>
+
+// custom headers
 #include "dimen.h"
+#include "color.h"
+#include "easing.h"
+#include "object.cpp"
+#include "animate.h"
+
+// renders and controls
 #include "renderMaster.h"
 #include "kbControl.h"
 

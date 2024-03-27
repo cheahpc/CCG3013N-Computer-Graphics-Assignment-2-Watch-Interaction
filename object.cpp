@@ -1,7 +1,6 @@
 #ifndef OBJECT_CPP
 #define OBJECT_CPP
 #include "object.h"
-#include "color.h"
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433
 #endif
