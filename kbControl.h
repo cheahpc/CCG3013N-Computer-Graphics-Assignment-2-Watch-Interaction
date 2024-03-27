@@ -56,6 +56,10 @@ void kbControl_Main(unsigned char key, int x, int y)
             toggleAnimationFlag(legendBg, true, false, false, true, false);
         }
         break;
+    case 'q': // Testing
+        bootingUp = true;
+        bootStartTime = chrono::high_resolution_clock::now();
+        break;
     case 27: // Escape key
         exit(0);
         break;

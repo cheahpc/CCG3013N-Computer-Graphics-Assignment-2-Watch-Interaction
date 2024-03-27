@@ -1,6 +1,5 @@
 #ifndef MOUSECONTROL_H
 #define MOUSECONTROL_H
-
 struct Mouse
 {
     GLint mouseX, mouseY;
@@ -25,17 +24,6 @@ bool inArea(GLint x, GLint y, GLint x1, GLint y1, GLint x2, GLint y2)
     return false;
 }
 
-// ! Implementation method 1
-void bootWatch(int value)
-{
-    if (mouse.leftDown && value == 0)
-    {
-        std::cout << "System is booting up, please wait" << std::endl;
-        // !animate booting screen
-        // !callback to end booting screen and show watch face
-    }
-}
-
 void mouseControl(GLint button, GLint state, int x, int y)
 {
     // Get mouse position
@@ -57,12 +45,11 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 // Check if the button is animating
                 if (!isBusyAnimating(watchButton))
                 {
+                    cout << "Watch button pressed..." << endl;
                     mouse.leftDown = true;
                     watchButtonPressed = true;
-                    bootingUp = true;
                     toggleAnimationFlag(watchButton, true, false, false, false, false);
-                    // glutTimerFunc(SYSTEM_BOOT_BUTTON_PRESS_TIME, bootWatch, 0); // Implementation method 1
-                    bootStartTime = chrono::high_resolution_clock::now(); // Catch the start time
+                    buttonPressStartTime = chrono::high_resolution_clock::now(); // Catch the start time
                 }
             }
         }
@@ -71,10 +58,8 @@ void mouseControl(GLint button, GLint state, int x, int y)
             // Reset button state
             mouse.leftDown = false;
             watchButtonPressed = false;
-            bootingUp = false;
             toggleAnimationFlag(watchButton, true, false, false, false, false);
-            glutTimerFunc(0, bootWatch, -1); // Implementation method 1
-
+            cout << "Watch button released..." << endl;
         }
         break;
     case GLUT_RIGHT_BUTTON:

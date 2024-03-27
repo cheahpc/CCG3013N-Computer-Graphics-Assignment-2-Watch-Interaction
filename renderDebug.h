@@ -54,9 +54,9 @@ void renderDebug()
 
 Object debugObj1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
 Object debugObj2 = Object(100, 100, 1, -45, COLOR_GREEN, 100);
-GLfloat xVal, yVal, rotateVal, scaleVal, opacityVal, orbitVal;
 void renderDebugControlTest()
 {
+    GLfloat xVal, yVal, rotateVal, scaleVal, opacityVal, orbitVal;
     renderGrid(); // For references only
     GLint x[4] = {-10, -10, 10, 10};
     GLint y[4] = {-10, 10, 10, -10};

@@ -7,7 +7,7 @@ Object uiBG = Object();
 
 void renderUI_BG()
 {
-    uiBG.setColor(COLOR_WHITE);
+    uiBG.setColor(COLOR_BLACK);
     uiBG.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
 }
 

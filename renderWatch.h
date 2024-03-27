@@ -8,8 +8,9 @@ Object watchDial = Object(WATCH_DIAL_CENTER_X, WATCH_DIAL_CENTER_Y, 1, 0, COLOR_
 Object watchButton = Object(WATCH_BUTTON_CENTER_X, WATCH_BUTTON_CENTER_Y, 1, 0, COLOR_GOLD, 100);
 
 bool watchButtonPressed = false; // button press toggle
-bool bootingUp = false; // booting animation toggle
-chrono::high_resolution_clock::time_point bootStartTime;
+bool bootingUp = false;          // booting animation toggle
+bool bootingUpAnimationToggled = false;
+chrono::high_resolution_clock::time_point buttonPressStartTime, bootStartTime;
 
 void renderWatchStrap()
 {
@@ -19,8 +20,11 @@ void renderWatchStrap()
 
 void renderWatchBody()
 {
-    watchBody.setColor(COLOR_GRAY);
+    watchBody.setColor(COLOR_BLACK_4);
     watchBody.drawRoundedRect_Fill(WATCH_BODY_WIDTH, WATCH_BODY_HEIGHT, WATCH_BODY_ROUND_RADIUS);
+
+    watchBody.setColor(COLOR_BLACK);
+    watchBody.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
 }
 
 void renderWatchDial()
@@ -30,17 +34,17 @@ void renderWatchDial()
 
 void renderWatchButton()
 {
-    GLfloat xVal;
-    GLfloat duration = 100;
-    const GLfloat *easing = EASEINOUT3;
+    GLfloat btnXval = 0;
+    GLfloat buttonPressAnimationDuration = 100;
+    const GLfloat *btnEasing = EASEINOUT5;
     if (watchButtonPressed)
-        xVal = -5;
+        btnXval = -5;
     else
-        xVal = 5;
+        btnXval = 5;
 
     watchButton.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH, WATCH_BUTTON_HEIGHT, WATCH_BUTTON_ROUND_RADIUS);
-    animateTranslate(watchButton, duration, easing, xVal, 0);
 
+    animateTranslate(watchButton, buttonPressAnimationDuration, btnEasing, btnXval, 0);
     // reset button position when release too early
     if (watchButton.anchorX > WATCH_BUTTON_CENTER_X)
     {
@@ -53,11 +57,14 @@ void renderWatchButton()
     if (watchButtonPressed)
     {
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-        chrono::duration<double, milli> pressTime = currentTime - bootStartTime;
+        chrono::duration<double, milli> pressTime = currentTime - buttonPressStartTime;
         if (pressTime.count() >= SYSTEM_BOOT_BUTTON_PRESS_TIME)
         {
+            // Reset button states
+            watchButtonPressed = false;
+            toggleAnimationFlag(watchButton, false, false, false, false, false);
             bootingUp = true;
-            // TODO call the function to start watch booting animation 
+            bootStartTime = chrono::high_resolution_clock::now();
         }
     }
 }
