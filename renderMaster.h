@@ -6,7 +6,8 @@
 #include "renderBackground.h"
 #include "renderLegend.h"
 #include "renderWatch.h"
-#include "renderWatchBootUI.h"
+#include "renderBoot.h"
+#include "renderPowerOff.h"
 #include "renderUI.h"
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
@@ -48,9 +49,9 @@ void renderMaster()
     renderWatchButton(); // Draw the watch button
     renderWatchBody();   // Draw the watch body
 
-
-    // Boot
-    renderWatchBootUI(); // Draw the booting up UI
+    // Boot & Power Off
+    renderBoot(); // Draw the booting up UI
+    // renderPowerOff(); // Draw the power off UI
 
     // UI
     // renderUI_BG();

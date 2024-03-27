@@ -15,12 +15,10 @@ void updateMouse(int x, int y)
     mouse.mouseY = -y + WINDOWS_HEIGHT / 2;
 }
 
-bool inArea(GLint x, GLint y, GLint x1, GLint y1, GLint x2, GLint y2)
+bool inArea(GLint x, GLint y, GLfloat *areaX, GLfloat *areaY)
 {
-    if (x >= x1 && x <= x2 && y >= y1 && y <= y2)
-    {
+    if (x >= areaX[0] && x <= areaX[1] && y >= areaY[0] && y <= areaY[1])
         return true;
-    }
     return false;
 }
 
@@ -35,12 +33,12 @@ void mouseControl(GLint button, GLint state, int x, int y)
         if (state == GLUT_DOWN)
         {
             // Define button area
-            GLfloat x1 = WATCH_BODY_WIDTH / 2;
-            GLfloat x2 = (WATCH_BODY_WIDTH / 2) + WATCH_BUTTON_WIDTH / 2;
-            GLfloat y1 = WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2;
-            GLfloat y2 = WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2;
+            GLfloat btnX[2] = {WATCH_BODY_WIDTH / 2,
+                               (WATCH_BODY_WIDTH / 2) + WATCH_BUTTON_WIDTH / 2};
+            GLfloat btnY[2] = { WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2,
+                                WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2 };
             //    Check if mouse is within the button
-            if (inArea(mouse.mouseX, mouse.mouseY, x1, y1, x2, y2))
+            if (inArea(mouse.mouseX, mouse.mouseY, btnX, btnY))
             {
                 // Check if the button is animating
                 if (!isBusyAnimating(watchButton))

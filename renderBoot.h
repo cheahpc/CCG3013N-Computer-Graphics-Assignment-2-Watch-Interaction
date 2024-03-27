@@ -5,7 +5,8 @@ Object bootUI_BG = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);
 Object bootUI_Logo = Object(-170, -100, 0.55, 0, COLOR_THEME_GREEN, 0);
 Object bootUI_Indicator = Object((-UI_SCREEN_WIDTH / 2) + 40, (UI_SCREEN_HEIGHT / 2) - 40, 1, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
 Object bootUI_BootingText = Object(-130, -50, 0.20, 0, COLOR_WHITE, 100);
-void renderWatchBootUI()
+
+void renderBoot()
 {
     // Booting up animation
     // BG
@@ -41,6 +42,7 @@ void renderWatchBootUI()
         {
             // Boot completed
             bootingUp = false;
+            systemRunning = true;
             cout << "Boot completed..." << endl;
         }
         else
