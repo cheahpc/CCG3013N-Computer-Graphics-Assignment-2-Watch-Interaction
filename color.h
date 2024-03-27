@@ -26,4 +26,6 @@ const float COLOR_SILVER[] = {0.75, 0.75, 0.75};
 const float COLOR_GOLD[] = {1.0, 0.84, 0.0};
 const float COLOR_BRONZE[] = {0.8, 0.5, 0.2};
 
+const float COLOR_THEME_GREEN_1[] = {0.117647, 0.639216, 0.4};
+
 #endif

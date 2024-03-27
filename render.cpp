@@ -12,9 +12,9 @@
 #include "object.cpp"
 #include "renderdebug.cpp"
 
-// Object  anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
+// anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 Object obj1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
-Object obj2 = Object(100, 100, 1, -45, COLOR_BLUE, 0);
+Object obj2 = Object(100, 100, 1, -45, COLOR_GREEN, 100);
 Object obj3 = Object();
 
 GLfloat xVal, yVal, rotateVal, scaleVal, opacityVal, orbitVal;
@@ -31,29 +31,34 @@ void renderInit()
     gluOrtho2D(-(WINDOWS_WIDTH / 2), WINDOWS_WIDTH / 2, -(WINDOWS_HEIGHT / 2), WINDOWS_HEIGHT / 2); // Set canvas to windows width and height.
 }
 
-Object backgroundObj1 = Object();
+Object bg = Object();
 void renderBackground()
 {
+    // Coordinates
+    GLint x[4] = {-WINDOWS_WIDTH / 2, -WINDOWS_WIDTH / 2, WINDOWS_WIDTH / 2, WINDOWS_WIDTH / 2};
+    GLint y[4] = {-WINDOWS_HEIGHT / 2, WINDOWS_HEIGHT / 2, WINDOWS_HEIGHT / 2, -WINDOWS_HEIGHT / 2};
+
     // Draw the background
-
-
-
+    bg.setColor(COLOR_THEME_GREEN_1, 100);
+    bg.drawQuad_Fill(x, y);
 }
 
 void renderMaster()
 {
     renderInit(); // Initialize the canvas
+    // Background
+    renderBackground(); // Draw the background
 
     // Debugging
-    renderGrid(); // For references only
     // renderDebug(); // For debugging only
 
+    renderGrid(); // For references only
     GLint x[4] = {-10, -10, 10, 10};
     GLint y[4] = {-10, 10, 10, -10};
 
+    obj1.drawCircle_Line(50, 25, 330, 80);
+    obj2.drawPoint(15);
     // obj1.drawQuad_Fill(x, y);
-    obj1.drawCircle_Line(50, 25, 330,80);
-    obj2.drawPoint(10);
 
     if (obj2.anchorX == 100 && obj2.anchorY == 100)
         xVal = yVal = -200;
@@ -74,10 +79,10 @@ void renderMaster()
     else if (obj1.opacity == 20)
         opacityVal = 80;
 
-    // if (obj1.clockWiseFlag)
-    //     orbitVal = 1;
-    // else if (!obj1.clockWiseFlag)
-    //     orbitVal = -1;
+    if (obj1.clockWiseFlag)
+        orbitVal = 1;
+    else if (!obj1.clockWiseFlag)
+        orbitVal = -1;
 
     if (obj1.clockWiseFlag)
         orbitVal = 180;

@@ -36,7 +36,7 @@ void kbControl(unsigned char key, int x, int y)
 		obj1.scale(-scaleStep);
 		break;
 	case 'z':
-		obj2.translateFlag = !obj1.translateFlag;
+		obj2.translateFlag = !obj2.translateFlag;
 		break;
 	case 'x':
 		obj1.rotateFlag = !obj1.rotateFlag;
@@ -62,7 +62,7 @@ void kbControl(unsigned char key, int x, int y)
 		break;
 
 	case 'A':
-		obj2.translate(-translateStep * 10, 0);
+		obj1.translate(-translateStep * 10, 0);
 		break;
 	case 'D':
 		obj1.translate(translateStep * 10, 0);

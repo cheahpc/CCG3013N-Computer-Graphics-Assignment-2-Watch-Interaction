@@ -12,10 +12,13 @@ void renderGrid()
     // Draw the grid
     debugGrid.scaleTo(1);
     debugGrid.translateTo(0, 0);
+    // Sub 10
     debugGrid.setColor(COLOR_SILVER, 100);
     debugGrid.drawGrid(10, 1, 0);
+    // Sub 50
     debugGrid.setColor(COLOR_GRAY, 100);
     debugGrid.drawGrid(50, 1, 0);
+    // Main 100
     debugGrid.setColor(COLOR_BLACK, 100);
     debugGrid.drawGrid(100, 1, 0);
 

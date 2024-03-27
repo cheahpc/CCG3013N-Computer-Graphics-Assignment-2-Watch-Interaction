@@ -177,16 +177,16 @@ Object::~Object()
 void Object::drawPoint(GLfloat size)
 {
 	glStartInit();
-	glPointSize(size * scaleFactor);
+	glPointSize(size );
 	glBegin(GL_POINTS);
-	glVertex2i(this->anchorX, this->anchorY);
+	glVertex2i(0, 0);
 	glEndReset();
 }
 
 void Object::drawPoint(GLint x, GLint y, GLfloat size)
 {
 	glStartInit();
-	glPointSize(size * scaleFactor);
+	glPointSize(size );
 	glBegin(GL_POINTS);
 	glVertex2i(x, y);
 	glEndReset();
