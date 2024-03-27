@@ -7,6 +7,7 @@
 
 Object debugGrid = Object();
 Object debug = Object();
+
 void renderGrid()
 {
     // Draw the grid
@@ -55,6 +56,56 @@ void renderDebug()
     // debug.drawRoundedRect_Fill(200, 200, 40);
     // debug.drawRoundedRect_Line(200, 200, 40, 40);
     // debug.drawText("Hello World", 20);
+}
+
+Object debugObj1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
+Object debugObj2 = Object(100, 100, 1, -45, COLOR_GREEN, 100);
+GLfloat xVal, yVal, rotateVal, scaleVal, opacityVal, orbitVal;
+void renderDebugControlTest()
+{
+    renderGrid(); // For references only
+    GLint x[4] = {-10, -10, 10, 10};
+    GLint y[4] = {-10, 10, 10, -10};
+
+    debugObj1.drawCircle_Line(50, 25, 330, 80);
+    // debugObj1.drawQuad_Fill(x, y);
+    debugObj2.drawPoint(10);
+
+    if (debugObj2.anchorX == 100 && debugObj2.anchorY == 100)
+        xVal = yVal = -200;
+    else if (debugObj2.anchorX == -100 && debugObj2.anchorY == -100)
+        xVal = yVal = 200;
+    if (debugObj1.orientation == -45)
+        rotateVal = 90;
+    else if (debugObj1.orientation == 45)
+        rotateVal = -90;
+    if (debugObj1.scaleFactor == 1)
+        scaleVal = 4;
+    else if (debugObj1.scaleFactor == 5)
+        scaleVal = -4;
+
+    if (debugObj1.opacity == 100)
+        opacityVal = -80;
+    else if (debugObj1.opacity == 20)
+        opacityVal = 80;
+
+    if (debugObj1.clockWiseFlag)
+        orbitVal = 1;
+    else if (!debugObj1.clockWiseFlag)
+        orbitVal = -1;
+
+    if (debugObj1.clockWiseFlag)
+        orbitVal = 180;
+    else if (!debugObj1.clockWiseFlag)
+        orbitVal = -180;
+
+    // animateTranslate(debugObj1, 1000, EASEOUT5, 100, 100);
+    animateTranslate(debugObj2, 1000, EASEOUT5, xVal, yVal);
+    animateTranslate(debugObj1, 1000, EASEOUT5, xVal, yVal);
+    animateRotate(debugObj1, 1000, EASEOUT5, rotateVal);
+    animateScale(debugObj1, 1000, EASEOUT5, scaleVal);
+    animateOpacity(debugObj1, 1000, EASEOUT5, opacityVal);
+    animateOrbit(debugObj1, 1000, EASEINOUT1, debugObj2.anchorX, debugObj2.anchorY, 100, orbitVal);
 }
 
 #endif

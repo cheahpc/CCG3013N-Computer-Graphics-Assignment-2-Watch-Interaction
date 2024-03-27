@@ -218,3 +218,4 @@ void animateOrbit(Object &obj, GLfloat duration, const GLfloat easing[4], GLfloa
         obj.orbitTo(anchorX, anchorY, radius, obj.orbitAngle);
     }
 }
+
