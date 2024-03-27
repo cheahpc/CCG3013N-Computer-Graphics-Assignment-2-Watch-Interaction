@@ -50,7 +50,7 @@ void renderMaster()
     // Background
     renderBackground(); // Draw the background
     renderLegend();     // Draw the legend
-    renderGrid();       // Draw the grid
+    // renderGrid();       // Draw the grid
 
     renderFinish(); // Finish the rendering
 }

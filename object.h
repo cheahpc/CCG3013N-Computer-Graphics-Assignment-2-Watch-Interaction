@@ -36,6 +36,9 @@ public:
 						   GLint x3, GLint y3,
 						   GLfloat thickness);
 	void drawTriangle_Line(const GLint *x, const GLint *y, GLfloat thickness);
+	// Rectangle
+	void drawRect_Fill(GLfloat width, GLfloat height);
+	void drawRect_Line(GLfloat width, GLfloat height, GLfloat thickness);
 	// Quad
 	void drawQuad_Fill(GLint x1, GLint y1,
 					   GLint x2, GLint y2,

@@ -243,6 +243,58 @@ void Object::drawTriangle_Line(const GLint *x, const GLint *y, GLfloat thickness
 }
 #pragma endregion Triangle
 
+#pragma region Rectangle
+
+void Object::drawRect_Fill(GLfloat width, GLfloat height)
+{
+	GLfloat x[2] = {(-width / 2), (width / 2)};
+	GLfloat y[2] = {(-height / 2), (height / 2)};
+	glStartInit(); // Apply settings
+	glBegin(GL_QUADS);
+	glVertex2f(x[0], y[0]);
+	glVertex2f(x[0], y[1]);
+	glVertex2f(x[1], y[1]);
+	glVertex2f(x[1], y[0]);
+	glEndReset();
+}
+
+void Object::drawRect_Line(GLfloat width, GLfloat height, GLfloat thickness)
+{
+	GLfloat outerX[2] = {(-width / 2) - (thickness / 2), (width / 2) + (thickness / 2)};
+	GLfloat outerY[2] = {(-height / 2) - (thickness / 2), (height / 2) + (thickness / 2)};
+	GLfloat innerX[2] = {(-width / 2) + (thickness / 2), (width / 2) - (thickness / 2)};
+	GLfloat innerY[2] = {(-height / 2) + (thickness / 2), (height / 2) - (thickness / 2)};
+	glStartInit(); // Apply settings
+	glBegin(GL_QUADS);
+	// Left Part
+	glVertex2f(outerX[0], outerY[0]);
+	glVertex2f(outerX[0], outerY[1]);
+	glVertex2f(innerX[0], outerY[1]);
+	glVertex2f(innerX[0], outerY[0]);
+
+	// Top Part
+	glVertex2f(innerX[0], innerY[1]);
+	glVertex2f(innerX[0], outerY[1]);
+	glVertex2f(innerX[1], outerY[1]);
+	glVertex2f(innerX[1], innerY[1]);
+
+	// Right Part
+	glVertex2f(innerX[1], outerY[0]);
+	glVertex2f(innerX[1], outerY[1]);
+	glVertex2f(outerX[1], outerY[1]);
+	glVertex2f(outerX[1], outerY[0]);
+
+	// Bottom Part
+	glVertex2f(innerX[0], outerY[0]);
+	glVertex2f(innerX[0], innerY[0]);
+	glVertex2f(innerX[1], innerY[0]);
+	glVertex2f(innerX[1], outerY[0]);
+
+	glEndReset();
+};
+
+#pragma endregion Rectangle
+
 #pragma region Quad
 void Object::drawQuad_Fill(GLint x1, GLint y1,
 						   GLint x2, GLint y2,
