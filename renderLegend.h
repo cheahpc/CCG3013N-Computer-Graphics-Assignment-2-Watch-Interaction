@@ -6,7 +6,6 @@ Object legendHelpText = Object(-700, 160, 0.10, 0, COLOR_THEME_GREEN_DARK_1, 100
 Object legendBg = Object(-650, 0, 1, 0, COLOR_THEME_GREEN_DARK_2, 0);
 Object legendText = Object();
 bool legendShow = false;
-
 void renderLegend()
 {
     // Legend Background
@@ -20,11 +19,11 @@ void renderLegend()
     legendHelpText.drawText("Press 'h' for legend", LEGEND_HELP_TEXT_SIZE);
 
     // 2. Legend Box
-    legendBg.setColor(COLOR_THEME_GREEN_DARK_2);
-    legendBg.drawRoundedRect_Fill(LEGEND_BOX_WIDTH, LEGEND_BOX_HEIGHT, 25);
-
     legendBg.setColor(COLOR_THEME_GREEN_LIGHT_1);
-    legendBg.drawRoundedRect_Line(LEGEND_BOX_WIDTH, LEGEND_BOX_HEIGHT, 25, LEGEND_BOX_OUTLINE_SIZE);
+    legendBg.drawRoundedRect_Line(LEGEND_BOX_WIDTH, LEGEND_BOX_HEIGHT, LEGEND_BOX_ROUND_RADIUS, LEGEND_BOX_OUTLINE_SIZE);
+
+    legendBg.setColor(COLOR_THEME_GREEN_DARK_2);
+    legendBg.drawRoundedRect_Fill(LEGEND_BOX_WIDTH, LEGEND_BOX_HEIGHT, LEGEND_BOX_ROUND_RADIUS);
 
     if (legendShow)
     {

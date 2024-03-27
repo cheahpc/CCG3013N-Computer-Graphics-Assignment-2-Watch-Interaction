@@ -12,6 +12,7 @@
 #include <windows.h>
 
 // custom headers
+#include "system.h"
 #include "dimen.h"
 #include "color.h"
 #include "easing.h"
@@ -19,8 +20,10 @@
 #include "animate.h"
 
 // renders and controls
+#include "control.h"
 #include "renderMaster.h"
 #include "kbControl.h"
+#include "mouseControl.h"
 
 void init()
 {
@@ -42,11 +45,14 @@ void init()
 
 int main()
 {
-	init();						   // Load settings.
-	glutDisplayFunc(renderMaster); // Load render function.
+	init(); // Load settings.
+
+	glutDisplayFunc(renderMaster);	  // Load render function.
+	glutMouseFunc(mouseControl);	  // Enable mouse button function.
+	glutMotionFunc(mouseMoveControl); // Enable mouse move function.
 	// glutKeyboardFunc(kbControl_Debug_Control); // For debugging only
-	glutKeyboardFunc(kbControl_Main);
-	// glutSpecialFunc(kbControl);
+	glutKeyboardFunc(kbControl_Main); // Enable keyboard function.
+	// glutSpecialFunc(kbControl);				   // Enable special key function.
 	glutMainLoop(); // Loop frame forever.
 
 	system("PAUSE");

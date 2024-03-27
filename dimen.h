@@ -19,6 +19,7 @@ const float WINDOWS_INITIAL_POS_Y = SCREEN_CENTER_Y - (WINDOWS_HEIGHT / 2);
 const float LEGEND_HELP_TEXT_SIZE = 2;
 const float LEGEND_BOX_WIDTH = 200;
 const float LEGEND_BOX_HEIGHT = 200;
+const float LEGEND_BOX_ROUND_RADIUS = 25;
 const float LEGEND_BOX_OUTLINE_SIZE = 25;
 
 // Watch

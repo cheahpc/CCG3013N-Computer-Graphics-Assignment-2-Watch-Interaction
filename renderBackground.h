@@ -12,7 +12,7 @@ void renderBackground()
     bg.translateTo(0, 0);
     bg.scaleTo(1);
     bg.setOpacity(100);
-    bg.setColor(COLOR_SILVER);
+    bg.setColor(COLOR_WHITE);
     // Draw the background
     bg.drawQuad_Fill(x, y);
 

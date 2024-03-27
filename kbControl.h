@@ -1,32 +1,5 @@
 #ifndef KBCONTROL_H
 #define KBCONTROL_H
-#include "object.cpp"
-#include "color.h"
-#include "dimen.h"
-#include "renderMaster.h"
-#include "renderLegend.h"
-
-void toggle(Object &obj, bool translate, bool rotate, bool scale, bool opacity, bool orbit)
-{
-    if (translate)
-        obj.translateFlag = !obj.translateFlag;
-    if (rotate)
-        obj.rotateFlag = !obj.rotateFlag;
-    if (scale)
-        obj.scaleFlag = !obj.scaleFlag;
-    if (opacity)
-        obj.opacityFlag = !obj.opacityFlag;
-    if (orbit)
-        obj.orbitFlag = !obj.orbitFlag;
-}
-
-bool isBusy(Object &obj)
-{
-    if (obj.aTranslateState == obj.BUSY || obj.aRotateState == obj.BUSY || obj.aScaleState == obj.BUSY || obj.aOpacityState == obj.BUSY || obj.aOrbitState == obj.BUSY)
-        return true;
-    else
-        return false;
-}
 
 void kbControl_Debug_Control(unsigned char key, int x, int y)
 {
@@ -76,11 +49,11 @@ void kbControl_Main(unsigned char key, int x, int y)
 
         break;
     case 'h': // Help - legend
-        if (!isBusy(legendHelpText) || !isBusy(legendBg))
+        if (!isBusyAnimating(legendHelpText) || !isBusyAnimating(legendBg))
         {
             legendShow = !legendShow;
-            toggle(legendHelpText, true, false, false, true, false);
-            toggle(legendBg, true, false, false, true, false);
+            toggleAnimationFlag(legendHelpText, true, false, false, true, false);
+            toggleAnimationFlag(legendBg, true, false, false, true, false);
         }
         break;
     case 27: // Escape key
