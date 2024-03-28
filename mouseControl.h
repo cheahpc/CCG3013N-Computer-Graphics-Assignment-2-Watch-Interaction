@@ -37,11 +37,14 @@ void mouseControl(GLint button, GLint state, int x, int y)
                                  COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
 
             // Check if mouse is within the complication 4
-            if (inArea(mouse.mouseX, mouse.mouseY, comp4X, comp4Y))
+            if (System.currentScreen == Screen::MAIN)
             {
-                cout << "Complication 4 pressed..." << endl;
-                // Toggle 24Hr format
-                System.is24HrFormat = !System.is24HrFormat;
+                if (inArea(mouse.mouseX, mouse.mouseY, comp4X, comp4Y))
+                {
+                    cout << "Complication 4 pressed..." << endl;
+                    // Toggle 24Hr format
+                    System.is24HrFormat = !System.is24HrFormat;
+                }
             }
         }
         if (state == GLUT_UP)

@@ -75,6 +75,7 @@ void renderMainUI()
         {
             cout << "UI animation triggered..." << endl;
             ObjUI.animState = AnimState::ANIMATING;
+            System.currentScreen = Screen::NONE;
             toggleAnimationFlag(ObjUI.time, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.date, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.dateBox, true, false, false, true, false);
@@ -139,6 +140,7 @@ void renderMainUI()
             {
                 // Reset animation state
                 ObjUI.animState = AnimState::DONE;
+                System.currentScreen = Screen::MAIN;
                 cout << "UI animation completed..." << endl;
 
                 // Reset object

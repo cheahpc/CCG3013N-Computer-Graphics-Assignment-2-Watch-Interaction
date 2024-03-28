@@ -17,11 +17,21 @@ enum class SystemState
     POWERING_OFF_TRIGGERED,
     POWERING_OFF
 };
+
+enum class Screen
+{
+    NONE,
+    MAIN,
+    POWER_OFF_CONFIRMATION,
+    TIMER,
+    ALARM
+};
 struct System
 {
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
     AnimState pwrOnAnimState = AnimState::IDLE;
+    Screen currentScreen = Screen::NONE;
 
     std::chrono::high_resolution_clock::time_point pOnStartTime, pOffStartTime;
 } System;
