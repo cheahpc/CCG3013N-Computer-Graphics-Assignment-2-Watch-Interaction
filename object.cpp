@@ -301,8 +301,6 @@ void Object::drawQuad_Fill(GLint x1, GLint y1,
 						   GLint x4, GLint y4)
 {
 	glStartInit(); // Apply settings
-
-	glPushMatrix();
 	glBegin(GL_QUADS);
 	glVertex2i(x1, y1);
 	glVertex2i(x2, y2);
@@ -380,7 +378,6 @@ void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 	glStartInit();
 	glRotatef(90 - startDegree, 0.0f, 0.0f, 1.0f);
 
-	glPushMatrix();
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= triangleAmount; i++)
 	{
@@ -440,10 +437,11 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 	glVertex2f(x[2], y[0]);
 	glVertex2f(x[2], y[1]);
 	glVertex2f(x[1], y[1]);
-	glEnd();
+	glEndReset();
 
 	// Draw the corners
 	// Top left corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex2f(x[1], y[2]);
 	for (int i = 0; i <= 30; i++)
@@ -452,9 +450,10 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 		glVertex2f(x[1] - (radius * cos(currentAngle)),
 				   y[2] + (radius * sin(currentAngle)));
 	}
-	glEnd();
+	glEndReset();
 
 	// Top right corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex2f(x[2], y[2]);
 	for (int i = 0; i <= 30; i++)
@@ -463,9 +462,10 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 		glVertex2f(x[2] + (radius * cos(currentAngle)),
 				   y[2] + (radius * sin(currentAngle)));
 	}
-	glEnd();
+	glEndReset();
 
 	// Bottom right corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex2f(x[2], y[1]);
 	for (int i = 0; i <= 30; i++)
@@ -474,9 +474,10 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 		glVertex2f(x[2] + (radius * cos(currentAngle)),
 				   y[1] - (radius * sin(currentAngle)));
 	}
-	glEnd();
+	glEndReset();
 
 	// Bottom left corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex2f(x[1], y[1]);
 	for (int i = 0; i <= 30; i++)
@@ -485,7 +486,6 @@ void Object::drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius)
 		glVertex2f(x[1] - (radius * cos(currentAngle)),
 				   y[1] - (radius * sin(currentAngle)));
 	}
-	glEnd();
 	glEndReset();
 }
 
@@ -530,10 +530,11 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 	glVertex2f(x[2], y[0]);
 	glVertex2f(x[2], y[1]);
 	glVertex2f(x[1], y[1]);
-	glEnd();
+	glEndReset();
 
 	// Draw the corners
 	// Top left corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= 30; i++)
 	{
@@ -543,9 +544,10 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 		glVertex2f(x[1] + (innerRadius * cos(currentAngle)),
 				   y[2] - (innerRadius * sin(currentAngle)));
 	}
-	glEnd();
+	glEndReset();
 
 	// Top right corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= 30; i++)
 	{
@@ -555,9 +557,10 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 		glVertex2f(x[2] - (innerRadius * cos(currentAngle)),
 				   y[2] - (innerRadius * sin(currentAngle)));
 	}
-	glEnd();
+	glEndReset();
 
 	// Bottom right corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= 30; i++)
 	{
@@ -567,9 +570,10 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 		glVertex2f(x[2] - (innerRadius * cos(currentAngle)),
 				   y[1] + (innerRadius * sin(currentAngle)));
 	}
-	glEnd();
+	glEndReset();
 
 	// Bottom left corner
+	glStartInit();
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i <= 30; i++)
 	{
@@ -579,8 +583,6 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 		glVertex2f(x[1] + (innerRadius * cos(currentAngle)),
 				   y[1] + (innerRadius * sin(currentAngle)));
 	}
-	glEnd();
-
 	glEndReset();
 }
 
@@ -782,6 +784,7 @@ void Object::glStartInit()
 
 void Object::glEndReset()
 {
+	cout << "End Reset" << endl;
 	glEnd();
 	glPopMatrix();
 	glLoadIdentity();

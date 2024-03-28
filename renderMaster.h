@@ -11,7 +11,6 @@
 #include "renderUI.h"
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
-
 void renderInit()
 {
     // Initialize the rendering context
@@ -54,7 +53,7 @@ void renderMaster()
     // renderPowerOff(); // Draw the power off UI
 
     // UI
-    // renderUI_BG();
+    renderUI_BG();
 
     // Legend
     renderLegend(); // Draw the legend

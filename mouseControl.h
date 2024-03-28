@@ -1,26 +1,6 @@
 #ifndef MOUSECONTROL_H
 #define MOUSECONTROL_H
-struct Mouse
-{
-    GLint mouseX, mouseY;
-    int timerID;
-    chrono::high_resolution_clock::time_point leftDownTime, rightDownTime;
-    bool leftDown, rightDown;
-} mouse;
 
-void updateMouse(int x, int y)
-{
-    // Get mouse position, convert to canvas position
-    mouse.mouseX = x - WINDOWS_WIDTH / 2;
-    mouse.mouseY = -y + WINDOWS_HEIGHT / 2;
-}
-
-bool inArea(GLint x, GLint y, GLfloat *areaX, GLfloat *areaY)
-{
-    if (x >= areaX[0] && x <= areaX[1] && y >= areaY[0] && y <= areaY[1])
-        return true;
-    return false;
-}
 
 void mouseControl(GLint button, GLint state, int x, int y)
 {
@@ -45,9 +25,11 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 {
                     cout << "Watch button pressed..." << endl;
                     mouse.leftDown = true;
-                    watchButtonPressed = true;
+                    // watchButtonPressed = true;
+                    watchBtn.isDown = true;
                     toggleAnimationFlag(watchButton, true, false, false, false, false);
-                    buttonPressStartTime = chrono::high_resolution_clock::now(); // Catch the start time
+                    // buttonPressStartTime = chrono::high_resolution_clock::now(); // Catch the start time
+                    watchBtn.downTime = chrono::high_resolution_clock::now();
                 }
             }
         }
@@ -55,7 +37,8 @@ void mouseControl(GLint button, GLint state, int x, int y)
         {
             // Reset button state
             mouse.leftDown = false;
-            watchButtonPressed = false;
+            // watchButtonPressed = false;
+            watchBtn.isDown = false;
             toggleAnimationFlag(watchButton, true, false, false, false, false);
             cout << "Watch button released..." << endl;
         }

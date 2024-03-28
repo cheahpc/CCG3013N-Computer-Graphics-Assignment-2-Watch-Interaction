@@ -22,18 +22,21 @@ void renderBoot()
     // Booting up Text
     GLfloat bootingUpTextSize = 5;
 
-    if (bootingUp)
+    // if (bootingUp)
+    if (sys.poweringUp)
     {
         bootUI_BG.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
         bootUI_Indicator.drawCircle_Fill(10, 0, 360);
         bootUI_Logo.drawText("OppsOS", 5);
         // Enable animations for first time
-        if (!bootingUpAnimationToggled)
+        // if (!bootingUpAnimationToggled)
+        if (!sys.poweringUpAnimation)
         {
             toggleAnimationFlag(bootUI_BG, false, false, false, true, false);
             toggleAnimationFlag(bootUI_Indicator, false, false, false, true, false);
             toggleAnimationFlag(bootUI_Logo, true, false, false, true, false);
-            bootingUpAnimationToggled = true;
+            // bootingUpAnimationToggled = true;
+            bootingUpAnimationToggled = sys.poweringUpAnimation = true;
         }
 
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
@@ -41,8 +44,13 @@ void renderBoot()
         if (bootTime.count() >= SYSTEM_BOOT_TIME)
         {
             // Boot completed
-            bootingUp = false;
-            systemRunning = true;
+            // bootingUp = false;
+            // systemRunning = true;
+            // bootingUpAnimationToggled = false;
+
+            sys.poweringUp = false;
+            sys.isOn = true;
+            sys.poweringUpAnimation = false;
             cout << "Boot completed..." << endl;
         }
         else
