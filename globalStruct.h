@@ -19,6 +19,7 @@ enum class SystemState
 };
 struct System
 {
+    bool is24HrFormat = true;
     SystemState state = SystemState::OFF;
     AnimState pwrOnAnimState = AnimState::IDLE;
 
@@ -53,18 +54,19 @@ struct Watch_Object
 
 struct UI_Object
 {
-    Object bg = Object(0, 0, 1, 0, COLOR_THEME_GREEN_LIGHT_1, 20);
-    Object boot = Object(0, 0, 1, 0, COLOR_BLACK, 100);
-    Object powerOff = Object(0, 0, 1, 0, COLOR_BLACK, 100);
+    Object bg = Object();
     Object legend = Object(0, 0, 1, 0, COLOR_BLACK, 100);
-    Object complication1 = Object();
-    Object complication2 = Object();
-    Object complication3 = Object();
-    Object complication4 = Object();
-    Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);
-    Object date = Object(-70, 20, 0.2, 0, COLOR_WHITE, 0);
+    Object complication1 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication2 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication3 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication4 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
 
-    chrono::high_resolution_clock::time_point uiAnimationStartTime;
+    Object comp4Text = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);
+    Object dateBox = Object(43, 20, 0.5, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object date = Object(-70, 10, 0.2, 0, COLOR_THEME_GREEN_DARK_3, 0);
+
+    chrono::high_resolution_clock::time_point animStartTime;
 
     AnimState animState = AnimState::IDLE;
 
@@ -83,8 +85,8 @@ struct Powering_On_Object
     Object logo = Object(-170, -100, 0.55, 0, COLOR_THEME_GREEN, 0);
     Object indicator = Object((-UI_SCREEN_WIDTH / 2) + 40, (UI_SCREEN_HEIGHT / 2) - 40, 1, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object loadingText = Object(-130, -50, 0.20, 0, COLOR_WHITE, 100);
-    Object loadingRing1 = Object(0, 0, 1, 0, COLOR_THEME_GREEN, 100);
-    Object loadingRing1_null = Object(0, 0);
+    Object loadingRing = Object(0, 0, 1, 0, COLOR_THEME_GREEN, 100);
+    Object loadingRing_Null = Object(0, 0);
 
     AnimState state = AnimState::IDLE;
 } ObjPowerOn;
@@ -100,14 +102,6 @@ struct Powering_Off_Object
     Object separatorLineHorizontal = Object();
     Object separatorLineVertical = Object();
 
-    // AnimState state = AnimState::IDLE;
-    struct State
-    {
-        bool isTriggered = false;
-        bool confirmDiagAnimStarted = false;
-        bool confirmDiagAnimEnded = false;
-        bool isPoweringOff = false;
-        bool isPoweringOffAnimation = false;
-        chrono::high_resolution_clock::time_point poweringOffStartTime;
-    } State;
+    AnimState state = AnimState::IDLE;
+
 } ObjPowerOff;

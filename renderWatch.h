@@ -58,19 +58,9 @@ void renderWatchButton()
 
             // Check current system state
             if (System.state == SystemState::ON)
-            {
-                // Power off
-                cout << "Power off triggered..." << endl;
                 System.state = SystemState::POWERING_OFF_TRIGGERED;
-                System.pOffStartTime = chrono::high_resolution_clock::now();
-            }
             else if (System.state == SystemState::OFF)
-            {
-                // Power on
-                cout << "Power on triggered..." << endl;
                 System.state = SystemState::POWERING_ON;
-                System.pOnStartTime = chrono::high_resolution_clock::now();
-            }
         }
     }
 }

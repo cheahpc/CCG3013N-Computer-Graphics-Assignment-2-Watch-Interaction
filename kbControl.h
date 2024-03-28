@@ -58,17 +58,21 @@ void kbControl_Main(unsigned char key, int x, int y)
         break;
     case 'q': // Testing
         // ---- Test Power On Animation
-        System.state = SystemState::POWERING_ON;
-        System.pOnStartTime = chrono::high_resolution_clock::now();
+        // System.state = SystemState::POWERING_ON;
 
         // ---- Test After Power On Animation
+        System.state = SystemState::ON;
+        ObjUI.animState = AnimState::IDLE;
 
         break;
 
     case 'w': // Testing
-              // ---- Test Power Off Animation
-        System.state = SystemState::POWERING_OFF_TRIGGERED;
-        System.pOffStartTime = chrono::high_resolution_clock::now();
+
+        //   ---- Test Power Off Animation
+        // System.state = SystemState::POWERING_OFF_TRIGGERED;
+
+        // ---- Test After Power On Animation
+        System.state = SystemState::ON;
 
         break;
     case 27: // Escape key

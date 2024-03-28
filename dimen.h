@@ -48,6 +48,19 @@ const float UI_SCREEN_WIDTH = WATCH_BODY_WIDTH - 40;
 const float UI_SCREEN_HEIGHT = WATCH_BODY_HEIGHT - 40;
 const float UI_SCREEN_ROUND_RADIUS = WATCH_BODY_ROUND_RADIUS - (WATCH_BODY_WIDTH - UI_SCREEN_WIDTH) / 2;
 
+// - DateTime
+const float DATE_BOX_WIDTH = 500;
+const float DATE_BOX_HEIGHT = 100;
+const float DATE_BOX_ROUND_RADIUS = 10;
+
+// - Complication
+const float COMPLICATION_RADIUS = 40;
+const float COMPLICATION_X_POS = -UI_SCREEN_WIDTH / 2 + COMPLICATION_RADIUS + 20;
+const float COMPLICATION_Y_POS_1 = UI_SCREEN_HEIGHT / 8 * 3;
+const float COMPLICATION_Y_POS_2 = UI_SCREEN_HEIGHT / 8 * 1;
+const float COMPLICATION_Y_POS_3 = -UI_SCREEN_HEIGHT / 8 * 1;
+const float COMPLICATION_Y_POS_4 = -UI_SCREEN_HEIGHT / 8 * 3;
+
 // - Powering On
 
 // - Powering Off

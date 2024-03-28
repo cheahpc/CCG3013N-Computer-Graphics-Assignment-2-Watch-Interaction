@@ -28,21 +28,20 @@ void renderPowerOff()
         ObjPowerOff.bg.drawRoundedRect_Fill(PO_CONFIRM_DIAG_WIDTH, PO_CONFIRM_DIAG_HEIGHT, PO_CONFIRM_DIAG_ROUND_RADIUS);
 
         // Initiate animation
-        if (!ObjPowerOff.State.confirmDiagAnimStarted)
-        {
-            ObjPowerOff.State.confirmDiagAnimStarted = true;
-            ObjPowerOff.State.confirmDiagAnimEnded = false;
-            // toggle animation
-            toggleAnimationFlag(ObjPowerOff.overlay, false, false, false, true, false);
-            toggleAnimationFlag(ObjPowerOff.bg, true, false, false, true, false);
-        }
+        //     if (!ObjPowerOff.State.confirmDiagAnimStarted)
+        //     {
+        //         ObjPowerOff.State.confirmDiagAnimStarted = true;
+        //         ObjPowerOff.State.confirmDiagAnimEnded = false;
+        //         toggleAnimationFlag(ObjPowerOff.overlay, false, false, false, true, false);
+        //         toggleAnimationFlag(ObjPowerOff.bg, true, false, false, true, false);
+        //     }
 
-        if (!ObjPowerOff.State.confirmDiagAnimEnded)
-        {
-            animateOpacity(ObjPowerOff.overlay, po_OverlayDuration, po_OverlayEasing, po_OverlayOpacity);
-            animateOpacity(ObjPowerOff.bg, po_BGDuration, po_BGEasing, po_BGOpacity);
-            animateTranslate(ObjPowerOff.bg, po_BGDuration, po_BGEasing, 0, po_BGTranslateYVal);
-        }
+        //     if (!ObjPowerOff.State.confirmDiagAnimEnded)
+        //     {
+        //         animateOpacity(ObjPowerOff.overlay, po_OverlayDuration, po_OverlayEasing, po_OverlayOpacity);
+        //         animateOpacity(ObjPowerOff.bg, po_BGDuration, po_BGEasing, po_BGOpacity);
+        //         animateTranslate(ObjPowerOff.bg, po_BGDuration, po_BGEasing, 0, po_BGTranslateYVal);
+        //     }
     }
     else if (System.state == SystemState::POWERING_OFF)
     {
