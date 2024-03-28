@@ -60,13 +60,9 @@ string getAMPM()
 
     stringstream ampm;
     if (local_time->tm_hour >= 12)
-    {
         ampm << "PM";
-    }
     else
-    {
         ampm << "AM";
-    }
     return ampm.str();
 }
 struct Mouse
