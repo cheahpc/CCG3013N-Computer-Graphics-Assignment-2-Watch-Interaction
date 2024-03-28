@@ -13,12 +13,8 @@ bool systemRunning = false;                // system running toggle
 bool shuttingDown = false;                 // shutting down animation toggle
 bool shuttingDownAnimationToggled = false; // shutting down animation toggle
 
-struct WatchButton {
-    bool isDown = false;
-    std::chrono::high_resolution_clock::time_point downTime;
-} watchBtn;
-
-struct system{
+struct System
+{
     bool poweringUp = false;
     bool poweringDown = false;
     bool isOn = false;
@@ -27,4 +23,4 @@ struct system{
     bool poweringDownAnimation = false;
 
     std::chrono::high_resolution_clock::time_point poweringUpStartTime, poweringDownStartTime;
-} sys;
+} System;

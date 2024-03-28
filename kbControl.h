@@ -6,29 +6,29 @@ void kbControl_Debug_Control(unsigned char key, int x, int y)
     switch (key)
     {
     case 'v':
-        debugObj2.translateFlag = !debugObj2.translateFlag;
+        ObjDebug.ctrlTest2.translateFlag = !ObjDebug.ctrlTest2.translateFlag;
         break;
     case 'r':
-        debugObj1.rotateFlag = !debugObj1.rotateFlag;
+        ObjDebug.ctrlTest1.rotateFlag = !ObjDebug.ctrlTest1.rotateFlag;
         break;
     case 's':
-        debugObj1.scaleFlag = !debugObj1.scaleFlag;
+        ObjDebug.ctrlTest1.scaleFlag = !ObjDebug.ctrlTest1.scaleFlag;
         break;
     case 't':
-        debugObj1.opacityFlag = !debugObj1.opacityFlag;
+        ObjDebug.ctrlTest1.opacityFlag = !ObjDebug.ctrlTest1.opacityFlag;
         break;
     case 'o':
-        debugObj1.orbitFlag = !debugObj1.orbitFlag;
+        ObjDebug.ctrlTest1.orbitFlag = !ObjDebug.ctrlTest1.orbitFlag;
         break;
     case 'c':
-        debugObj1.clockWiseFlag = !debugObj1.clockWiseFlag;
+        ObjDebug.ctrlTest1.clockWiseFlag = !ObjDebug.ctrlTest1.clockWiseFlag;
         break;
     case 'a': // All
-        debugObj2.translateFlag = !debugObj2.translateFlag;
-        debugObj1.rotateFlag = !debugObj1.rotateFlag;
-        debugObj1.scaleFlag = !debugObj1.scaleFlag;
-        debugObj1.opacityFlag = !debugObj1.opacityFlag;
-        debugObj1.orbitFlag = !debugObj1.orbitFlag;
+        ObjDebug.ctrlTest2.translateFlag = !ObjDebug.ctrlTest2.translateFlag;
+        ObjDebug.ctrlTest1.rotateFlag = !ObjDebug.ctrlTest1.rotateFlag;
+        ObjDebug.ctrlTest1.scaleFlag = !ObjDebug.ctrlTest1.scaleFlag;
+        ObjDebug.ctrlTest1.opacityFlag = !ObjDebug.ctrlTest1.opacityFlag;
+        ObjDebug.ctrlTest1.orbitFlag = !ObjDebug.ctrlTest1.orbitFlag;
         break;
 
     case 27: // Escape key
@@ -42,23 +42,24 @@ void kbControl_Main(unsigned char key, int x, int y)
     switch (key)
     {
     case 'g': // Toggle grid
-        if (debugGrid.opacity == 0)
-            debugGrid.opacity = 100;
+        if (ObjDebug.grid.opacity == 0)
+            ObjDebug.grid.opacity = 100;
         else
-            debugGrid.opacity = 0;
+            ObjDebug.grid.opacity = 0;
 
         break;
     case 'h': // Help - legend
-        if (!isBusyAnimating(legendHelpText) || !isBusyAnimating(legendBg))
+        if (!isBusyAnimating(ObjLegend.hintText) || !isBusyAnimating(ObjLegend.bg))
         {
             legendShow = !legendShow;
-            toggleAnimationFlag(legendHelpText, true, false, false, true, false);
-            toggleAnimationFlag(legendBg, true, false, false, true, false);
+            toggleAnimationFlag(ObjLegend.hintText, true, false, false, true, false);
+            toggleAnimationFlag(ObjLegend.bg, true, false, false, true, false);
         }
         break;
     case 'q': // Testing
-        bootingUp = true;
+        System.poweringUp = true;
         bootStartTime = chrono::high_resolution_clock::now();
+        System.poweringUpStartTime = chrono::high_resolution_clock::now();
         break;
     case 27: // Escape key
         exit(0);

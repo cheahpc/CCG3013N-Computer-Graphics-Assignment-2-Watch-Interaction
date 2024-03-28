@@ -12,12 +12,15 @@
 #include <windows.h>
 
 // custom headers7
-#include "system.h"
 #include "dimen.h"
 #include "color.h"
 #include "easing.h"
 #include "object.cpp"
 #include "animate.h"
+
+// Structs
+#include "globalSystemStruct.h"
+#include "globalObjectStruct.h"
 
 // renders and controls
 #include "control.h"

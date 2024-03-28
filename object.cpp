@@ -784,7 +784,6 @@ void Object::glStartInit()
 
 void Object::glEndReset()
 {
-	cout << "End Reset" << endl;
 	glEnd();
 	glPopMatrix();
 	glLoadIdentity();

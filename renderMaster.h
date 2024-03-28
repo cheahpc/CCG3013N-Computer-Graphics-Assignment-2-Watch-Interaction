@@ -3,10 +3,10 @@
 
 // Renders
 #include "renderdebug.h"
-#include "renderBackground.h"
+#include "renderBackdrop.h"
 #include "renderLegend.h"
 #include "renderWatch.h"
-#include "renderBoot.h"
+#include "renderPowerOn.h"
 #include "renderPowerOff.h"
 #include "renderUI.h"
 
@@ -39,7 +39,7 @@ void renderMaster()
     // renderDebug(); // For debugging only
     // renderDebugControlTest(); // For debugging only
 
-    // Background
+    // UI
     renderBackground(); // Draw the background
 
     // Watch
@@ -48,12 +48,14 @@ void renderMaster()
     renderWatchButton(); // Draw the watch button
     renderWatchBody();   // Draw the watch body
 
-    // Boot & Power Off
-    renderBoot(); // Draw the booting up UI
-    // renderPowerOff(); // Draw the power off UI
+    // Power On
+    renderPowerOn(); // Draw the booting up UI
 
     // UI
     renderUI_BG();
+
+// Power Off
+    // renderPowerOff(); // Draw the power off UI
 
     // Legend
     renderLegend(); // Draw the legend

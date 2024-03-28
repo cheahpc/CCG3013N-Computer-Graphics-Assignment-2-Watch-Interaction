@@ -21,15 +21,16 @@ void mouseControl(GLint button, GLint state, int x, int y)
             if (inArea(mouse.mouseX, mouse.mouseY, btnX, btnY))
             {
                 // Check if the button is animating
-                if (!isBusyAnimating(watchButton))
+                if (!isBusyAnimating(ObjWatch.button))
                 {
-                    cout << "Watch button pressed..." << endl;
                     mouse.leftDown = true;
+                    // !remove after this
+                    cout << "Watch button pressed..." << "mouse.leftDown = " << mouse.leftDown << endl;
                     // watchButtonPressed = true;
-                    watchBtn.isDown = true;
-                    toggleAnimationFlag(watchButton, true, false, false, false, false);
+                    ObjWatch.Button.isDown = true;
+                    toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
                     // buttonPressStartTime = chrono::high_resolution_clock::now(); // Catch the start time
-                    watchBtn.downTime = chrono::high_resolution_clock::now();
+                    ObjWatch.Button.downTime = chrono::high_resolution_clock::now();
                 }
             }
         }
@@ -38,8 +39,8 @@ void mouseControl(GLint button, GLint state, int x, int y)
             // Reset button state
             mouse.leftDown = false;
             // watchButtonPressed = false;
-            watchBtn.isDown = false;
-            toggleAnimationFlag(watchButton, true, false, false, false, false);
+            ObjWatch.Button.isDown = false;
+            toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
             cout << "Watch button released..." << endl;
         }
         break;
