@@ -72,7 +72,12 @@ void kbControl_Main(unsigned char key, int x, int y)
         // System.state = SystemState::POWERING_OFF_TRIGGERED;
 
         // ---- Test After Power On Animation
-        System.state = SystemState::ON;
+        // System.state = SystemState::ON;
+
+        // ---- Test After Power Off Animation
+
+        // ---- Test complication 4
+        System.is24HrFormat = !System.is24HrFormat;
 
         break;
     case 27: // Escape key

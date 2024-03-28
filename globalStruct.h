@@ -19,7 +19,7 @@ enum class SystemState
 };
 struct System
 {
-    bool is24HrFormat = true;
+    bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
     AnimState pwrOnAnimState = AnimState::IDLE;
 
@@ -54,14 +54,15 @@ struct Watch_Object
 
 struct UI_Object
 {
-    Object bg = Object();
+    Object bg = Object(0, 0, 1, 0, COLOR_THEME_GREEN_DARK_1, 100);
     Object legend = Object(0, 0, 1, 0, COLOR_BLACK, 100);
     Object complication1 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object complication2 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object complication3 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object complication4 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
 
-    Object comp4Text = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object comp4Text = Object(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS, 0.2, 0, COLOR_WHITE, 0);
+
     Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);
     Object dateBox = Object(43, 20, 0.5, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object date = Object(-70, 10, 0.2, 0, COLOR_THEME_GREEN_DARK_3, 0);

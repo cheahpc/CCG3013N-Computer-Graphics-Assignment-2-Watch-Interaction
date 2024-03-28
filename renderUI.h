@@ -11,7 +11,7 @@ void renderMainUI()
     if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED)
     {
         // ---- Variables
-        float ui_AnimTotalDuration = 3000;
+        float ui_AnimTotalDuration = 5000;
 
         // Complications
         float comp1StartTime = 0;
@@ -19,17 +19,32 @@ void renderMainUI()
         float comp3StartTime = 0;
         float comp4StartTime = 0;
 
-        float comp1Duration = 3000;
-        float comp2Duration = 3000;
-        float comp3Duration = 3000;
-        float comp4Duration = 3000;
+        float comp4TextStartTime = 2000;
+
+        float comp1Duration = 2000;
+        float comp2Duration = 2000;
+        float comp3Duration = 2000;
+        float comp4Duration = 2000;
+
+        float comp4TextDuration = 3000;
 
         float comp1YTranslateVal = COMPLICATION_Y_POS_1;
         float comp2YTranslateVal = COMPLICATION_Y_POS_2;
         float comp3YTranslateVal = COMPLICATION_Y_POS_3;
         float comp4YTranslateVal = COMPLICATION_Y_POS_4;
 
-        const float *comp1Easing = EASEOUT1;
+        const float *comp1Easing = EASEOUT4;
+        const float *comp4Easing = EASEOUT1;
+
+        const float *comp4TextEasing = EASEOUT3;
+
+        string comp4TextStr;
+        if (System.is24HrFormat)
+            comp4TextStr = "24";
+        else
+            comp4TextStr = getAMPM();
+        char hrFormatStr[3];
+        strcpy(hrFormatStr, comp4TextStr.c_str());
 
         // DateTime
         float dateTimeADuration = 2200;
@@ -41,6 +56,8 @@ void renderMainUI()
         strcpy(dateStr, getDate().c_str());
 
         // ---- Drawing
+        ObjUI.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
+
         ObjUI.time.drawText(timeStr, 9);
         ObjUI.dateBox.drawRoundedRect_Fill(DATE_BOX_WIDTH, DATE_BOX_HEIGHT, DATE_BOX_ROUND_RADIUS);
         ObjUI.date.drawText(dateStr, 5);
@@ -49,10 +66,9 @@ void renderMainUI()
         ObjUI.complication1.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication2.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
-        ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 5);
+        ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 4);
 
-        ObjUI.comp4Text.drawText("Complication 4", 3);
-
+        ObjUI.comp4Text.drawText(hrFormatStr, COMP4_TEXT_SIZE);
 
         // Initiate animation
         if (ObjUI.animState == AnimState::IDLE)
@@ -66,6 +82,8 @@ void renderMainUI()
             toggleAnimationFlag(ObjUI.complication2, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication3, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication4, true, false, true, true, false);
+
+            toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
             ObjUI.animStartTime = chrono::high_resolution_clock::now();
         }
         // ---- Animate
@@ -110,8 +128,14 @@ void renderMainUI()
                 animateTranslate(ObjUI.complication4, comp4Duration, comp1Easing, 0, comp4YTranslateVal);
             }
 
+            // Complication 4 Text
+            if (elapsedTime.count() >= comp4TextStartTime)
+            {
+                animateOpacity(ObjUI.comp4Text, comp4TextDuration, comp4TextEasing, 100);
+            }
+
             // (Too long || Animation is done) == End
-            if (elapsedTime.count() >= ui_AnimTotalDuration && (!isBusyAnimating(ObjUI.time) && !isBusyAnimating(ObjUI.date) && !isBusyAnimating(ObjUI.complication1) && !isBusyAnimating(ObjUI.complication2) && !isBusyAnimating(ObjUI.complication3) && !isBusyAnimating(ObjUI.complication4)))
+            if (elapsedTime.count() >= ui_AnimTotalDuration && (!isBusyAnimating(ObjUI.time) && !isBusyAnimating(ObjUI.date) && !isBusyAnimating(ObjUI.complication1) && !isBusyAnimating(ObjUI.complication2) && !isBusyAnimating(ObjUI.complication3) && !isBusyAnimating(ObjUI.complication4) && !isBusyAnimating(ObjUI.comp4Text)))
             {
                 // Reset animation state
                 ObjUI.animState = AnimState::DONE;

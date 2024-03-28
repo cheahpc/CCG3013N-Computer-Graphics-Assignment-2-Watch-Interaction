@@ -27,10 +27,13 @@ string getTimeNow()
 {
     time_t now = time(nullptr);
     tm *local_time = localtime(&now);
-
     stringstream time;
-    time << setfill('0') << setw(2) << local_time->tm_hour;
-    time << ":" << setw(2) << local_time->tm_min;
+    if (!(System.is24HrFormat) && local_time->tm_hour > 12)
+        time << setfill(' ') << setw(2) << local_time->tm_hour - 12;
+    else
+        time << setfill(' ') << setw(2) << local_time->tm_hour;
+    time << ":" << setfill('0') << setw(2) << local_time->tm_min;
+
     return time.str();
 }
 
@@ -40,10 +43,27 @@ string getDate()
     tm *local_time = localtime(&now);
 
     stringstream date, day;
-    date << setfill('0') << setw(2) << local_time->tm_mday;
+    date << setfill(' ') << setw(2) << local_time->tm_mday;
     date << " " << asctime(local_time)[4] << asctime(local_time)[5] << asctime(local_time)[6];
     day << asctime(local_time)[0] << asctime(local_time)[1] << asctime(local_time)[2];
     return date.str() + ", " + day.str();
+}
+
+string getAMPM()
+{
+    time_t now = time(nullptr);
+    tm *local_time = localtime(&now);
+
+    stringstream ampm;
+    if (local_time->tm_hour >= 12)
+    {
+        ampm << "PM";
+    }
+    else
+    {
+        ampm << "AM";
+    }
+    return ampm.str();
 }
 struct Mouse
 {
