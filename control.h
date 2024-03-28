@@ -28,10 +28,14 @@ string getTimeNow()
     time_t now = time(nullptr);
     tm *local_time = localtime(&now);
     stringstream time;
-    if (!(System.is24HrFormat) && local_time->tm_hour > 12)
-        time << setfill(' ') << setw(2) << local_time->tm_hour - 12;
+
+    if (System.is24HrFormat)
+        time << setfill('0') << setw(2) << local_time->tm_hour;
+    else if (!(System.is24HrFormat) && local_time->tm_hour == 0)
+        time << setfill(' ') << setw(2) << local_time->tm_hour + 12;
     else
-        time << setfill(' ') << setw(2) << local_time->tm_hour;
+        time << setfill(' ') << setw(2) << local_time->tm_hour - 12;
+
     time << ":" << setfill('0') << setw(2) << local_time->tm_min;
 
     return time.str();

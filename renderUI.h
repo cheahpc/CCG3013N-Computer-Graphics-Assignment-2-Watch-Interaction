@@ -162,6 +162,7 @@ void renderMainUI()
 }
 
 // TODO 4 complication on the left
+// TODO import draw heart object drawing
 
 // TODO mini analog clock under the digital time display
 // TODO step counter on top of the digital time display
