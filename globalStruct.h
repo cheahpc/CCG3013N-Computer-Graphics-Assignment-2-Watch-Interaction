@@ -1,3 +1,30 @@
+const int SYS_P_ON_TIME = 25000;             // 25 seconds
+const int SYS_P_ON_OFF_BTN_HOLD_TIME = 5000; // 5 seconds
+const int SYS_P_OFF_TIME = 5000;
+
+enum class AnimState
+{
+    IDLE,
+    ANIMATING,
+    DONE
+};
+
+enum class SystemState
+{
+    OFF,
+    ON,
+    POWERING_ON,
+    POWERING_OFF_TRIGGERED,
+    POWERING_OFF
+};
+struct System
+{
+    SystemState state = SystemState::OFF;
+    AnimState pwrOnAnimState = AnimState::IDLE;
+
+    std::chrono::high_resolution_clock::time_point pOnStartTime, pOffStartTime;
+} System;
+
 struct Debug_Object
 {
     Object grid = Object(0, 0, 1, 0, COLOR_BLACK, 0);
@@ -20,7 +47,7 @@ struct Watch_Object
     struct Button
     {
         bool isDown = false;
-        chrono::high_resolution_clock::time_point downTime;
+        chrono::high_resolution_clock::time_point downStartTime;
     } Button;
 } ObjWatch;
 
@@ -37,12 +64,10 @@ struct UI_Object
     Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);
     Object date = Object(-70, 20, 0.2, 0, COLOR_WHITE, 0);
 
+    chrono::high_resolution_clock::time_point uiAnimationStartTime;
 
-    struct DateTime
-    {
-        bool isShow= false;
-        bool isAnimating = false;
-    } DateTime;
+    AnimState animState = AnimState::IDLE;
+
 } ObjUI;
 
 struct Legend_Object
@@ -60,4 +85,29 @@ struct Powering_On_Object
     Object loadingText = Object(-130, -50, 0.20, 0, COLOR_WHITE, 100);
     Object loadingRing1 = Object(0, 0, 1, 0, COLOR_THEME_GREEN, 100);
     Object loadingRing1_null = Object(0, 0);
+
+    AnimState state = AnimState::IDLE;
 } ObjPowerOn;
+
+struct Powering_Off_Object
+{
+    Object overlay = Object(0, 0, 1, 0, COLOR_BLACK, 0);
+    Object bg = Object(0, 70, 1, 0, COLOR_ORANGE, 0);
+    Object tittle = Object();
+    Object message = Object();
+    Object yesText = Object();
+    Object noText = Object();
+    Object separatorLineHorizontal = Object();
+    Object separatorLineVertical = Object();
+
+    // AnimState state = AnimState::IDLE;
+    struct State
+    {
+        bool isTriggered = false;
+        bool confirmDiagAnimStarted = false;
+        bool confirmDiagAnimEnded = false;
+        bool isPoweringOff = false;
+        bool isPoweringOffAnimation = false;
+        chrono::high_resolution_clock::time_point poweringOffStartTime;
+    } State;
+} ObjPowerOff;

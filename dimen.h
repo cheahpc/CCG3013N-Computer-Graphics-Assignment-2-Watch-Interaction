@@ -48,4 +48,11 @@ const float UI_SCREEN_WIDTH = WATCH_BODY_WIDTH - 40;
 const float UI_SCREEN_HEIGHT = WATCH_BODY_HEIGHT - 40;
 const float UI_SCREEN_ROUND_RADIUS = WATCH_BODY_ROUND_RADIUS - (WATCH_BODY_WIDTH - UI_SCREEN_WIDTH) / 2;
 
+// - Powering On
+
+// - Powering Off
+const float PO_CONFIRM_DIAG_WIDTH = 400;
+const float PO_CONFIRM_DIAG_HEIGHT = 200;
+const float PO_CONFIRM_DIAG_ROUND_RADIUS = 25;
+
 #endif

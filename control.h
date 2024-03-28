@@ -34,7 +34,7 @@ string getTimeNow()
     return time.str();
 }
 
-string get_formatted_date()
+string getDate()
 {
     time_t now = time(nullptr);
     tm *local_time = localtime(&now);

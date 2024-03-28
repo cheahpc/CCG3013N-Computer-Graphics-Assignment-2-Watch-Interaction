@@ -57,16 +57,18 @@ void kbControl_Main(unsigned char key, int x, int y)
         }
         break;
     case 'q': // Testing
-
         // ---- Test Power On Animation
-        // System.poweringUp = true;
-        // System.poweringUpStartTime = chrono::high_resolution_clock::now();
+        System.state = SystemState::POWERING_ON;
+        System.pOnStartTime = chrono::high_resolution_clock::now();
 
         // ---- Test After Power On Animation
-        System.poweringUp = false;
-        System.isOn = true;
-        System.poweringUpAnimation = false;
-        cout << "Boot completed..." << endl;
+
+        break;
+
+    case 'w': // Testing
+              // ---- Test Power Off Animation
+        System.state = SystemState::POWERING_OFF_TRIGGERED;
+        System.pOffStartTime = chrono::high_resolution_clock::now();
 
         break;
     case 27: // Escape key

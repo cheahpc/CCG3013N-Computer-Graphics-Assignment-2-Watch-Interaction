@@ -14,20 +14,19 @@ void mouseControl(GLint button, GLint state, int x, int y)
             // Define button area
             GLfloat btnX[2] = {WATCH_BODY_WIDTH / 2,
                                (WATCH_BODY_WIDTH / 2) + WATCH_BUTTON_WIDTH / 2};
-            GLfloat btnY[2] = { WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2,
-                                WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2 };
+            GLfloat btnY[2] = {WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2,
+                               WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2};
             //    Check if mouse is within the button
             if (inArea(mouse.mouseX, mouse.mouseY, btnX, btnY))
             {
+                cout << "Watch button pressed..." << endl;
                 // Check if the button is animating
                 if (!isBusyAnimating(ObjWatch.button))
                 {
                     mouse.leftDown = true;
-                    // !remove after this
-                    cout << "Watch button pressed..." << "mouse.leftDown = " << mouse.leftDown << endl;
                     ObjWatch.Button.isDown = true;
                     toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-                    ObjWatch.Button.downTime = chrono::high_resolution_clock::now();
+                    ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
                 }
             }
         }

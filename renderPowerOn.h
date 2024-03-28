@@ -27,30 +27,31 @@ void renderPowerOn()
     float loadingTextStartTime = 7000;
     float textSize = 5;
 
-    if (System.poweringUp)
+    if (System.state == SystemState::POWERING_ON)
     {
         ObjPowerOn.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
         ObjPowerOn.indicator.drawCircle_Fill(10, 0, 360);
-        ObjPowerOn.logo.drawText("OppsOS", 5);
+        ObjPowerOn.logo.drawText("OppsOS", 7);
         ObjPowerOn.loadingRing1.drawCircle_Line(60, 0, ObjPowerOn.loadingRing1_null.anchorX, 15);
-        if (!System.poweringUpAnimation)
+
+        // Initiate animation
+        if (System.pwrOnAnimState == AnimState::IDLE)
         {
             toggleAnimationFlag(ObjPowerOn.bg, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.indicator, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.logo, true, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.loadingRing1, true, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.loadingRing1_null, true, false, false, false, false);
-            System.poweringUpAnimation = true;
+            System.pwrOnAnimState = AnimState::ANIMATING;
         }
 
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-        chrono::duration<double, milli> bootTime = currentTime - System.poweringUpStartTime;
-        if (bootTime.count() >= SYSTEM_POWER_ON_TIME)
+        chrono::duration<double, milli> bootTime = currentTime - System.pOnStartTime;
+        if (bootTime.count() >= SYS_P_ON_TIME)
         {
             // Boot completed
-            System.poweringUp = false;
-            System.isOn = true;
-            System.poweringUpAnimation = false;
+            System.state = SystemState::ON;
+            System.pwrOnAnimState = AnimState::IDLE;
             cout << "Boot completed..." << endl;
         }
         else

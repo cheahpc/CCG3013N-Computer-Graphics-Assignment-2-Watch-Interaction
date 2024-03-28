@@ -21,8 +21,7 @@
 #include "animate.h"
 
 // Structs
-#include "globalSystemStruct.h"
-#include "globalObjectStruct.h"
+#include "globalStruct.h"
 
 // renders and controls
 #include "control.h"

@@ -49,14 +49,28 @@ void renderWatchButton()
     {
         // Booting up animation
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-        chrono::duration<double, milli> pressTime = currentTime - ObjWatch.Button.downTime;
-        if (pressTime.count() >= SYSTEM_POWER_ON_BUTTON_PRESS_TIME)
+        chrono::duration<double, milli> pressTime = currentTime - ObjWatch.Button.downStartTime;
+        if (pressTime.count() >= SYS_P_ON_OFF_BTN_HOLD_TIME)
         {
             // Reset button states
             ObjWatch.Button.isDown = false;
             toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
-            System.poweringUp = true;
-            System.poweringUpStartTime = chrono::high_resolution_clock::now();
+
+            // Check current system state
+            if (System.state == SystemState::ON)
+            {
+                // Power off
+                cout << "Power off triggered..." << endl;
+                System.state = SystemState::POWERING_OFF_TRIGGERED;
+                System.pOffStartTime = chrono::high_resolution_clock::now();
+            }
+            else if (System.state == SystemState::OFF)
+            {
+                // Power on
+                cout << "Power on triggered..." << endl;
+                System.state = SystemState::POWERING_ON;
+                System.pOnStartTime = chrono::high_resolution_clock::now();
+            }
         }
     }
 }

@@ -4,45 +4,56 @@
 void renderUI_BG()
 {
     // Check if system is on
-    if (System.isOn)
-    {
-        // Draw the background
-    }
 }
 
-void renderTime()
+void renderMainUI()
 {
-    if (System.isOn)
+    if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED)
     {
+        // Complications
+        float comp1Duration = 1500;
+        float comp2Duration = 2000;
+        float comp3Duration = 2500;
+        float comp4Duration = 3000;
+
+        // Todo Animate in complication
+
+        // DateTime
         float dateTimeADuration = 2200;
         const float *dateTimeAEasing = EASEOUT3;
         float dateTimeYTranslateVal = -70;
 
         char timeStr[6], dateStr[12];
         strcpy(timeStr, getTimeNow().c_str());
-        strcpy(dateStr, get_formatted_date().c_str());
+        strcpy(dateStr, getDate().c_str());
 
+        // DateTime
         ObjUI.time.drawText(timeStr, 9);
         ObjUI.date.drawText(dateStr, 5);
-        if (!ObjUI.DateTime.isShow)
+
+        // Initiate animation
+        if (ObjUI.animState == AnimState::IDLE)
         {
-            // Toggle animation flag
+            ObjUI.animState = AnimState::ANIMATING;
             toggleAnimationFlag(ObjUI.time, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.date, true, false, false, true, false);
-
-            ObjUI.DateTime.isShow = true;
-            ObjUI.DateTime.isAnimating = true;
+            ObjUI.uiAnimationStartTime = chrono::high_resolution_clock::now();
         }
 
-        if (ObjUI.DateTime.isAnimating)
+        if (ObjUI.animState == AnimState::ANIMATING)
         {
             // Animate the time and date
+            // DateTime
             animateOpacity(ObjUI.time, dateTimeADuration, dateTimeAEasing, 100);
             animateOpacity(ObjUI.date, dateTimeADuration, dateTimeAEasing, 100);
             animateTranslate(ObjUI.time, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);
             animateTranslate(ObjUI.date, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);
+
+            // Check if animation is done
             if (!isBusyAnimating(ObjUI.time) && !isBusyAnimating(ObjUI.date))
-                ObjUI.DateTime.isAnimating = false;
+            {
+                ObjUI.animState = AnimState::DONE;
+            }
         }
 
         // draw the time
@@ -50,8 +61,7 @@ void renderTime()
 }
 
 // TODO 4 complication on the left
-// TODO digital time display on the right
-// TODO date display under the digital time display
+
 // TODO mini analog clock under the digital time display
 // TODO step counter on top of the digital time display
 // TODO heart rate monitor on top of the digital time display
