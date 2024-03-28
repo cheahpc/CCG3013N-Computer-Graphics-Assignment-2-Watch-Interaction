@@ -26,6 +26,7 @@ void renderWatchDial()
 
 void renderWatchButton()
 {
+    // ---- Variables
     GLfloat btnXval = 0;
     GLfloat buttonPressAnimationDuration = 100;
     const GLfloat *btnEasing = EASEINOUT5;
@@ -34,14 +35,15 @@ void renderWatchButton()
     else
         btnXval = 5;
 
+    // ---- Drawing
     ObjWatch.button.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH, WATCH_BUTTON_HEIGHT, WATCH_BUTTON_ROUND_RADIUS);
-
+    // ---- Animation
     animateTranslate(ObjWatch.button, buttonPressAnimationDuration, btnEasing, btnXval, 0);
+
     // reset button position when release too early
     if (ObjWatch.button.anchorX > WATCH_BUTTON_CENTER_X)
     {
         ObjWatch.button.anchorX = WATCH_BUTTON_CENTER_X;
-        ObjWatch.Button.isDown = false;
         toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
     }
 
