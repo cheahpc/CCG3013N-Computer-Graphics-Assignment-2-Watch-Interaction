@@ -6,7 +6,40 @@
 void renderWatchStrap()
 {
     // Todo add more texture and details
+
+    ObjWatch.strap.translateTo(0, 0);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
+    ObjWatch.strap.setOpacity(100);
     ObjWatch.strap.drawRect_Fill(WATCH_STRAP_WIDTH, WATCH_STRAP_HEIGHT);
+
+    // Shades
+    ObjWatch.strap.setOpacity(40);
+    ObjWatch.strap.translateTo(0, WINDOWS_HEIGHT / 2);
+    ObjWatch.strap.setColor(COLOR_WHITE);
+    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 80), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 50, 50);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
+    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 110), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 80, 35);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
+    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 150), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 120, 15);
+    ObjWatch.strap.setColor(COLOR_WHITE);
+    ObjWatch.strap.translateTo(0, -WINDOWS_HEIGHT / 2);
+    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 80), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 50, 50);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
+    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 110), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 80, 35);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
+    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 150), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 120, 15);
+
+    // Stripes
+    ObjWatch.strap.setColor(COLOR_WHITE);
+    ObjWatch.strap.setOpacity(20);
+
+    // for (int i = -80; i <= 80; i += 20)
+    // {
+    //     ObjWatch.strap.translateTo(i, 0);
+    //     ObjWatch.strap.drawRect_Fill(3, WATCH_STRAP_HEIGHT);
+    // }
+    ObjWatch.strap.translateTo(0, 0);
+    ObjWatch.strap.setColor(COLOR_GOLD);
 }
 
 void renderWatchBody()
