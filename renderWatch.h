@@ -12,7 +12,10 @@ void renderWatchStrap()
 void renderWatchBody()
 {
     // Todo add more texture and details
+    ObjWatch.body.setColor(COLOR_BLACK_4);
     ObjWatch.body.drawRoundedRect_Fill(WATCH_BODY_WIDTH, WATCH_BODY_HEIGHT, WATCH_BODY_ROUND_RADIUS);
+    ObjWatch.body.setColor(COLOR_BLACK);
+    ObjWatch.body.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
 }
 
 void renderWatchDial()
@@ -38,44 +41,24 @@ void renderWatchButton()
     if (ObjWatch.button.anchorX > WATCH_BUTTON_CENTER_X)
     {
         ObjWatch.button.anchorX = WATCH_BUTTON_CENTER_X;
-        // watchButtonPressed = false;
         ObjWatch.Button.isDown = false;
         toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
     }
 
-    // if (watchButtonPressed && !systemRunning)
     if (ObjWatch.Button.isDown)
     {
         // Booting up animation
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
         chrono::duration<double, milli> pressTime = currentTime - ObjWatch.Button.downTime;
-        if (pressTime.count() >= SYSTEM_BOOT_BUTTON_PRESS_TIME)
+        if (pressTime.count() >= SYSTEM_POWER_ON_BUTTON_PRESS_TIME)
         {
             // Reset button states
-            // watchButtonPressed = false;
             ObjWatch.Button.isDown = false;
             toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
-            // bootingUp = true;
             System.poweringUp = true;
-            // bootStartTime = chrono::high_resolution_clock::now();
             System.poweringUpStartTime = chrono::high_resolution_clock::now();
         }
     }
-    // else if (watchButtonPressed && systemRunning)
-    // {
-    // Power off animation
-    // TODO implement power off time
-    // chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-    // chrono::duration<double, milli> pressTime = currentTime - buttonPressStartTime;
-    // if (pressTime.count() >= SYSTEM_SHUTDOWN_BUTTON_PRESS_TIME)
-    // {
-    // Reset button states
-    // watchButtonPressed = false;
-    // toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
-    // shuttingDown = true;
-
-    // }
-    // }
 }
 
 #endif

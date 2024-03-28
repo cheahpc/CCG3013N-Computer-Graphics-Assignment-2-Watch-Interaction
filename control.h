@@ -23,6 +23,28 @@ bool isBusyAnimating(Object &obj)
         return false;
 }
 
+string getTimeNow()
+{
+    time_t now = time(nullptr);
+    tm *local_time = localtime(&now);
+
+    stringstream time;
+    time << setfill('0') << setw(2) << local_time->tm_hour;
+    time << ":" << setw(2) << local_time->tm_min;
+    return time.str();
+}
+
+string get_formatted_date()
+{
+    time_t now = time(nullptr);
+    tm *local_time = localtime(&now);
+
+    stringstream date, day;
+    date << setfill('0') << setw(2) << local_time->tm_mday;
+    date << " " << asctime(local_time)[4] << asctime(local_time)[5] << asctime(local_time)[6];
+    day << asctime(local_time)[0] << asctime(local_time)[1] << asctime(local_time)[2];
+    return date.str() + ", " + day.str();
+}
 struct Mouse
 {
     GLint mouseX, mouseY;

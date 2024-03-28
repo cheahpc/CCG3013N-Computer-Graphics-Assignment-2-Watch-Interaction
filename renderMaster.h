@@ -53,8 +53,9 @@ void renderMaster()
 
     // UI
     renderUI_BG();
+    renderTime(); // Draw the time
 
-// Power Off
+    // Power Off
     // renderPowerOff(); // Draw the power off UI
 
     // Legend

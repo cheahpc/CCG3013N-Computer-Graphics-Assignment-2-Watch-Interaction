@@ -1,7 +1,6 @@
 #ifndef MOUSECONTROL_H
 #define MOUSECONTROL_H
 
-
 void mouseControl(GLint button, GLint state, int x, int y)
 {
     // Get mouse position
@@ -26,10 +25,8 @@ void mouseControl(GLint button, GLint state, int x, int y)
                     mouse.leftDown = true;
                     // !remove after this
                     cout << "Watch button pressed..." << "mouse.leftDown = " << mouse.leftDown << endl;
-                    // watchButtonPressed = true;
                     ObjWatch.Button.isDown = true;
                     toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-                    // buttonPressStartTime = chrono::high_resolution_clock::now(); // Catch the start time
                     ObjWatch.Button.downTime = chrono::high_resolution_clock::now();
                 }
             }
@@ -38,7 +35,6 @@ void mouseControl(GLint button, GLint state, int x, int y)
         {
             // Reset button state
             mouse.leftDown = false;
-            // watchButtonPressed = false;
             ObjWatch.Button.isDown = false;
             toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
             cout << "Watch button released..." << endl;

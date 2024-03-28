@@ -5,39 +5,34 @@ void renderPowerOn()
 {
     // Powering up animation
     // BG
-    GLfloat bgDuration = 1000;
-    const GLfloat *bgEasing = EASEOUT3;
+    float bgDuration = 1000;
+    const float *bgEasing = EASEOUT3;
     // Indicator
-    GLfloat indicatorDuration = 1000;
-    GLfloat indicatorStartTime = bgDuration; // After BG finish
-    const GLfloat *indicatorEasing = EASEOUT3;
+    float indicatorDuration = 1000;
+    float indicatorStartTime = bgDuration; // After BG finish
+    const float *indicatorEasing = EASEOUT3;
 
     // Loading Ring
-    GLfloat loadingRing1Duration = 3000;
-    GLfloat loadingRing1StartTime = bgDuration + 800; // Before logo start
-    const GLfloat *loadingRing1Easing = EASEINOUT1;
+    float loadingRing1Duration = 3000;
+    float loadingRing1StartTime = bgDuration + 800; // Before logo start
+    const float *loadingRing1Easing = EASEINOUT1;
 
     // Logo
-    GLfloat logoTranslateYVal = 120;
-    GLfloat logoDuration = 1000;
-    GLfloat logoStartTime = loadingRing1StartTime + loadingRing1Duration; // After loading ring 1 finish
-    const GLfloat *logoEasing = EASEINOUT2;
+    float logoTranslateYVal = 120;
+    float logoDuration = 1000;
+    float logoStartTime = loadingRing1StartTime + loadingRing1Duration; // After loading ring 1 finish
+    const float *logoEasing = EASEINOUT2;
 
     // Loading text
-    GLfloat loadingTextStartTime = 7000;
-    GLfloat textSize = 5;
+    float loadingTextStartTime = 7000;
+    float textSize = 5;
 
-    // if (bootingUp)
     if (System.poweringUp)
     {
         ObjPowerOn.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
         ObjPowerOn.indicator.drawCircle_Fill(10, 0, 360);
         ObjPowerOn.logo.drawText("OppsOS", 5);
         ObjPowerOn.loadingRing1.drawCircle_Line(60, 0, ObjPowerOn.loadingRing1_null.anchorX, 15);
-        // ObjPowerOn.loadingRing1.drawCircle_Line(40, 0, 333, 15);
-
-        // Enable animations for first time
-        // if (!bootingUpAnimationToggled)
         if (!System.poweringUpAnimation)
         {
             toggleAnimationFlag(ObjPowerOn.bg, false, false, false, true, false);
@@ -45,14 +40,12 @@ void renderPowerOn()
             toggleAnimationFlag(ObjPowerOn.logo, true, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.loadingRing1, true, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.loadingRing1_null, true, false, false, false, false);
-
-            // bootingUpAnimationToggled = true;
-            bootingUpAnimationToggled = System.poweringUpAnimation = true;
+            System.poweringUpAnimation = true;
         }
 
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
         chrono::duration<double, milli> bootTime = currentTime - System.poweringUpStartTime;
-        if (bootTime.count() >= SYSTEM_BOOT_TIME)
+        if (bootTime.count() >= SYSTEM_POWER_ON_TIME)
         {
             // Boot completed
             System.poweringUp = false;

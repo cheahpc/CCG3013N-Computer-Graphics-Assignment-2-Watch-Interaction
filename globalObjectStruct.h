@@ -26,7 +26,7 @@ struct Watch_Object
 
 struct UI_Object
 {
-    Object bg = Object(0, 0, 1, 0, COLOR_BLACK, 100);
+    Object bg = Object(0, 0, 1, 0, COLOR_THEME_GREEN_LIGHT_1, 20);
     Object boot = Object(0, 0, 1, 0, COLOR_BLACK, 100);
     Object powerOff = Object(0, 0, 1, 0, COLOR_BLACK, 100);
     Object legend = Object(0, 0, 1, 0, COLOR_BLACK, 100);
@@ -34,6 +34,15 @@ struct UI_Object
     Object complication2 = Object();
     Object complication3 = Object();
     Object complication4 = Object();
+    Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);
+    Object date = Object(-70, 20, 0.2, 0, COLOR_WHITE, 0);
+
+
+    struct DateTime
+    {
+        bool isShow= false;
+        bool isAnimating = false;
+    } DateTime;
 } ObjUI;
 
 struct Legend_Object
