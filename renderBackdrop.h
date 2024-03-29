@@ -1,7 +1,7 @@
 #ifndef RENDER_BACKGROUND_H
 #define RENDER_BACKGROUND_H
 
-void renderBackground()
+void renderBackdrop()
 {
     ObjBackdrop.bg.translateTo(0, 0);
     ObjBackdrop.bg.setColor(COLOR_THEME_GREEN_LIGHT_3);
@@ -18,17 +18,17 @@ void renderBackground()
     ObjBackdrop.bg.drawCircle_Fill(200, 0, 360);
 
     ObjBackdrop.bg.setColor(COLOR_ORANGE);
-    ObjBackdrop.bg.translateTo(-300,200);
+    ObjBackdrop.bg.translateTo(-300, 200);
     ObjBackdrop.bg.drawCircle_Fill(100, 0, 360);
 
-    ObjBackdrop.bg.translateTo(700,100);
+    ObjBackdrop.bg.translateTo(700, 100);
     ObjBackdrop.bg.drawCircle_Fill(50, 0, 360);
 
     ObjBackdrop.bg.setColor(COLOR_THEME_GREEN);
-    ObjBackdrop.bg.translateTo(700,200);
+    ObjBackdrop.bg.translateTo(700, 200);
     ObjBackdrop.bg.drawCircle_Fill(300, 0, 360);
 
-    ObjBackdrop.bg.translateTo(-700,200);
+    ObjBackdrop.bg.translateTo(-700, 200);
     ObjBackdrop.bg.drawCircle_Fill(400, 0, 360);
 
     // Draw the background shade

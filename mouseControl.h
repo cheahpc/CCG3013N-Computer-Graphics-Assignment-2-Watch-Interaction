@@ -21,12 +21,30 @@ void mouseControl(GLint button, GLint state, int x, int y)
             {
                 cout << "Watch button pressed..." << endl;
                 // Check if the button is animating
-                if (!isBusyAnimating(ObjWatch.button))
+                switch (System.currentScreen)
                 {
-                    mouse.leftDown = true;
-                    ObjWatch.Button.isDown = true;
-                    toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-                    ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
+                case Screen::NONE:
+                case Screen::MAIN:
+                    if (!isBusyAnimating(ObjWatch.button))
+                    {
+                        mouse.leftDown = true;
+                        ObjWatch.Button.isDown = true;
+                        toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
+                        ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
+                    }
+                    break;
+                case Screen::POWER_OFF_CONFIRMATION:
+                    ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
+                    if (!isBusyAnimating(ObjWatch.button))
+                    {
+                        mouse.leftDown = true;
+                        ObjWatch.Button.isDown = true;
+                        toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
+                        ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
+                    }
+                    break;
+                default:
+                    break;
                 }
             }
 
@@ -36,14 +54,34 @@ void mouseControl(GLint button, GLint state, int x, int y)
             GLfloat comp4Y[2] = {COMPLICATION_Y_POS_4 - COMPLICATION_RADIUS,
                                  COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
 
-            // Check if mouse is within the complication 4
             if (System.currentScreen == Screen::MAIN)
             {
+                // Check if mouse is within the complication 4
                 if (inArea(mouse.mouseX, mouse.mouseY, comp4X, comp4Y))
                 {
                     cout << "Complication 4 pressed..." << endl;
                     // Toggle 24Hr format
                     System.is24HrFormat = !System.is24HrFormat;
+                }
+            }
+
+            // Define Yes No area
+            GLfloat yesX[2] = {0, 180};
+            GLfloat noX[2] = {-180, 0};
+            GLfloat yesNoY[2] = {-170, -70};
+
+            // Check if mouse is within the Yes No area
+            if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
+            {
+                if (inArea(mouse.mouseX, mouse.mouseY, yesX, yesNoY))
+                {
+                    cout << "Yes pressed..." << endl;
+                    ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
+                }
+                else if (inArea(mouse.mouseX, mouse.mouseY, noX, yesNoY))
+                {
+                    cout << "No pressed..." << endl;
+                    ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
                 }
             }
         }
@@ -53,7 +91,6 @@ void mouseControl(GLint button, GLint state, int x, int y)
             mouse.leftDown = false;
             ObjWatch.Button.isDown = false;
             toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-            cout << "Watch button released..." << endl;
         }
         break;
     case GLUT_RIGHT_BUTTON:

@@ -85,6 +85,7 @@ void renderWatchButton()
         // Booting up animation
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
         chrono::duration<double, milli> pressTime = currentTime - ObjWatch.Button.downStartTime;
+
         if (pressTime.count() >= SYS_P_ON_OFF_BTN_HOLD_TIME)
         {
             // Reset button states
@@ -93,9 +94,15 @@ void renderWatchButton()
 
             // Check current system state
             if (System.state == SystemState::ON)
+            {
                 System.state = SystemState::POWERING_OFF_TRIGGERED;
+                System.currentScreen = Screen::POWER_OFF_CONFIRMATION;
+            }
             else if (System.state == SystemState::OFF)
+            {
                 System.state = SystemState::POWERING_ON;
+                System.currentScreen = Screen::POWERING_ON;
+            }
         }
     }
 }

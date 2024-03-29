@@ -64,6 +64,12 @@ void kbControl_Main(unsigned char key, int x, int y)
         System.state = SystemState::ON;
         ObjUI.animState = AnimState::IDLE;
 
+        // Test Yes on Power Off Confirmation
+        // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
+
+        // Test No on Power Off Confirmation
+        // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
+
         break;
 
     case 'w': // Testing
@@ -74,10 +80,14 @@ void kbControl_Main(unsigned char key, int x, int y)
         // ---- Test After Power On Animation
         // System.state = SystemState::ON;
 
-        // ---- Test After Power Off Animation
+        // ---- Test Power Off Animation
+        System.state = SystemState::POWERING_OFF_TRIGGERED;
 
         // ---- Test complication 4
-        System.is24HrFormat = !System.is24HrFormat;
+        // System.is24HrFormat = !System.is24HrFormat;
+
+        // Test No on Power Off Confirmation
+        // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
 
         break;
     case 27: // Escape key

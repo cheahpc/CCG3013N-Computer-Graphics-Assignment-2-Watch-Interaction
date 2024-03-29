@@ -68,8 +68,8 @@ const float COMP4_TEXT_Y_POS = -202;
 // - Powering On
 
 // - Powering Off
-const float PO_CONFIRM_DIAG_WIDTH = 400;
-const float PO_CONFIRM_DIAG_HEIGHT = 200;
+const float PO_CONFIRM_DIAG_WIDTH = UI_SCREEN_WIDTH - 50;
+const float PO_CONFIRM_DIAG_HEIGHT = UI_SCREEN_HEIGHT / 1.5;
 const float PO_CONFIRM_DIAG_ROUND_RADIUS = 25;
 
 #endif

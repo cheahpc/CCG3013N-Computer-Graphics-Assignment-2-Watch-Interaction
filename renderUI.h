@@ -1,41 +1,36 @@
 #ifndef RENDER_UI_H
 #define RENDER_UI_H
 
-void renderUI_BG()
-{
-    // Check if system is on
-}
-
 void renderMainUI()
 {
     if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED)
     {
         // ---- Variables
-        float ui_AnimTotalDuration = 5000;
+        float ui_AnimTotalDuration = 2000;
+        const float *ui_OpactEasing = EASEINOUT3;
 
         // Complications
         float comp1StartTime = 0;
-        float comp2StartTime = 0;
-        float comp3StartTime = 0;
-        float comp4StartTime = 0;
+        float comp2StartTime = 200;
+        float comp3StartTime = 400;
+        float comp4StartTime = 600;
 
-        float comp4TextStartTime = 2000;
+        float comp4TextStartTime = 1500;
 
-        float comp1Duration = 2000;
-        float comp2Duration = 2000;
-        float comp3Duration = 2000;
-        float comp4Duration = 2000;
+        float comp1Duration = 1000;
+        float comp2Duration = 1000;
+        float comp3Duration = 1000;
+        float comp4Duration = 1000;
 
-        float comp4TextDuration = 3000;
+        float comp4TextDuration = 1000;
 
-        float comp1YTranslateVal = COMPLICATION_Y_POS_1;
-        float comp2YTranslateVal = COMPLICATION_Y_POS_2;
-        float comp3YTranslateVal = COMPLICATION_Y_POS_3;
-        float comp4YTranslateVal = COMPLICATION_Y_POS_4;
+        float comp1YTranslateVal = 0;
+        float comp2YTranslateVal = -(COMPLICATION_Y_POS_1 - COMPLICATION_Y_POS_2);
+        float comp3YTranslateVal = -(COMPLICATION_Y_POS_1 - COMPLICATION_Y_POS_3);
+        float comp4YTranslateVal = -(COMPLICATION_Y_POS_1 - COMPLICATION_Y_POS_4);
 
-        const float *comp1Easing = EASEOUT4;
-        const float *comp4Easing = EASEOUT1;
-
+        const float *compEasing = EASEOUT4;
+        
         const float *comp4TextEasing = EASEOUT3;
 
         string comp4TextStr;
@@ -47,7 +42,7 @@ void renderMainUI()
         strcpy(hrFormatStr, comp4TextStr.c_str());
 
         // DateTime
-        float dateTimeADuration = 2200;
+        float dateTimeADuration = 2500;
         float dateTimeYTranslateVal = -70;
         const float *dateTimeAEasing = EASEOUT3;
 
@@ -96,44 +91,42 @@ void renderMainUI()
 
             // Animate the time and date
             // DateTime
-            animateOpacity(ObjUI.time, dateTimeADuration, dateTimeAEasing, 100);
-            animateOpacity(ObjUI.date, dateTimeADuration, dateTimeAEasing, 100);
+            animateOpacity(ObjUI.time, dateTimeADuration, ui_OpactEasing, 100);
+            animateOpacity(ObjUI.date, dateTimeADuration, ui_OpactEasing, 100);
             animateTranslate(ObjUI.time, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);
             animateTranslate(ObjUI.date, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);
-            animateOpacity(ObjUI.dateBox, dateTimeADuration, dateTimeAEasing, 100);
+            animateOpacity(ObjUI.dateBox, dateTimeADuration, ui_OpactEasing, 100);
             animateTranslate(ObjUI.dateBox, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);
 
             // Animate the complications
             if (elapsedTime.count() >= comp1StartTime)
             {
-                animateScale(ObjUI.complication1, comp1Duration, comp1Easing, 1);
-                animateOpacity(ObjUI.complication1, comp1Duration, comp1Easing, 100);
-                animateTranslate(ObjUI.complication1, comp1Duration, comp1Easing, 0, comp1YTranslateVal);
+                animateScale(ObjUI.complication1, comp1Duration, compEasing, 1);
+                animateOpacity(ObjUI.complication1, comp1Duration, ui_OpactEasing, 100);
+                animateTranslate(ObjUI.complication1, comp1Duration, compEasing, 0, comp1YTranslateVal);
             }
             if (elapsedTime.count() >= comp2StartTime)
             {
-                animateScale(ObjUI.complication2, comp2Duration, comp1Easing, 1);
-                animateOpacity(ObjUI.complication2, comp2Duration, comp1Easing, 100);
-                animateTranslate(ObjUI.complication2, comp2Duration, comp1Easing, 0, comp2YTranslateVal);
+                animateScale(ObjUI.complication2, comp2Duration, compEasing, 1);
+                animateOpacity(ObjUI.complication2, comp2Duration, ui_OpactEasing, 100);
+                animateTranslate(ObjUI.complication2, comp2Duration, compEasing, 0, comp2YTranslateVal);
             }
             if (elapsedTime.count() >= comp3StartTime)
             {
-                animateScale(ObjUI.complication3, comp3Duration, comp1Easing, 1);
-                animateOpacity(ObjUI.complication3, comp3Duration, comp1Easing, 100);
-                animateTranslate(ObjUI.complication3, comp3Duration, comp1Easing, 0, comp3YTranslateVal);
+                animateScale(ObjUI.complication3, comp3Duration, compEasing, 1);
+                animateOpacity(ObjUI.complication3, comp3Duration, ui_OpactEasing, 100);
+                animateTranslate(ObjUI.complication3, comp3Duration, compEasing, 0, comp3YTranslateVal);
             }
             if (elapsedTime.count() >= comp4StartTime)
             {
-                animateScale(ObjUI.complication4, comp4Duration, comp1Easing, 1);
-                animateOpacity(ObjUI.complication4, comp4Duration, comp1Easing, 100);
-                animateTranslate(ObjUI.complication4, comp4Duration, comp1Easing, 0, comp4YTranslateVal);
+                animateScale(ObjUI.complication4, comp4Duration, compEasing, 1);
+                animateOpacity(ObjUI.complication4, comp4Duration, ui_OpactEasing, 100);
+                animateTranslate(ObjUI.complication4, comp4Duration, compEasing, 0, comp4YTranslateVal);
             }
 
             // Complication 4 Text
             if (elapsedTime.count() >= comp4TextStartTime)
-            {
-                animateOpacity(ObjUI.comp4Text, comp4TextDuration, comp4TextEasing, 100);
-            }
+                animateOpacity(ObjUI.comp4Text, comp4TextDuration, ui_OpactEasing, 100);
 
             // (Too long || Animation is done) == End
             if (elapsedTime.count() >= ui_AnimTotalDuration && (!isBusyAnimating(ObjUI.time) && !isBusyAnimating(ObjUI.date) && !isBusyAnimating(ObjUI.complication1) && !isBusyAnimating(ObjUI.complication2) && !isBusyAnimating(ObjUI.complication3) && !isBusyAnimating(ObjUI.complication4) && !isBusyAnimating(ObjUI.comp4Text)))
@@ -142,25 +135,9 @@ void renderMainUI()
                 ObjUI.animState = AnimState::DONE;
                 System.currentScreen = Screen::MAIN;
                 cout << "UI animation completed..." << endl;
-
-                // Reset object
-                // ObjUI.time.setOpacity(0);
-                // ObjUI.date.setOpacity(0);
-                // ObjUI.time.translateTo(-90, 70);
-                // ObjUI.date.translateTo(-70, 20);
-                // ObjUI.complication1.scaleTo(0);
-                // ObjUI.complication2.scaleTo(0);
-                // ObjUI.complication3.scaleTo(0);
-                // ObjUI.complication4.scaleTo(0);
-                // ObjUI.complication1.setOpacity(0);
-                // ObjUI.complication2.setOpacity(0);
-                // ObjUI.complication3.setOpacity(0);
-                // ObjUI.complication4.setOpacity(0);
             }
         }
-
-        // draw the time
-    }
+    } 
 }
 
 // TODO 4 complication on the left

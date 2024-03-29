@@ -39,8 +39,8 @@ void renderMaster()
     // renderDebug(); // For debugging only
     // renderDebugControlTest(); // For debugging only
 
-    // UI
-    renderBackground(); // Draw the background
+    // Backdrop
+    renderBackdrop(); // Draw the backdrop
 
     // Watch
     renderWatchStrap();
@@ -52,7 +52,6 @@ void renderMaster()
     renderPowerOn(); // Draw the booting up UI
 
     // UI
-    renderUI_BG();
     renderMainUI(); // Draw the time
 
     // Power Off

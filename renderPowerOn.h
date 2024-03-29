@@ -7,28 +7,27 @@ void renderPowerOn()
     if (System.state == SystemState::POWERING_ON)
     {
         // ---- Variables
-        // Powering up animation
-        float bgDuration = 1000;
+        // Easing
         const float *bgEasing = EASEOUT3;
-        // Indicator
-        float indicatorDuration = 1000;
-        float indicatorStartTime = bgDuration; // After BG finish
         const float *indicatorEasing = EASEOUT3;
-
-        // Loading Ring
-        float loadingRing1Duration = 3000;
-        float loadingRing1StartTime = bgDuration + 800; // Before logo start
         const float *loadingRing1Easing = EASEINOUT1;
-
-        // Logo
-        float logoTranslateYVal = 120;
-        float logoDuration = 1000;
-        float logoStartTime = loadingRing1StartTime + loadingRing1Duration; // After loading ring 1 finish
         const float *logoEasing = EASEINOUT2;
 
-        // Loading text
+        // Durations
+        float bgDuration = 1000;
+        float indicatorDuration = 1000;
+        float loadingRing1Duration = 3000;
+        float logoDuration = 1000;
+
+        // Start Times
+        float indicatorStartTime = bgDuration;                              // After BG finish
+        float loadingRing1StartTime = bgDuration + 800;                     // Before logo start
+        float logoStartTime = loadingRing1StartTime + loadingRing1Duration; // After loading ring 1 finish
         float loadingTextStartTime = 7000;
-        float textSize = 5;
+
+        // Translate Values
+        float logoTranslateYVal = 120;
+        float textSize = 3;
 
         // ---- Drawing
         ObjPowerOn.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
@@ -37,24 +36,23 @@ void renderPowerOn()
         ObjPowerOn.loadingRing.drawCircle_Line(60, 0, ObjPowerOn.loadingRing_Null.anchorX, 15);
 
         // Initiate animation
-        if (System.pwrOnAnimState == AnimState::IDLE)
+        if (ObjPowerOn.pOnAnimState == AnimState::IDLE)
         {
             cout << "Power on triggered..." << endl;
-            System.pwrOnAnimState = AnimState::ANIMATING;
+            ObjPowerOn.pOnAnimState = AnimState::ANIMATING;
             toggleAnimationFlag(ObjPowerOn.bg, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.indicator, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.logo, true, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.loadingRing, true, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.loadingRing_Null, true, false, false, false, false);
-            System.pOnStartTime = chrono::high_resolution_clock::now();
-            cout << "Is busy? + " << isBusyAnimating(ObjPowerOn.bg) << endl;
+            ObjPowerOn.pOnStartTime = chrono::high_resolution_clock::now();
         }
         // ---- Animate
-        if (System.pwrOnAnimState == AnimState::ANIMATING)
+        if (ObjPowerOn.pOnAnimState == AnimState::ANIMATING)
         {
             // get elapsed time
             chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-            chrono::duration<double, milli> elapsedTime = currentTime - System.pOnStartTime;
+            chrono::duration<double, milli> elapsedTime = currentTime - ObjPowerOn.pOnStartTime;
 
             // 1 - Boot UI BG
             animateOpacity(ObjPowerOn.bg, logoDuration, logoEasing, 100);
@@ -111,7 +109,7 @@ void renderPowerOn()
             {
                 // Reset animation state
                 System.state = SystemState::ON;
-                System.pwrOnAnimState = AnimState::IDLE;
+                ObjPowerOn.pOnAnimState = AnimState::IDLE;
                 cout << "Boot completed..." << endl;
 
                 // Reset objects

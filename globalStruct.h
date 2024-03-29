@@ -22,18 +22,26 @@ enum class Screen
 {
     NONE,
     MAIN,
+    POWERING_ON,
     POWER_OFF_CONFIRMATION,
+    POWERING_OFF,
     TIMER,
     ALARM
+};
+
+enum class PowerOffConfirmation
+{
+    NONE,
+    YES,
+    NO
 };
 struct System
 {
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
-    AnimState pwrOnAnimState = AnimState::IDLE;
+
     Screen currentScreen = Screen::NONE;
 
-    std::chrono::high_resolution_clock::time_point pOnStartTime, pOffStartTime;
 } System;
 
 struct Debug_Object
@@ -66,10 +74,10 @@ struct UI_Object
 {
     Object bg = Object(0, 0, 1, 0, COLOR_THEME_GREEN_DARK_1, 100);
     Object legend = Object(0, 0, 1, 0, COLOR_BLACK, 100);
-    Object complication1 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
-    Object complication2 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
-    Object complication3 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
-    Object complication4 = Object(COMPLICATION_X_POS, 0, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication1 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication2 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication3 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
+    Object complication4 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
 
     Object comp4Text = Object(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS, 0.2, 0, COLOR_WHITE, 0);
 
@@ -99,20 +107,32 @@ struct Powering_On_Object
     Object loadingRing = Object(0, 0, 1, 0, COLOR_THEME_GREEN, 100);
     Object loadingRing_Null = Object(0, 0);
 
-    AnimState state = AnimState::IDLE;
+    AnimState pOnAnimState = AnimState::IDLE;
+    std::chrono::high_resolution_clock::time_point pOnStartTime;
 } ObjPowerOn;
 
 struct Powering_Off_Object
 {
-    Object overlay = Object(0, 0, 1, 0, COLOR_BLACK, 0);
-    Object bg = Object(0, 70, 1, 0, COLOR_ORANGE, 0);
-    Object tittle = Object();
-    Object message = Object();
-    Object yesText = Object();
-    Object noText = Object();
-    Object separatorLineHorizontal = Object();
-    Object separatorLineVertical = Object();
+    // For confirmation
+    Object bgBlur = Object(0, 0, 1, 0, COLOR_BLACK, 0);
+    Object bg = Object(0, 80, 1, 0, COLOR_BLACK_1, 0);
+    Object title = Object(-140, 180, 0.3, 0, COLOR_WHITE, 0);
+    Object message = Object(-140, 80, 0.2, 0, COLOR_WHITE, 0);
+    Object yesText = Object(60, -50, 0.2, 0, COLOR_RED, 0);
+    Object noText = Object(-115, -50, 0.2, 0, COLOR_WHITE, 0);
+    Object separatorLineHorizontal = Object(0, 10, 1, 0, COLOR_WHITE, 0);
+    Object separatorLineVertical = Object(0, -40, 1, 0, COLOR_WHITE, 0);
 
-    AnimState state = AnimState::IDLE;
+    // For power off
+    Object offBg = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);
+    Object offRing = Object(0, 0, 1, 0, COLOR_THEME_GREEN, 0);
+    Object offRing_Null = Object(360, 0, 1, 0, COLOR_TRANSPARENT, 0);
+    Object offLogo = Object(-170, 20, 0.55, 0, COLOR_THEME_GREEN, 0);
+    Object offText = Object(-90, -50, 0.20, 0, COLOR_WHITE, 0);
+    Object offIndicator = Object((-UI_SCREEN_WIDTH / 2) + 40, (UI_SCREEN_HEIGHT / 2) - 40, 1, 0, COLOR_RED, 0);
 
+    AnimState pOffAnimState = AnimState::IDLE;
+    AnimState pOffOverlayAnimState = AnimState::IDLE;
+    PowerOffConfirmation pOffConfirmation = PowerOffConfirmation::NONE;
+    chrono::high_resolution_clock::time_point pOffStartTime, pOffOverlayStartTime;
 } ObjPowerOff;
