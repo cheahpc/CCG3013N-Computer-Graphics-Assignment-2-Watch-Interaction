@@ -3,16 +3,11 @@
 
 void toggleAnimationFlag(Object &obj, bool translate, bool rotate, bool scale, bool opacity, bool orbit)
 {
-    if (translate)
-        obj.translateFlag = !obj.translateFlag;
-    if (rotate)
-        obj.rotateFlag = !obj.rotateFlag;
-    if (scale)
-        obj.scaleFlag = !obj.scaleFlag;
-    if (opacity)
-        obj.opacityFlag = !obj.opacityFlag;
-    if (orbit)
-        obj.orbitFlag = !obj.orbitFlag;
+    obj.translateFlag = translate;
+    obj.rotateFlag = rotate;
+    obj.scaleFlag = scale;
+    obj.opacityFlag = opacity;
+    obj.orbitFlag = orbit;
 }
 
 bool isBusyAnimating(Object &obj)
@@ -64,6 +59,36 @@ string getAMPM()
     else
         ampm << "AM";
     return ampm.str();
+}
+
+string getHeartRate()
+{
+    default_random_engine rSeed(chrono::system_clock::now().time_since_epoch().count());
+
+    uniform_int_distribution<int> distribution(6000, 18000);
+    int randomInterval = distribution(rSeed);
+
+    chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> elapsedTime = currentTime - ObjUI.heartRateLastSampleTime;
+    if (elapsedTime.count() > ObjUI.heartRateInterval)
+    {
+        ObjUI.heartRateLastSampleTime = currentTime;
+        ObjUI.heartRateInterval = randomInterval;
+
+        uniform_real_distribution<float> distribution(50, 85);
+        int heartRate = distribution(rSeed);
+
+        ObjUI.heartRateValue = heartRate;
+        stringstream hr;
+        hr << heartRate << " bpm";
+        return hr.str();
+    }
+    else
+    {
+        stringstream hr;
+        hr << ObjUI.heartRateValue << " bpm";
+        return hr.str();
+    }
 }
 struct Mouse
 {

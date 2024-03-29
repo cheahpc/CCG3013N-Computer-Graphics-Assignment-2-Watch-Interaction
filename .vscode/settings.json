@@ -34,6 +34,8 @@
 		"vector": "cpp",
 		"fstream": "cpp",
 		"sstream": "cpp",
-		"stdexcept": "cpp"
-	}
+		"stdexcept": "cpp",
+		"string": "cpp"
+	},
+	"cSpell.words": ["EASEINOUT", "EASEOUT", "Opact"]
 }

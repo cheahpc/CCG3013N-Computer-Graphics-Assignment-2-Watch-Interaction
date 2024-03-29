@@ -11,28 +11,18 @@ void mouseControl(GLint button, GLint state, int x, int y)
     case GLUT_LEFT_BUTTON:
         if (state == GLUT_DOWN)
         {
-            // Define button area
+
             GLfloat btnX[2] = {WATCH_BODY_WIDTH / 2,
                                (WATCH_BODY_WIDTH / 2) + WATCH_BUTTON_WIDTH / 2};
             GLfloat btnY[2] = {WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2,
                                WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2};
-            //    Check if mouse is within the button
+            // Button Area
             if (inArea(mouse.mouseX, mouse.mouseY, btnX, btnY))
             {
                 cout << "Watch button pressed..." << endl;
                 // Check if the button is animating
                 switch (System.currentScreen)
                 {
-                case Screen::NONE:
-                case Screen::MAIN:
-                    if (!isBusyAnimating(ObjWatch.button))
-                    {
-                        mouse.leftDown = true;
-                        ObjWatch.Button.isDown = true;
-                        toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-                        ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
-                    }
-                    break;
                 case Screen::POWER_OFF_CONFIRMATION:
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
                     if (!isBusyAnimating(ObjWatch.button))
@@ -43,25 +33,46 @@ void mouseControl(GLint button, GLint state, int x, int y)
                         ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
                     }
                     break;
+                case Screen::NONE:
+                case Screen::MAIN:
+                case Screen::POWERING_ON:
+                case Screen::POWERING_OFF:
                 default:
+                    if (!isBusyAnimating(ObjWatch.button))
+                    {
+                        mouse.leftDown = true;
+                        ObjWatch.Button.isDown = true;
+                        toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
+                        ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
+                    }
+
                     break;
                 }
             }
 
-            // Define comp 4 area
-            GLfloat comp4X[2] = {COMPLICATION_X_POS - COMPLICATION_RADIUS,
-                                 COMPLICATION_X_POS + COMPLICATION_RADIUS};
-            GLfloat comp4Y[2] = {COMPLICATION_Y_POS_4 - COMPLICATION_RADIUS,
-                                 COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
-
             if (System.currentScreen == Screen::MAIN)
             {
-                // Check if mouse is within the complication 4
+                // Comp 4 Area
+                GLfloat comp4X[2] = {COMPLICATION_X_POS - COMPLICATION_RADIUS,
+                                     COMPLICATION_X_POS + COMPLICATION_RADIUS};
+                GLfloat comp4Y[2] = {COMPLICATION_Y_POS_4 - COMPLICATION_RADIUS,
+                                     COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
+
                 if (inArea(mouse.mouseX, mouse.mouseY, comp4X, comp4Y))
                 {
                     cout << "Complication 4 pressed..." << endl;
                     // Toggle 24Hr format
                     System.is24HrFormat = !System.is24HrFormat;
+                }
+
+                // Heart Rate Monitor Area
+                GLfloat hrX[2] = {10, 190};
+                GLfloat hrY[2] = {40, 210};
+                if (inArea(mouse.mouseX, mouse.mouseY, hrX, hrY))
+                {
+                    cout << "Heart Rate Monitor pressed..." << endl;
+                    // Toggle Heart Beat Animation
+                    ObjUI.isHeartBeating = !ObjUI.isHeartBeating;
                 }
             }
 

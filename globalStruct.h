@@ -47,7 +47,7 @@ struct System
 struct Debug_Object
 {
     Object grid = Object(0, 0, 1, 0, COLOR_BLACK, 0);
-    Object test = Object(0, 0, 1, 0, COLOR_RED, 10);
+    Object test = Object(0, 0, 1, 0, COLOR_RED, 80);
     Object ctrlTest1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
     Object ctrlTest2 = Object(100, 100, 1, -45, COLOR_GREEN, 100);
 } ObjDebug;
@@ -85,7 +85,17 @@ struct UI_Object
     Object dateBox = Object(43, 20, 0.5, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object date = Object(-70, 10, 0.2, 0, COLOR_THEME_GREEN_DARK_3, 0);
 
-    chrono::high_resolution_clock::time_point animStartTime;
+    Object heartIcon = Object(50, 170, 1, 0, COLOR_ORANGE, 0);
+    Object heartRate = Object(-20, 100, 0.2, 0, COLOR_WHITE, 0);
+
+    // string heartRateValue = 0;
+    float heartRateInterval = 0;
+    float heartRateValue = 0;
+
+    bool isHeartBeating = false;
+    bool isHeartBeatUp = true;
+
+    chrono::high_resolution_clock::time_point animStartTime, heartRateLastSampleTime;
 
     AnimState animState = AnimState::IDLE;
 

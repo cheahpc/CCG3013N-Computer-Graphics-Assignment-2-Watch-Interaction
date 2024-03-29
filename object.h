@@ -60,6 +60,9 @@ public:
 	void drawRoundedRect_Fill(GLfloat width, GLfloat height, GLfloat radius);
 	void drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius, GLfloat thickness);
 
+	// Heart
+	void drawHeart_Fill(GLfloat size);
+
 	// 2D transformation
 	void translateTo(GLfloat x, GLfloat y);
 	void translateTo(GLfloat *p);

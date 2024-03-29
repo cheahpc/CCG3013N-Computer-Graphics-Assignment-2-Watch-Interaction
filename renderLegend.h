@@ -1,7 +1,6 @@
 #ifndef RENDERLEGEND_H
 #define RENDERLEGEND_H
 
-
 Object legendText = Object();
 bool legendShow = false;
 void renderLegend()
@@ -14,7 +13,7 @@ void renderLegend()
     GLfloat legendBgOpacVal, legendBgTransVal;
 
     // 1. Help Text
-    ObjLegend.hintText.drawText("Press 'h' for legend", LEGEND_HELP_TEXT_SIZE);
+    ObjLegend.hintText.drawText("Press 'h' for help", LEGEND_HELP_TEXT_SIZE);
 
     // 2. Legend Box
     ObjLegend.bg.setColor(COLOR_THEME_GREEN_LIGHT_1);
@@ -49,9 +48,6 @@ void renderLegend()
     animateOpacity(ObjLegend.bg, duration, easing, legendBgOpacVal);
     animateTranslate(ObjLegend.bg, duration, easing, legendBgTransVal, 0);
 
-    // S - boot
-    // Q - close notification
-    // C - show clock
-    // A - toggle always on display (AOD)
+    // Label the buttons and all
 }
 #endif

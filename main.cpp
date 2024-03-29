@@ -5,6 +5,7 @@
 #include <iostream>
 #include <math.h>
 #include <ratio>
+#include <random>
 #include <sstream>
 #include <stdarg.h>
 #include <stdio.h>

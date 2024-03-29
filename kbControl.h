@@ -42,10 +42,7 @@ void kbControl_Main(unsigned char key, int x, int y)
     switch (key)
     {
     case 'g': // Toggle grid
-        if (ObjDebug.grid.opacity == 0)
-            ObjDebug.grid.opacity = 100;
-        else
-            ObjDebug.grid.opacity = 0;
+        ObjDebug.grid.opacity = (ObjDebug.grid.opacity == 100) ? 0 : 100;
 
         break;
     case 'h': // Help - legend
@@ -74,6 +71,13 @@ void kbControl_Main(unsigned char key, int x, int y)
 
     case 'w': // Testing
 
+        // ---- Test Power On Animation
+        // System.state = SystemState::POWERING_ON;
+
+        // ---- Test Heart Beat Animation
+        ObjUI.isHeartBeating = !ObjUI.isHeartBeating;
+        toggleAnimationFlag(ObjUI.heartIcon, false, false, true, false, false); // Always animate the heart icon scale
+
         //   ---- Test Power Off Animation
         // System.state = SystemState::POWERING_OFF_TRIGGERED;
 
@@ -81,7 +85,7 @@ void kbControl_Main(unsigned char key, int x, int y)
         // System.state = SystemState::ON;
 
         // ---- Test Power Off Animation
-        System.state = SystemState::POWERING_OFF_TRIGGERED;
+        // System.state = SystemState::POWERING_OFF_TRIGGERED;
 
         // ---- Test complication 4
         // System.is24HrFormat = !System.is24HrFormat;

@@ -364,7 +364,7 @@ void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 				   -(radius * sin(currentAngle)));
 	}
 
-	this->glEndReset();
+	glEndReset();
 }
 void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDegree, GLfloat thickness)
 {
@@ -587,6 +587,51 @@ void Object::drawRoundedRect_Line(GLfloat width, GLfloat height, GLfloat radius,
 }
 
 #pragma endregion Rounded Rectangle
+
+#pragma region Heart
+void Object::drawHeart_Fill(GLfloat size)
+{
+	GLfloat initialX = this->anchorX;
+	GLfloat initialY = this->anchorY;
+
+	GLfloat x[2] = {(-size / 2), (size / 2)};
+	GLfloat y[2] = {(-size / 2), (size / 2)};
+	GLfloat radius = size / 2;
+
+	rotateTo(45);
+	// 1. draw a square
+	drawRect_Fill(size, size);
+
+	// 2. draw a semi-circle
+	glStartInit();
+	glTranslatef(-radius, 0, 0);
+	glRotatef(-90, 0.0f, 0.0f, 1.0f);
+	glTranslatef(radius, 0, 0);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(-radius, 0); // center of circle
+	for (int i = 0; i <= 60; i++)
+	{
+		GLfloat currentAngle = i * M_PI / 60;
+		glVertex2f(-radius - radius * cos(currentAngle),
+				   -radius * sin(currentAngle));
+	}
+	glEndReset();
+
+	// 3. draw another semi-circle
+	glStartInit();
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(0, radius); // center of circle
+	for (int i = 0; i <= 60; i++)
+	{
+		GLfloat currentAngle = i * M_PI / 60;
+		glVertex2f(-radius * cos(currentAngle),
+				   radius + radius * sin(currentAngle));
+	}
+	glEndReset();
+
+	rotateTo(0);
+}
+#pragma endregion Heart
 
 #pragma region 2D Transformation
 // 2D Transformation
