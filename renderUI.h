@@ -92,7 +92,6 @@ void renderMainUI()
         // Initiate animation
         if (ObjUI.animState == AnimState::IDLE)
         {
-            cout << "UI animation triggered..." << endl;
             ObjUI.animState = AnimState::ANIMATING;
             System.currentScreen = Screen::NONE;
             toggleAnimationFlag(ObjUI.time, true, false, false, true, false);
@@ -169,7 +168,7 @@ void renderMainUI()
                 // Reset animation state
                 ObjUI.animState = AnimState::DONE;
                 System.currentScreen = Screen::MAIN;
-                cout << "UI animation completed..." << endl;
+                cout << "Welcome..." << endl;
             }
         }
     }

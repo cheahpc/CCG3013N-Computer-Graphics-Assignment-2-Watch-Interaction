@@ -6,10 +6,12 @@
 void renderPowerOff()
 {
     // Low battery power off
-    if (System.batteryLevel <= 0 && System.state == SystemState::ON)
+    if (System.batteryLevel <= 0 && System.state == SystemState::ON && ObjPowerOff.pOffConfirmation != PowerOffConfirmation::YES)
     {
-        cout << "Battery running out... shutting down " << System.batteryLevel << endl;
+        cout << "Battery running out... shutting down" << endl;
+        System.state == SystemState::POWERING_OFF_TRIGGERED;
         ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
+
         System.batteryLevel = 0;
     }
 
@@ -52,7 +54,7 @@ void renderPowerOff()
         // Initiate animation
         if (ObjPowerOff.pOffOverlayAnimState == AnimState::IDLE)
         {
-            cout << "Power off enter overlay triggered..." << endl;
+            cout << "Power off triggered..." << endl;
             ObjPowerOff.pOffOverlayAnimState = AnimState::ANIMATING;
             toggleAnimationFlag(ObjPowerOff.bgBlur, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOff.bg, true, false, false, true, false);
@@ -98,7 +100,7 @@ void renderPowerOff()
             // (Too long || Animation is done) == End
             if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.separatorLineHorizontal) || isBusyAnimating(ObjPowerOff.separatorLineVertical)))
             {
-                cout << "Power off overlay enter animation done..." << endl;
+                cout << "Confirm power off?..." << endl;
                 ObjPowerOff.pOffOverlayAnimState = AnimState::DONE;
                 System.currentScreen = Screen::POWER_OFF_CONFIRMATION;
             }
@@ -115,7 +117,7 @@ void renderPowerOff()
                 break;
             case PowerOffConfirmation::NO:
                 ObjPowerOff.pOffOverlayAnimState = AnimState::IDLE;
-                cout << "Power off cancelled...Right here!" << endl;
+                cout << "Power off cancelled..." << endl;
                 System.currentScreen = Screen::MAIN;
                 System.state = SystemState::ON;
                 break;
@@ -160,7 +162,6 @@ void renderPowerOff()
         // Initiate animation
         if (ObjPowerOff.pOffOverlayAnimState == AnimState::IDLE)
         {
-            cout << "Power off exit overlay triggered..." << endl;
             ObjPowerOff.pOffOverlayAnimState = AnimState::ANIMATING;
             toggleAnimationFlag(ObjPowerOff.bgBlur, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOff.bg, true, false, false, true, false);
@@ -206,7 +207,6 @@ void renderPowerOff()
             // (Too long || Animation is done) == End
             if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.separatorLineHorizontal) || isBusyAnimating(ObjPowerOff.separatorLineVertical)))
             {
-                cout << "Power off overlay exit animation done..." << endl;
                 ObjPowerOff.pOffOverlayAnimState = AnimState::DONE;
 
                 // Reset all object
@@ -287,7 +287,6 @@ void renderPowerOff()
         // Initiate animation
         if (ObjPowerOff.pOffAnimState == AnimState::IDLE)
         {
-            cout << "Power off animation triggered..." << endl;
             ObjPowerOff.pOffAnimState = AnimState::ANIMATING;
 
             toggleAnimationFlag(ObjPowerOff.offBg, false, false, false, true, false);
@@ -334,7 +333,6 @@ void renderPowerOff()
             // (Too long || Animation is done) == End
             if (elapsedTime.count() >= po_TotalDuration && !(isBusyAnimating(ObjPowerOff.offBg) || isBusyAnimating(ObjPowerOff.offRing) || isBusyAnimating(ObjPowerOff.offIndicator) || isBusyAnimating(ObjPowerOff.offLogo) || isBusyAnimating(ObjPowerOff.offText) || isBusyAnimating(ObjPowerOff.offRing_Null)))
             {
-                cout << "Power off animation done..." << endl;
                 ObjPowerOff.pOffAnimState = AnimState::DONE;
             }
         }

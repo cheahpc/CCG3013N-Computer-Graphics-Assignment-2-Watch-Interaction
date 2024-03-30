@@ -22,7 +22,6 @@ void mouseControl(GLint button, GLint state, int x, int y)
             // Dock Area, !Button Area, !Body Area
             if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.dockX, ObjArea.dockY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.btnX, ObjArea.btnY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.bodyX, ObjArea.bodyY))
             {
-                cout << "Charging dock pressed..." << endl;
                 // Toggle charging state
                 Mouse.leftDown = true;
                 ObjCharging.isDragging = true;
@@ -101,15 +100,9 @@ void mouseControl(GLint button, GLint state, int x, int y)
             if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
             {
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, yesX, yesNoY))
-                {
-                    cout << "Yes pressed..." << endl;
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
-                }
                 else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, noX, yesNoY))
-                {
-                    cout << "No pressed..." << endl;
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
-                }
             }
         }
         if (state == GLUT_UP)

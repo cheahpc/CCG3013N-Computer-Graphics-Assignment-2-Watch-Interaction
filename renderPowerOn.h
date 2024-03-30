@@ -38,6 +38,7 @@ void renderPowerOn()
         if (ObjPowerOn.pOnAnimState == AnimState::IDLE)
         {
             cout << "Power on triggered..." << endl;
+            cout << "System is powering on..." << endl;
             ObjPowerOn.pOnAnimState = AnimState::ANIMATING;
             System.currentScreen = Screen::POWERING_ON;
             toggleAnimationFlag(ObjPowerOn.bg, false, false, false, true, false);
@@ -97,8 +98,6 @@ void renderPowerOn()
                     break;
                 }
             }
-
-            cout << "Booting up..." << endl;
 
             // (Too long || Animation is done) == End
             if (elapsedTime.count() >= SYS_P_ON_TIME && (!isBusyAnimating(ObjPowerOn.bg) && !isBusyAnimating(ObjPowerOn.indicator) && !isBusyAnimating(ObjPowerOn.logo) && !isBusyAnimating(ObjPowerOn.loadingRing) && !isBusyAnimating(ObjPowerOn.loadingRing_Null)))

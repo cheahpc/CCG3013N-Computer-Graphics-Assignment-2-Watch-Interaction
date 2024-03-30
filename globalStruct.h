@@ -40,10 +40,10 @@ struct System
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
     Screen currentScreen = Screen::NONE;
-    float batteryLevel = 0.5;
+    float batteryLevel = 2.0;
     float chargingRate = 0.1;
-    float depletedRate = 0.5;
-    float minimumBatteryLevel = 5;
+    float depletedRate = 1.5;
+    float minimumBatteryLevel = 1;
     bool isCharging = false;
 } System;
 

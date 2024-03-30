@@ -3,13 +3,13 @@
 
 void renderCharging()
 {
-    if (System.isCharging == true && System.batteryLevel < 100)
+    if (System.isCharging && System.batteryLevel < 100)
         System.batteryLevel += System.chargingRate;
 
     if (System.batteryLevel > 100)
         System.batteryLevel = 100;
 
-    if (System.state == SystemState::OFF && System.currentScreen == Screen::NONE && System.isCharging == true)
+    if (System.state == SystemState::OFF && System.currentScreen == Screen::NONE && System.isCharging)
     {
         if (System.batteryLevel == 100)
             System.state = SystemState::POWERING_ON;
@@ -56,7 +56,7 @@ void renderCharging()
         // Initiate animation
         if (ObjCharging.chargingAnimState == AnimState::IDLE)
         {
-            cout << "Charging animation triggered..." << endl;
+            cout << "Watch is charging... Battery level: " << System.batteryLevel << endl;
             ObjCharging.chargingAnimState = AnimState::ANIMATING;
             toggleAnimationFlag(ObjCharging.bg, false, false, false, true, false);
             toggleAnimationFlag(ObjCharging.battery, false, false, false, true, false);
@@ -79,19 +79,19 @@ void renderCharging()
             {
                 // Reset animation state
                 ObjCharging.chargingAnimState = AnimState::DONE;
-                cout << "Charging animation completed..." << endl;
             }
         }
     }
 
-    if (System.isCharging == false && ObjCharging.chargingAnimState == AnimState::DONE)
+    if (!System.isCharging && ObjCharging.chargingAnimState != AnimState::IDLE)
     {
-        cout << "Charging animation reset..." << endl;
+        cout << "Charging stopped...  Battery level: " << System.batteryLevel << endl;
         ObjCharging.chargingAnimState = AnimState::IDLE;
         ObjCharging.bg.setOpacity(0);
         ObjCharging.battery.setOpacity(0);
         ObjCharging.chargingText.setOpacity(0);
     }
+
 }
 
 void renderChargingDock()
