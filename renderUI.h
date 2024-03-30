@@ -69,8 +69,11 @@ void renderMainUI()
         ObjUI.heartIcon.drawHeart_Fill(30);
 
         // Complications
+        // ObjUI.complication1.setColor(COLOR_THEME_GREEN);
+        ObjUI.complication1.setColor(COLOR_THEME_GREEN_DARK_2);
+        ObjUI.complication1.drawCircle_Fill(COMPLICATION_RADIUS - 8, 0, 360);
         ObjUI.complication1.setColor(batteryLevelColor);
-        ObjUI.complication1.drawCircle_Line(COMPLICATION_RADIUS, 0, System.batteryLevel * 3.6, 4);
+        ObjUI.complication1.drawCircle_Line(COMPLICATION_RADIUS, 0, System.batteryLevel * 3.6, 8);
         ObjUI.complication2.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 4);
@@ -173,9 +176,4 @@ void renderMainUI()
         }
     }
 }
-
-// TODO 4 complication on the left
-
-// TODO step counter on top of the digital time display
-// TODO heart rate monitor on top of the digital time display
 #endif

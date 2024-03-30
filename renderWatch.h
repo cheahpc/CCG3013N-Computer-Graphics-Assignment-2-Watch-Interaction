@@ -6,64 +6,73 @@
 void renderWatchStrap()
 {
     ObjWatch.strap.translateTo(0, 0);
-    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
     ObjWatch.strap.setOpacity(100);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_2);
     ObjWatch.strap.drawRect_Fill(WATCH_STRAP_WIDTH, WATCH_STRAP_HEIGHT);
 
-    // Shades
-    ObjWatch.strap.setOpacity(40);
-    ObjWatch.strap.translateTo(0, WINDOWS_HEIGHT / 2);
-    ObjWatch.strap.setColor(COLOR_WHITE);
-    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 80), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 50, 50);
-    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
-    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 110), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 80, 35);
-    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
-    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 150), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 120, 15);
-    ObjWatch.strap.setColor(COLOR_WHITE);
-    ObjWatch.strap.translateTo(0, -WINDOWS_HEIGHT / 2);
-    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 80), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 50, 50);
-    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
-    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 110), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 80, 35);
-    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
-    ObjWatch.strap.drawRoundedRect_Fill((WATCH_STRAP_WIDTH - 150), (WINDOWS_HEIGHT - WATCH_BODY_HEIGHT) - 120, 15);
-
-    // Stripes
+    // Shading
     ObjWatch.strap.setColor(COLOR_WHITE);
     ObjWatch.strap.setOpacity(20);
+    for (int i = 5; i < 120; i += 5)
+        ObjWatch.strap.drawRect_Fill(WATCH_STRAP_WIDTH - i, WATCH_STRAP_HEIGHT - i);
 
-    // for (int i = -80; i <= 80; i += 20)
-    // {
-    //     ObjWatch.strap.translateTo(i, 0);
-    //     ObjWatch.strap.drawRect_Fill(3, WATCH_STRAP_HEIGHT);
-    // }
-    ObjWatch.strap.translateTo(0, 0);
-    ObjWatch.strap.setColor(COLOR_GOLD);
+    ObjWatch.strap.setOpacity(100);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_2);
+    ObjWatch.strap.drawRect_Fill(80, WATCH_STRAP_HEIGHT);
+
+    ObjWatch.strap.setOpacity(20);
+    ObjWatch.strap.setColor(COLOR_THEME_GREEN);
+    for (int i = 15; i < 80; i += 5)
+        ObjWatch.strap.drawRect_Fill(80 - i, WATCH_STRAP_HEIGHT);
+    // Stripes
 }
 
 void renderWatchBody()
 {
-    // Todo add more texture and details
-    ObjWatch.body.setColor(COLOR_BLACK_4);
+    ObjWatch.body.setOpacity(100);
+    ObjWatch.body.setColor(COLOR_BLACK_2);
     ObjWatch.body.drawRoundedRect_Fill(WATCH_BODY_WIDTH, WATCH_BODY_HEIGHT, WATCH_BODY_ROUND_RADIUS);
+
+    ObjWatch.body.setColor(COLOR_WHITE);
+    ObjWatch.body.setOpacity(25);
+    for (int i = 5; i < 80; i += 5)
+        ObjWatch.body.drawRoundedRect_Fill(WATCH_BODY_WIDTH - i, WATCH_BODY_HEIGHT - i, WATCH_BODY_ROUND_RADIUS - i);
+
     ObjWatch.body.setColor(COLOR_BLACK);
+    ObjWatch.body.setOpacity(100);
     ObjWatch.body.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
 }
 
 void renderWatchDial()
 {
-    // Todo add more texture and details
+    ObjWatch.dial.setOpacity(100);
+    ObjWatch.dial.setColor(COLOR_BLACK);
     ObjWatch.dial.drawRoundedRect_Fill(WATCH_DIAL_WIDTH, WATCH_DIAL_HEIGHT, WATCH_DIAL_ROUND_RADIUS);
+
+    ObjWatch.dial.setOpacity(20);
+    ObjWatch.dial.setColor(COLOR_GREEN);
+    for (int i = 2; i < 10; i += 2)
+        ObjWatch.dial.drawRoundedRect_Fill(WATCH_DIAL_WIDTH - i, WATCH_DIAL_HEIGHT - i, WATCH_DIAL_ROUND_RADIUS - i);
 }
 
 void renderWatchButton()
 {
     // ---- Variables
-    GLfloat btnXval = (ObjWatch.Button.isDown)? -5 : 5;
+    GLfloat btnXval = (ObjWatch.Button.isDown) ? -5 : 5;
     GLfloat buttonPressAnimationDuration = 100;
     const GLfloat *btnEasing = EASEINOUT5;
- 
+
     // ---- Drawing
+
+    ObjWatch.button.setOpacity(100);
+    ObjWatch.button.setColor(COLOR_BLACK);
     ObjWatch.button.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH, WATCH_BUTTON_HEIGHT, WATCH_BUTTON_ROUND_RADIUS);
+
+    ObjWatch.button.setOpacity(25);
+    ObjWatch.button.setColor(COLOR_GREEN);
+    for (int i = 2; i < 10; i += 2)
+        ObjWatch.button.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH - i, WATCH_BUTTON_HEIGHT - i, WATCH_BUTTON_ROUND_RADIUS - i);
+
     // ---- Animation
     animateTranslate(ObjWatch.button, buttonPressAnimationDuration, btnEasing, btnXval, 0);
 

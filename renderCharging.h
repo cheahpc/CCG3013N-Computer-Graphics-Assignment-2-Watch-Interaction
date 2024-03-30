@@ -91,43 +91,51 @@ void renderCharging()
         ObjCharging.battery.setOpacity(0);
         ObjCharging.chargingText.setOpacity(0);
     }
-
 }
 
 void renderChargingDock()
 {
     ObjCharging.dock.setOpacity(100);
-    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_2);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_1);
     ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH, DOCK_HEIGHT, DOCK_ROUND_RADIUS);
-    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_3);
-    ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH - 20, DOCK_HEIGHT - 20, DOCK_ROUND_RADIUS - 10);
-
-    ObjCharging.dock.setColor(COLOR_GOLD);
-    ObjCharging.dock.setOpacity(20);
-    ObjCharging.dock.drawCircle_Line(DOCK_WIDTH / 4, 0, 360, 10);
+    ObjCharging.dock.setOpacity(10);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_2);
+    for (int i = 10; i <= 90; i += 5)
+        ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH - i, DOCK_HEIGHT - i, DOCK_ROUND_RADIUS - 10);
 
     ObjCharging.dock.setOpacity(100);
-    ObjCharging.dock.setColor(COLOR_THEME_GREEN);
-    ObjCharging.dock.drawCircle_Fill(80, 40, 50);
-    ObjCharging.dock.drawCircle_Fill(80, 130, 140);
-    ObjCharging.dock.drawCircle_Fill(80, 220, 230);
-    ObjCharging.dock.drawCircle_Fill(80, 310, 320);
-    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_2);
-    ObjCharging.dock.drawRect_Fill(5, DOCK_HEIGHT - 20);
-    ObjCharging.dock.drawRect_Fill(DOCK_WIDTH - 20, 5);
+    ObjCharging.dock.drawCircle_Fill(60, 0, 360);
 
-    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_3);
-    ObjCharging.dock.drawCircle_Fill(30, 0, 360);
-    ObjCharging.dock.setColor(COLOR_GOLD);
-    ObjCharging.dock.drawCircle_Fill(10, 0, 360);
+    ObjCharging.dock.setColor(COLOR_WHITE);
+    ObjCharging.dock.setOpacity(20);
+    ObjCharging.dock.drawCircle_Line(150, 0, 360, 30);
 
+    ObjCharging.dock.setOpacity(100);
+    ObjCharging.dock.setColor(COLOR_WHITE);
+    ObjCharging.dock.drawCircle_Fill(200, 40, 50);
+    ObjCharging.dock.drawCircle_Fill(200, 130, 140);
+    ObjCharging.dock.drawCircle_Fill(200, 220, 230);
+    ObjCharging.dock.drawCircle_Fill(200, 310, 320);
+
+    ObjCharging.dock.drawCircle_Fill(20, 0, 360);
+
+    ObjCharging.dockWire.setOpacity(100);
     ObjCharging.dockWire.translateTo(ObjCharging.dock.anchorX + WINDOWS_WIDTH / 2 + DOCK_WIDTH / 2, ObjCharging.dock.anchorY);
-    ObjCharging.dockWire.setColor(COLOR_THEME_GREEN_DARK_2);
-    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 40);
-    ObjCharging.dockWire.setColor(COLOR_OLIVE);
-    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 20);
     ObjCharging.dockWire.setColor(COLOR_BRONZE);
-    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 5);
+    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 50);
+
+    ObjCharging.dockWire.setOpacity(5);
+    ObjCharging.dockWire.setColor(COLOR_GOLD);
+    for (int i = 2; i <= 40; i += 4)
+        ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, i);
+
+    // Charging dock text
+    ObjCharging.dockLabel.scaleTo(0.3);
+    ObjCharging.dockLabel.translateTo(ObjCharging.dock.anchorX + 50 - (DOCK_WIDTH / 2), ObjCharging.dock.anchorY - 90 + (DOCK_HEIGHT / 2));
+    ObjCharging.dockLabel.drawText("240W", 7);
+    ObjCharging.dockLabel.scaleTo(0.25);
+    ObjCharging.dockLabel.translateTo(ObjCharging.dock.anchorX + 50 - (DOCK_WIDTH / 2), ObjCharging.dock.anchorY - 130 + (DOCK_HEIGHT / 2));
+    ObjCharging.dockLabel.drawText("Charger", 7);
 }
 
 #endif

@@ -64,6 +64,21 @@ void renderMaster()
     // Charging
     renderCharging(); // Draw the charging UI
 
+    stringstream stepCountss;
+    stepCountss << ObjUI.stepCount << endl;
+    char stepCountStr[5];
+    strcpy(stepCountStr, stepCountss.str().c_str());
+
+    if (ObjUI.stepCount < 10)
+        ObjUI.stepCountText.translateTo(23, -150);
+    else if (ObjUI.stepCount < 100)
+        ObjUI.stepCountText.translateTo(4, -150);
+    else
+        ObjUI.stepCountText.translateTo(-15, -150);
+
+    ObjUI.stepCountText.drawText(stepCountStr, 3);
+    ObjUI.stepStepText.drawText("STEPS", 5);
+
     // Help
     renderHelp(); // Draw the help
 

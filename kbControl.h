@@ -53,13 +53,34 @@ void kbControl_Main(unsigned char key, int x, int y)
             toggleAnimationFlag(ObjHelp.bg, true, false, false, true, false);
         }
         break;
+
+    case 'a':
+        if (System.state != SystemState::OFF && System.state != SystemState::POWERING_OFF)
+        {
+            if (!ObjUI.lastStepIsLeft)
+            {
+                ObjUI.stepCount++;
+                ObjUI.lastStepIsLeft = true;
+            }
+        }
+        break;
+    case 'd':
+        if (System.state != SystemState::OFF && System.state != SystemState::POWERING_OFF)
+        {
+            if (ObjUI.lastStepIsLeft)
+            {
+                ObjUI.stepCount++;
+                ObjUI.lastStepIsLeft = false;
+            }
+        }
+        break;
     case 'q': // Testing
         // ---- Test Power On Animation
         // System.state = SystemState::POWERING_ON;
 
         // ---- Test After Power On Animation
-        // System.state = SystemState::ON;
-        // ObjUI.animState = AnimState::IDLE;
+        System.state = SystemState::ON;
+        ObjUI.animState = AnimState::IDLE;
 
         // Test Yes on Power Off Confirmation
         // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
@@ -68,7 +89,7 @@ void kbControl_Main(unsigned char key, int x, int y)
         // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
 
         // Test Charging
-        System.isCharging = !System.isCharging;
+        // System.isCharging = !System.isCharging;
 
         break;
 

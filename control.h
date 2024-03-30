@@ -108,7 +108,8 @@ void updateMouse(int x, int y)
     Mouse.mouseY = -y + WINDOWS_HEIGHT / 2;
 }
 
-struct ObjectArea{
+struct ObjectArea
+{
     GLfloat bodyX[2] = {-WATCH_BODY_WIDTH / 2, WATCH_BODY_WIDTH / 2};
     GLfloat bodyY[2] = {-WATCH_BODY_HEIGHT / 2, WATCH_BODY_HEIGHT / 2};
 
@@ -123,9 +124,14 @@ struct ObjectArea{
     // Charging dock area
     GLfloat dockX[2] = {ObjCharging.dock.anchorX - DOCK_WIDTH / 2, ObjCharging.dock.anchorX + DOCK_WIDTH / 2};
     GLfloat dockY[2] = {ObjCharging.dock.anchorY - DOCK_HEIGHT / 2, ObjCharging.dock.anchorY + DOCK_HEIGHT / 2};
+
+    // Strap Area
+    GLfloat strapX[2] = {-WATCH_STRAP_WIDTH / 2, WATCH_STRAP_WIDTH / 2};
+    GLfloat strapY[2] = {-WATCH_STRAP_HEIGHT / 2, WATCH_STRAP_HEIGHT / 2};
 } ObjArea;
 
-void updateObjArea(){
+void updateObjArea()
+{
     // Charging dock area
     ObjArea.dockX[0] = ObjCharging.dock.anchorX - DOCK_WIDTH / 2;
     ObjArea.dockX[1] = ObjCharging.dock.anchorX + DOCK_WIDTH / 2;
