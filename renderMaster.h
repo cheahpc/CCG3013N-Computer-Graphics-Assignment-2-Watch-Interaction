@@ -4,7 +4,7 @@
 // Renders
 #include "renderdebug.h"
 #include "renderBackdrop.h"
-#include "renderLegend.h"
+#include "renderHelp.h"
 #include "renderWatch.h"
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
@@ -61,8 +61,8 @@ void renderMaster()
     // Charging
     renderCharging(); // Draw the charging UI
 
-    // Legend
-    renderLegend(); // Draw the legend
+    // Help
+    renderHelp(); // Draw the help
 
     // Grid Overlay
     renderGrid(); // Draw the grid

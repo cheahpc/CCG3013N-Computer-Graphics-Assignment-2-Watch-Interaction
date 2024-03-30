@@ -46,11 +46,11 @@ void kbControl_Main(unsigned char key, int x, int y)
 
         break;
     case 'h': // Help - legend
-        if (!isBusyAnimating(ObjLegend.hintText) || !isBusyAnimating(ObjLegend.bg))
+        if (!isBusyAnimating(ObjHelp.hintText) || !isBusyAnimating(ObjHelp.bg))
         {
-            legendShow = !legendShow;
-            toggleAnimationFlag(ObjLegend.hintText, true, false, false, true, false);
-            toggleAnimationFlag(ObjLegend.bg, true, false, false, true, false);
+            ObjHelp.isHelpVisible = ObjHelp.isHelpVisible ? false : true;
+            toggleAnimationFlag(ObjHelp.hintText, true, false, false, true, false);
+            toggleAnimationFlag(ObjHelp.bg, true, false, false, true, false);
         }
         break;
     case 'q': // Testing

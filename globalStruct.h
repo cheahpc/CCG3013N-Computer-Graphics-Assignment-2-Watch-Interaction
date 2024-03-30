@@ -105,12 +105,14 @@ struct UI_Object
 
 } ObjUI;
 
-struct Legend_Object
+struct Help_Object
 {
     Object bg = Object(-650, 0, 1, 0, COLOR_THEME_GREEN_DARK_2, 0);
     Object hintText = Object(-700, 160, 0.10, 0, COLOR_THEME_GREEN_DARK_1, 100);
     Object text = Object();
-} ObjLegend;
+
+    bool isHelpVisible = false;
+} ObjHelp;
 
 struct Powering_On_Object
 {
@@ -154,7 +156,7 @@ struct Powering_Off_Object
 struct Charging_Object
 {
     Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);
-    Object battery = Object(0, 20,1,0,COLOR_WHITE,0);
+    Object battery = Object(0, 20, 1, 0, COLOR_WHITE, 0);
     Object chargingText = Object(0, 0, 0.40, 0, COLOR_WHITE, 0);
 
     Object dock = Object(0, 0, 1, 0, COLOR_BLACK_3, 100);
