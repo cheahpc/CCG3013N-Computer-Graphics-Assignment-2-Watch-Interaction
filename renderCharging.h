@@ -4,14 +4,15 @@
 void renderCharging()
 {
     if (System.isCharging == true && System.batteryLevel < 100)
-        System.batteryLevel += 0.1;
+        System.batteryLevel += System.chargingRate;
+
     if (System.batteryLevel > 100)
         System.batteryLevel = 100;
 
     if (System.state == SystemState::OFF && System.currentScreen == Screen::NONE && System.isCharging == true)
     {
-        // if (System.batteryLevel == 100)
-        //     System.state = SystemState::POWERING_ON;
+        if (System.batteryLevel == 100)
+            System.state = SystemState::POWERING_ON;
 
         // ---- Variables
         // Battery Level Color
@@ -91,6 +92,12 @@ void renderCharging()
         ObjCharging.battery.setOpacity(0);
         ObjCharging.chargingText.setOpacity(0);
     }
+}
+
+void renderChargingDock()
+{
+    // ObjCharging.dock.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
+
 }
 
 #endif

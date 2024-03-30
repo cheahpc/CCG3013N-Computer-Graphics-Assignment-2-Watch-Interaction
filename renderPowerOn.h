@@ -3,11 +3,7 @@
 
 void renderPowerOn()
 {
-    // Check battery power
-    if (System.batteryLevel <= 0.1)
-        System.state = SystemState::OFF;
-
-    if (System.state == SystemState::POWERING_ON)
+    if (System.state == SystemState::POWERING_ON && System.batteryLevel >= System.minimumBatteryLevel)
     {
         // ---- Variables
         // Easing
@@ -63,15 +59,11 @@ void renderPowerOn()
 
             // 2 - Boot Indicator
             if (elapsedTime.count() >= bgDuration)
-            {
                 animateOpacity(ObjPowerOn.indicator, indicatorDuration, indicatorEasing, 100);
-            }
 
             // 3 - Loading Ring 1
             if (elapsedTime.count() >= loadingRing1StartTime)
-            {
                 animateTranslate(ObjPowerOn.loadingRing_Null, loadingRing1Duration, loadingRing1Easing, 360, 0);
-            }
 
             // 3 - Boot Logo
             if (elapsedTime.count() >= logoStartTime)

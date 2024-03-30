@@ -6,9 +6,9 @@
 void renderPowerOff()
 {
     // Low battery power off
-    cout << "Battery Level: " << System.batteryLevel << endl;
-    if (System.batteryLevel <= 0.04 && System.state == SystemState::ON)
+    if (System.batteryLevel <= 0 && System.state == SystemState::ON)
     {
+        cout << "Battery running out... shutting down " << System.batteryLevel << endl;
         ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
         System.batteryLevel = 0;
     }

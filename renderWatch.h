@@ -5,8 +5,6 @@
 
 void renderWatchStrap()
 {
-    // Todo add more texture and details
-
     ObjWatch.strap.translateTo(0, 0);
     ObjWatch.strap.setColor(COLOR_THEME_GREEN_DARK_1);
     ObjWatch.strap.setOpacity(100);
@@ -60,14 +58,10 @@ void renderWatchDial()
 void renderWatchButton()
 {
     // ---- Variables
-    GLfloat btnXval = 0;
+    GLfloat btnXval = (ObjWatch.Button.isDown)? -5 : 5;
     GLfloat buttonPressAnimationDuration = 100;
     const GLfloat *btnEasing = EASEINOUT5;
-    if (ObjWatch.Button.isDown)
-        btnXval = -5;
-    else
-        btnXval = 5;
-
+ 
     // ---- Drawing
     ObjWatch.button.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH, WATCH_BUTTON_HEIGHT, WATCH_BUTTON_ROUND_RADIUS);
     // ---- Animation
@@ -98,7 +92,7 @@ void renderWatchButton()
                 System.state = SystemState::POWERING_OFF_TRIGGERED;
                 System.currentScreen = Screen::POWER_OFF_CONFIRMATION;
             }
-            else if (System.state == SystemState::OFF)
+            else if (System.state == SystemState::OFF && System.batteryLevel >= System.minimumBatteryLevel)
             {
                 System.state = SystemState::POWERING_ON;
                 System.currentScreen = Screen::POWERING_ON;

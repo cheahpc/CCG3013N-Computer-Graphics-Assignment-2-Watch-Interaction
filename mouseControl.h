@@ -67,7 +67,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
 
                 // Heart Rate Monitor Area
                 GLfloat hrX[2] = {10, 190};
-                GLfloat hrY[2] = {40, 210};
+                GLfloat hrY[2] = {140, 210};
                 if (inArea(mouse.mouseX, mouse.mouseY, hrX, hrY))
                 {
                     cout << "Heart Rate Monitor pressed..." << endl;
