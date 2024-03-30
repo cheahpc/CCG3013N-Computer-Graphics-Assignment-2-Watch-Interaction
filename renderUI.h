@@ -12,7 +12,7 @@ void renderMainUI()
         float comp3StartTime = 400;
         float comp4StartTime = 600;
         float compContentStartTime = 1500;
-        float heartStartTime = 0;
+        float heartStepStartTime = 1500;
 
         // Duration
         float comp1Duration = 1000;
@@ -21,7 +21,7 @@ void renderMainUI()
         float comp4Duration = 1300;
         float compContentDuration = 1000;
         float dateTimeADuration = 2500;
-        float heartDuration = 3000;
+        float heartStepDuration = 1000;
         float heartBeatDuration = (60 / ObjUI.heartRateValue / 2) * 1000;
 
         // Translate Value
@@ -68,6 +68,24 @@ void renderMainUI()
         ObjUI.heartRate.drawText(hrStr, 3);
         ObjUI.heartIcon.drawHeart_Fill(30);
 
+        // Step Counter
+        stringstream stepCountss;
+        stepCountss << ObjUI.stepCount << endl;
+        char stepCountStr[5];
+        strcpy(stepCountStr, stepCountss.str().c_str());
+
+        if (ObjUI.stepCount < 10)
+            ObjUI.stepCountText.translateTo(23, -150);
+        else if (ObjUI.stepCount < 100)
+            ObjUI.stepCountText.translateTo(4, -150);
+        else if (ObjUI.stepCount < 1000)
+            ObjUI.stepCountText.translateTo(-15, -150);
+        else
+            ObjUI.stepCountText.translateTo(-40, -150);
+
+        ObjUI.stepCountText.drawText(stepCountStr, 3);
+        ObjUI.stepStepText.drawText("STEPS", 5);
+
         // Complications
         // ObjUI.complication1.setColor(COLOR_THEME_GREEN);
         ObjUI.complication1.setColor(COLOR_THEME_GREEN_DARK_2);
@@ -102,7 +120,8 @@ void renderMainUI()
             toggleAnimationFlag(ObjUI.dateBox, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.heartIcon, false, false, false, true, false);
             toggleAnimationFlag(ObjUI.heartRate, false, false, false, true, false);
-
+            toggleAnimationFlag(ObjUI.stepCountText, false, false, true, true, false);
+            toggleAnimationFlag(ObjUI.stepStepText, false, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication1, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication2, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication3, true, false, true, true, false);
@@ -125,8 +144,13 @@ void renderMainUI()
             animateOpacity(ObjUI.date, dateTimeADuration, ui_OpactEasing, 100);
             animateOpacity(ObjUI.dateBox, dateTimeADuration, ui_OpactEasing, 100);
 
-            animateOpacity(ObjUI.heartIcon, heartDuration, ui_OpactEasing, 100);
-            animateOpacity(ObjUI.heartRate, heartDuration, ui_OpactEasing, 100);
+            if (elapsedTime.count() >= heartStepStartTime)
+            {
+                animateOpacity(ObjUI.heartIcon, heartStepDuration, ui_OpactEasing, 100);
+                animateOpacity(ObjUI.heartRate, heartStepDuration, ui_OpactEasing, 100);
+                animateOpacity(ObjUI.stepCountText, heartStepDuration, ui_OpactEasing, 100);
+                animateOpacity(ObjUI.stepStepText, heartStepDuration, ui_OpactEasing, 100);
+            }
 
             animateTranslate(ObjUI.time, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);
             animateTranslate(ObjUI.date, dateTimeADuration, dateTimeAEasing, 0, dateTimeYTranslateVal);

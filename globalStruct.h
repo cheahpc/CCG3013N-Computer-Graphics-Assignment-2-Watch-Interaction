@@ -94,12 +94,12 @@ struct UI_Object
     float heartRateInterval = 0;
     float heartRateValue = 0;
 
-    Object stepCountText = Object(25, -150, 0.4, 0, COLOR_WHITE, 100);
-    Object stepStepText = Object(-5, -200, 0.2, 0, COLOR_WHITE, 100);
+    Object stepCountText = Object(25, -150, 0.4, 0, COLOR_WHITE, 0);
+    Object stepStepText = Object(-5, -200, 0.2, 0, COLOR_WHITE, 0);
     bool isHeartBeating = false;
     bool isHeartBeatUp = true;
 
-    int stepCount = 0;
+    int stepCount = 990;
     bool lastStepIsLeft = false;
 
     chrono::high_resolution_clock::time_point animStartTime, heartRateLastSampleTime, stepLastSampleTime;
