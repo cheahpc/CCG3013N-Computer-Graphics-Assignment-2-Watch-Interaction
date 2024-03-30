@@ -64,7 +64,7 @@ public:
 	void drawHeart_Fill(GLfloat size);
 
 	// Battery
-	void drawBattery_Fill(GLfloat size, GLfloat batteryLevel, const GLfloat *batColor, const GLfloat *batLvlColor);
+	void drawBattery_Fill(GLfloat size, GLfloat batteryLevel, bool isCharging, const GLfloat *batColor, const GLfloat *batLvlColor);
 
 	// 2D transformation
 	void translateTo(GLfloat x, GLfloat y);

@@ -5,6 +5,14 @@
 
 void renderPowerOff()
 {
+    // Low battery power off
+    cout << "Battery Level: " << System.batteryLevel << endl;
+    if (System.batteryLevel <= 0.04 && System.state == SystemState::ON)
+    {
+        ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
+        System.batteryLevel = 0;
+    }
+
     // Power off confirm screen
     if (System.state == SystemState::POWERING_OFF_TRIGGERED)
     {
@@ -347,12 +355,18 @@ void renderPowerOff()
             System.state = SystemState::OFF;
 
             // Reset all object
+            ObjUI.isHeartBeating = false;
+
             ObjUI.bg.setOpacity(100);
             ObjUI.complication1.setOpacity(0);
             ObjUI.complication2.setOpacity(0);
             ObjUI.complication3.setOpacity(0);
             ObjUI.complication4.setOpacity(0);
+            ObjUI.comp1Battery.setOpacity(0);
             ObjUI.comp4Text.setOpacity(0);
+
+            ObjUI.heartIcon.setOpacity(0);
+            ObjUI.heartRate.setOpacity(0);
 
             ObjUI.time.setOpacity(0);
             ObjUI.dateBox.setOpacity(0);

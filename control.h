@@ -72,6 +72,8 @@ string getHeartRate()
     chrono::duration<double, milli> elapsedTime = currentTime - ObjUI.heartRateLastSampleTime;
     if (elapsedTime.count() > ObjUI.heartRateInterval)
     {
+        System.batteryLevel = System.batteryLevel - 0.02;
+
         ObjUI.heartRateLastSampleTime = currentTime;
         ObjUI.heartRateInterval = randomInterval;
 

@@ -60,9 +60,6 @@ void renderMaster()
     // Legend
     renderLegend(); // Draw the legend
 
-    ObjDebug.test.setOpacity(21);
-    ObjDebug.test.drawBattery_Fill(100, 1, COLOR_WHITE, COLOR_GREEN);
-
     // Grid Overlay
     renderGrid(); // Draw the grid
 

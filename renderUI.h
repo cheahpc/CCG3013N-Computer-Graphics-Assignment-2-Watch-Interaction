@@ -11,7 +11,7 @@ void renderMainUI()
         float comp2StartTime = 200;
         float comp3StartTime = 400;
         float comp4StartTime = 600;
-        float comp4TextStartTime = 1500;
+        float compContentStartTime = 1500;
         float heartStartTime = 0;
 
         // Duration
@@ -19,7 +19,7 @@ void renderMainUI()
         float comp2Duration = 1100;
         float comp3Duration = 1200;
         float comp4Duration = 1300;
-        float comp4TextDuration = 1000;
+        float compContentDuration = 1000;
         float dateTimeADuration = 2500;
         float heartDuration = 3000;
         float heartBeatDuration = (60 / ObjUI.heartRateValue / 2) * 1000;
@@ -34,12 +34,17 @@ void renderMainUI()
         // Scale Value
         float heartBeatScaleVal = ObjUI.isHeartBeatUp ? 0.7 : -0.7;
 
-        // Other Variables
+        // Color Value
+        const float *batteryLevelColor = (System.batteryLevel > 40)   ? COLOR_GREEN
+                                         : (System.batteryLevel > 15) ? COLOR_ORANGE
+                                                                      : COLOR_RED;
+
+        // Easing
         float ui_AnimTotalDuration = 10000;
         const float *ui_OpactEasing = EASEINOUT3;
-        const float *compEasing = EASEOUT4;
+        const float *compRingEasing = EASEOUT4;
         const float *dateTimeAEasing = EASEOUT3;
-        const float *comp4TextEasing = EASEOUT3;
+        const float *compContentEasing = EASEOUT4;
 
         const float *heartBeatEasing = ObjUI.isHeartBeatUp ? EASEIN3 : EASEOUT3;
 
@@ -64,11 +69,13 @@ void renderMainUI()
         ObjUI.heartIcon.drawHeart_Fill(30);
 
         // Complications
-        ObjUI.complication1.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
+        ObjUI.complication1.setColor(batteryLevelColor);
+        ObjUI.complication1.drawCircle_Line(COMPLICATION_RADIUS, 0, System.batteryLevel * 3.6, 4);
         ObjUI.complication2.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 4);
 
+        ObjUI.comp1Battery.drawBattery_Fill(20, System.batteryLevel, System.isCharging, COLOR_WHITE, batteryLevelColor);
         ObjUI.comp4Text.drawText(hrFormatStr, COMP4_TEXT_SIZE);
 
         if (ObjUI.isHeartBeating)
@@ -78,6 +85,7 @@ void renderMainUI()
             {
                 toggleAnimationFlag(ObjUI.heartIcon, false, false, true, false, false); // Always animate the heart icon scale
                 ObjUI.isHeartBeatUp = (ObjUI.heartIcon.scaleFactor == 1) ? true : false;
+                System.batteryLevel = System.batteryLevel - 0.02;
             }
         }
 
@@ -92,10 +100,12 @@ void renderMainUI()
             toggleAnimationFlag(ObjUI.dateBox, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.heartIcon, false, false, false, true, false);
             toggleAnimationFlag(ObjUI.heartRate, false, false, false, true, false);
+
             toggleAnimationFlag(ObjUI.complication1, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication2, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication3, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication4, true, false, true, true, false);
+            toggleAnimationFlag(ObjUI.comp1Battery, false, false, false, true, false);
             toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
             ObjUI.animStartTime = chrono::high_resolution_clock::now();
         }
@@ -123,32 +133,35 @@ void renderMainUI()
             // Animate the complications
             if (elapsedTime.count() >= comp1StartTime) // Complication 1
             {
-                animateScale(ObjUI.complication1, comp1Duration, compEasing, 1);
+                animateScale(ObjUI.complication1, comp1Duration, compRingEasing, 1);
                 animateOpacity(ObjUI.complication1, comp1Duration, ui_OpactEasing, 100);
-                animateTranslate(ObjUI.complication1, comp1Duration, compEasing, 0, comp1YTranslateVal);
+                // animateTranslate(ObjUI.complication1, comp1Duration, compRingEasing, 0, comp1YTranslateVal);
             }
             if (elapsedTime.count() >= comp2StartTime) // Complication 2
             {
-                animateScale(ObjUI.complication2, comp2Duration, compEasing, 1);
+                animateScale(ObjUI.complication2, comp2Duration, compRingEasing, 1);
                 animateOpacity(ObjUI.complication2, comp2Duration, ui_OpactEasing, 100);
-                animateTranslate(ObjUI.complication2, comp2Duration, compEasing, 0, comp2YTranslateVal);
+                animateTranslate(ObjUI.complication2, comp2Duration, compRingEasing, 0, comp2YTranslateVal);
             }
             if (elapsedTime.count() >= comp3StartTime) // Complication 3
             {
-                animateScale(ObjUI.complication3, comp3Duration, compEasing, 1);
+                animateScale(ObjUI.complication3, comp3Duration, compRingEasing, 1);
                 animateOpacity(ObjUI.complication3, comp3Duration, ui_OpactEasing, 100);
-                animateTranslate(ObjUI.complication3, comp3Duration, compEasing, 0, comp3YTranslateVal);
+                animateTranslate(ObjUI.complication3, comp3Duration, compRingEasing, 0, comp3YTranslateVal);
             }
             if (elapsedTime.count() >= comp4StartTime) // Complication 4
             {
-                animateScale(ObjUI.complication4, comp4Duration, compEasing, 1);
+                animateScale(ObjUI.complication4, comp4Duration, compRingEasing, 1);
                 animateOpacity(ObjUI.complication4, comp4Duration, ui_OpactEasing, 100);
-                animateTranslate(ObjUI.complication4, comp4Duration, compEasing, 0, comp4YTranslateVal);
+                animateTranslate(ObjUI.complication4, comp4Duration, compRingEasing, 0, comp4YTranslateVal);
             }
 
-            // Complication 4 Text
-            if (elapsedTime.count() >= comp4TextStartTime)
-                animateOpacity(ObjUI.comp4Text, comp4TextDuration, ui_OpactEasing, 100);
+            // Complication Content
+            if (elapsedTime.count() >= compContentStartTime)
+            {
+                animateOpacity(ObjUI.comp1Battery, compContentDuration, ui_OpactEasing, 100);
+                animateOpacity(ObjUI.comp4Text, compContentDuration, ui_OpactEasing, 100);
+            }
 
             // (Too long || Animation is done) == End
             if (elapsedTime.count() >= ui_AnimTotalDuration || !(isBusyAnimating(ObjUI.time) || isBusyAnimating(ObjUI.date) || isBusyAnimating(ObjUI.dateBox) || isBusyAnimating(ObjUI.heartIcon) || isBusyAnimating(ObjUI.heartRate) || isBusyAnimating(ObjUI.complication1) || isBusyAnimating(ObjUI.complication2) || isBusyAnimating(ObjUI.complication3) || isBusyAnimating(ObjUI.complication4) || isBusyAnimating(ObjUI.comp4Text)))

@@ -3,6 +3,9 @@
 
 void renderPowerOn()
 {
+    // Check battery power
+    if (System.batteryLevel <= 0.1)
+        System.state = SystemState::OFF;
 
     if (System.state == SystemState::POWERING_ON)
     {

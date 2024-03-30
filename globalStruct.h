@@ -39,9 +39,9 @@ struct System
 {
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
-
     Screen currentScreen = Screen::NONE;
-
+    float batteryLevel = 0.0;
+    bool isCharging = false;
 } System;
 
 struct Debug_Object
@@ -79,6 +79,7 @@ struct UI_Object
     Object complication3 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object complication4 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
 
+    Object comp1Battery = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1 - 5, 1, 0, COLOR_WHITE, 0);
     Object comp4Text = Object(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS, 0.2, 0, COLOR_WHITE, 0);
 
     Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);

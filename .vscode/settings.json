@@ -38,5 +38,5 @@
 		"string": "cpp"
 	},
 	"cSpell.words": ["EASEINOUT", "EASEOUT", "endregion", "Opact"],
-	"cSpell.ignoreWords": ["Rotatef", "Scalef", "Translatef"]
+	"cSpell.ignoreWords": ["EASEIN", "Rotatef", "Scalef", "Translatef"]
 }

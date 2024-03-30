@@ -622,7 +622,7 @@ void Object::drawHeart_Fill(GLfloat size)
 #pragma endregion Heart
 
 #pragma region Battery
-void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, const GLfloat *batColor, const GLfloat *batLvlColor)
+void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, bool isCharging, const GLfloat *batColor, const GLfloat *batLvlColor)
 {
 	// Battery properties
 	GLfloat width = size, height = size * 2;
@@ -633,17 +633,48 @@ void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, const GLfloat 
 	GLfloat capCenterY = (height / 2) + thickness * 2;
 	GLfloat capWidth = width * 0.45;
 
-	GLfloat originalColor = this->color[0];
+	GLfloat originalX = this->anchorX;
+	GLfloat originalY = this->anchorY;
 
 	// Draw the battery level
 	setColor(batLvlColor);
 	GLfloat levelHeight = (height - thickness) * batteryLevel / 100;
-	translateTo(0, -height / 2 + levelHeight / 2 + thickness / 2);
+	translateTo(this->anchorX, this->anchorY - height / 2 + levelHeight / 2 + thickness / 2);
 	drawRect_Fill(width - thickness, levelHeight);
 	setColor(batColor);
 
+	// Draw the battery charging lightning icon
+	if (isCharging)
+	{
+		// Define 7 point of the lightning
+		GLfloat x[5] = {-(size / 2) * 0.75,
+						-(size / 2) * 0.4,
+						-(size / 2) * 0.25,
+						(size / 2) * 0.1,
+						(size / 2) * 0.75};
+
+		GLfloat y[6] = {-size * 0.8,
+						-size * 0.1,
+						-size * 0.05,
+						size * 0.15,
+						size * 0.2,
+						size * 0.7};
+		translateTo(originalX, originalY);
+		glStartInit();
+		glBegin(GL_POLYGON);
+		glVertex2f(x[2], y[2]); // point 7
+		glVertex2f(x[0], y[1]); // point 1
+		glVertex2f(x[1], y[5]); // point 2
+		glVertex2f(x[4], y[5]); // point 3
+		glVertex2f(x[3], y[3]); // point 4
+		glVertex2f(x[4], y[4]); // point 5
+		glVertex2f(x[4], y[4]); // point 5
+		glVertex2f(x[0], y[0]); // point 6
+		glEndReset();
+	}
+
 	// Draw the battery head
-	translateTo(capCenterX, capCenterY);
+	translateTo(originalX + capCenterX, originalY + capCenterY);
 	GLfloat angle = 90 * M_PI / 180; // get the angle in radian
 	GLfloat x[2], y[2], currentAngle;
 	GLfloat capRadius = 2 * (radius * 0.75);
@@ -678,7 +709,7 @@ void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, const GLfloat 
 	glEndReset();
 
 	// Draw the battery body
-	translateTo(0, 0);
+	translateTo(originalX, originalY);
 	drawRoundedRect_Line(width, height, radius, thickness);
 }
 #pragma endregion Battery
