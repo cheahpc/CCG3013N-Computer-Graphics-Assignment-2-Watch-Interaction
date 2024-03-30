@@ -65,22 +65,40 @@ string getHeartRate()
 {
     default_random_engine rSeed(chrono::system_clock::now().time_since_epoch().count());
 
-    uniform_int_distribution<int> distribution(6000, 18000);
-    int randomInterval = distribution(rSeed);
+    uniform_int_distribution<int> distInterval(3000, 12000);
+    int randomInterval = distInterval(rSeed);
+    uniform_real_distribution<float> distBaseHeartRate(50, 85);
+    int heartRate = distBaseHeartRate(rSeed);
+    uniform_real_distribution<float> distHeartRateOffset(0, ObjUI.heartBeatOffset);
+    int heartRateOffset = distHeartRateOffset(rSeed);
+    uniform_real_distribution<float> distHeartRateOffsetDecay(0, ObjUI.heartBeatOffset / 2);
+    int heartRateOffsetDecay = distHeartRateOffsetDecay(rSeed);
+
+    GLfloat currentStep = 0;
 
     chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-    chrono::duration<double, milli> elapsedTime = currentTime - ObjUI.heartRateLastSampleTime;
-    if (elapsedTime.count() > ObjUI.heartRateInterval)
+    chrono::duration<double, milli> elapsedTimeStep = currentTime - ObjUI.stepLastSampleTime;
+
+    if (elapsedTimeStep.count() > ObjUI.stepSamplePeriod)
     {
+        System.batteryLevel = System.batteryLevel - System.depletedRate;
+        ObjUI.stepLastSampleTime = currentTime;
+        currentStep = ObjUI.stepCount - ObjUI.stepLastSampleCount;
+        ObjUI.stepLastSampleCount = ObjUI.stepCount;
+        if (ObjUI.heartBeatOffset < currentStep)
+            ObjUI.heartBeatOffset = currentStep;
+    }
+    chrono::duration<double, milli> elapsedTimeHeart = currentTime - ObjUI.heartRateLastSampleTime;
+    if (elapsedTimeHeart.count() > ObjUI.heartRateInterval)
+    {
+        cout << "Heart rate refreshed..." << endl;
         System.batteryLevel = System.batteryLevel - System.depletedRate;
 
         ObjUI.heartRateLastSampleTime = currentTime;
         ObjUI.heartRateInterval = randomInterval;
 
-        uniform_real_distribution<float> distribution(50, 85);
-        int heartRate = distribution(rSeed);
-
-        ObjUI.heartRateValue = heartRate;
+        ObjUI.heartRateValue = heartRate + ObjUI.heartBeatOffset;
+        ObjUI.heartBeatOffset = ObjUI.heartBeatOffset - heartRateOffsetDecay;
         stringstream hr;
         hr << heartRate << " bpm";
         return hr.str();

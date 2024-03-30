@@ -99,8 +99,12 @@ struct UI_Object
     bool isHeartBeating = false;
     bool isHeartBeatUp = true;
 
-    int stepCount = 990;
+    int stepCount = 0;
+    int stepLastSampleCount = 0;
     bool lastStepIsLeft = false;
+    float stepSamplePeriod = 5000;
+
+    int heartBeatOffset = 0;
 
     chrono::high_resolution_clock::time_point animStartTime, heartRateLastSampleTime, stepLastSampleTime;
 

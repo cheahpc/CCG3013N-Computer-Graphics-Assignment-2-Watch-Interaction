@@ -64,8 +64,6 @@ void renderMaster()
     // Charging
     renderCharging(); // Draw the charging UI
 
-    
-
     // Help
     renderHelp(); // Draw the help
 
