@@ -96,8 +96,38 @@ void renderCharging()
 
 void renderChargingDock()
 {
-    // ObjCharging.dock.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
+    ObjCharging.dock.setOpacity(100);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_2);
+    ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH, DOCK_HEIGHT, DOCK_ROUND_RADIUS);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_3);
+    ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH - 20, DOCK_HEIGHT - 20, DOCK_ROUND_RADIUS - 10);
 
+    ObjCharging.dock.setColor(COLOR_GOLD);
+    ObjCharging.dock.setOpacity(20);
+    ObjCharging.dock.drawCircle_Line(DOCK_WIDTH / 4, 0, 360, 10);
+
+    ObjCharging.dock.setOpacity(100);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN);
+    ObjCharging.dock.drawCircle_Fill(80, 40, 50);
+    ObjCharging.dock.drawCircle_Fill(80, 130, 140);
+    ObjCharging.dock.drawCircle_Fill(80, 220, 230);
+    ObjCharging.dock.drawCircle_Fill(80, 310, 320);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_2);
+    ObjCharging.dock.drawRect_Fill(5, DOCK_HEIGHT - 20);
+    ObjCharging.dock.drawRect_Fill(DOCK_WIDTH - 20, 5);
+
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_3);
+    ObjCharging.dock.drawCircle_Fill(30, 0, 360);
+    ObjCharging.dock.setColor(COLOR_GOLD);
+    ObjCharging.dock.drawCircle_Fill(10, 0, 360);
+
+    ObjCharging.dockWire.translateTo(ObjCharging.dock.anchorX + WINDOWS_WIDTH / 2 + DOCK_WIDTH / 2, ObjCharging.dock.anchorY);
+    ObjCharging.dockWire.setColor(COLOR_THEME_GREEN_DARK_2);
+    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 40);
+    ObjCharging.dockWire.setColor(COLOR_OLIVE);
+    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 20);
+    ObjCharging.dockWire.setColor(COLOR_BRONZE);
+    ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 5);
 }
 
 #endif

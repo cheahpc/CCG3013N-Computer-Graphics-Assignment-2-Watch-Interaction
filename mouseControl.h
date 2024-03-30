@@ -3,21 +3,37 @@
 
 void mouseControl(GLint button, GLint state, int x, int y)
 {
-    // Get mouse position
+    // Update Mouse position & object area
     updateMouse(x, y);
-
+    updateObjArea();
     switch (button)
     {
     case GLUT_LEFT_BUTTON:
         if (state == GLUT_DOWN)
         {
+            // Dial Area
+            if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.dialX, ObjArea.dialY))
+            {
+                cout << "Watch dial pressed..." << endl;
+                // Toggle dial state
+                // ObjWatch.Dial.isPressed = !ObjWatch.Dial.isPressed;
+            }
 
-            GLfloat btnX[2] = {WATCH_BODY_WIDTH / 2,
-                               (WATCH_BODY_WIDTH / 2) + WATCH_BUTTON_WIDTH / 2};
-            GLfloat btnY[2] = {WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2,
-                               WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2};
+            // Dock Area, !Button Area, !Body Area
+            if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.dockX, ObjArea.dockY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.btnX, ObjArea.btnY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.bodyX, ObjArea.bodyY))
+            {
+                cout << "Charging dock pressed..." << endl;
+                // Toggle charging state
+                Mouse.leftDown = true;
+                ObjCharging.isDragging = true;
+                Mouse.lastMouseX = Mouse.mouseX;
+                Mouse.lastMouseY = Mouse.mouseY;
+                ObjCharging.dockInitialX = ObjCharging.dock.anchorX;
+                ObjCharging.dockInitialY = ObjCharging.dock.anchorY;
+            }
+
             // Button Area
-            if (inArea(mouse.mouseX, mouse.mouseY, btnX, btnY))
+            if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.btnX, ObjArea.btnY))
             {
                 cout << "Watch button pressed..." << endl;
                 // Check if the button is animating
@@ -27,7 +43,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
                     if (!isBusyAnimating(ObjWatch.button))
                     {
-                        mouse.leftDown = true;
+                        Mouse.leftDown = true;
                         ObjWatch.Button.isDown = true;
                         toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
                         ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
@@ -40,7 +56,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 default:
                     if (!isBusyAnimating(ObjWatch.button))
                     {
-                        mouse.leftDown = true;
+                        Mouse.leftDown = true;
                         ObjWatch.Button.isDown = true;
                         toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
                         ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
@@ -58,7 +74,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 GLfloat comp4Y[2] = {COMPLICATION_Y_POS_4 - COMPLICATION_RADIUS,
                                      COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
 
-                if (inArea(mouse.mouseX, mouse.mouseY, comp4X, comp4Y))
+                if (mouseInArea(Mouse.mouseX, Mouse.mouseY, comp4X, comp4Y))
                 {
                     cout << "Complication 4 pressed..." << endl;
                     // Toggle 24Hr format
@@ -68,7 +84,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 // Heart Rate Monitor Area
                 GLfloat hrX[2] = {10, 190};
                 GLfloat hrY[2] = {140, 210};
-                if (inArea(mouse.mouseX, mouse.mouseY, hrX, hrY))
+                if (mouseInArea(Mouse.mouseX, Mouse.mouseY, hrX, hrY))
                 {
                     cout << "Heart Rate Monitor pressed..." << endl;
                     // Toggle Heart Beat Animation
@@ -81,15 +97,15 @@ void mouseControl(GLint button, GLint state, int x, int y)
             GLfloat noX[2] = {-180, 0};
             GLfloat yesNoY[2] = {-170, -70};
 
-            // Check if mouse is within the Yes No area
+            // Check if Mouse is within the Yes No area
             if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
             {
-                if (inArea(mouse.mouseX, mouse.mouseY, yesX, yesNoY))
+                if (mouseInArea(Mouse.mouseX, Mouse.mouseY, yesX, yesNoY))
                 {
                     cout << "Yes pressed..." << endl;
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
                 }
-                else if (inArea(mouse.mouseX, mouse.mouseY, noX, yesNoY))
+                else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, noX, yesNoY))
                 {
                     cout << "No pressed..." << endl;
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
@@ -98,10 +114,13 @@ void mouseControl(GLint button, GLint state, int x, int y)
         }
         if (state == GLUT_UP)
         {
+            Mouse.leftDown = false;
             // Reset button state
-            mouse.leftDown = false;
             ObjWatch.Button.isDown = false;
             toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
+
+            // Charging dock area
+            ObjCharging.isDragging = false;
         }
         break;
     case GLUT_RIGHT_BUTTON:
@@ -116,8 +135,31 @@ void mouseControl(GLint button, GLint state, int x, int y)
 }
 void mouseMoveControl(GLint x, GLint y)
 {
-    // Update mouse position
+    // Update Mouse position & object area
     updateMouse(x, y);
+    updateObjArea();
+    if (Mouse.leftDown && ObjCharging.isDragging)
+    {
+        int dX = Mouse.mouseX - Mouse.lastMouseX;
+        int dY = Mouse.mouseY - Mouse.lastMouseY;
+        ObjCharging.dock.translateTo(ObjCharging.dockInitialX + dX, ObjCharging.dockInitialY + dY);
+
+        // Check if out of bound
+        if ((ObjCharging.dock.anchorX < -WINDOWS_WIDTH / 2))
+            ObjCharging.dock.translateTo(-WINDOWS_WIDTH / 2, ObjCharging.dock.anchorY);
+        if ((ObjCharging.dock.anchorX > WINDOWS_WIDTH / 2))
+            ObjCharging.dock.translateTo(WINDOWS_WIDTH / 2, ObjCharging.dock.anchorY);
+        if ((ObjCharging.dock.anchorY < -WINDOWS_HEIGHT / 2))
+            ObjCharging.dock.translateTo(ObjCharging.dock.anchorX, -WINDOWS_HEIGHT / 2);
+        if ((ObjCharging.dock.anchorY > WINDOWS_HEIGHT / 2))
+            ObjCharging.dock.translateTo(ObjCharging.dock.anchorX, WINDOWS_HEIGHT / 2);
+
+        // Toggle charging state
+        if (objInArea(ObjArea.bodyX, ObjArea.bodyY, ObjArea.dockX, ObjArea.dockY))
+            System.isCharging = true;
+        else
+            System.isCharging = false;
+    }
 
     glutPostRedisplay();
 }

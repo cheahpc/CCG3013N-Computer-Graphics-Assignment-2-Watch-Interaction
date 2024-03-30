@@ -43,6 +43,9 @@ void renderMaster()
     // Backdrop
     renderBackdrop(); // Draw the backdrop
 
+    // Charging Dock
+    renderChargingDock(); // Draw the charging dock
+
     // Watch
     renderWatchStrap();
     renderWatchDial();   // Draw the watch dial

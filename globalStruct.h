@@ -159,8 +159,11 @@ struct Charging_Object
     Object battery = Object(0, 20, 1, 0, COLOR_WHITE, 0);
     Object chargingText = Object(0, 0, 0.40, 0, COLOR_WHITE, 0);
 
-    Object dock = Object(0, 0, 1, 0, COLOR_BLACK_3, 100);
-    Object dockWire = Object(0, 0, 1, 0, COLOR_BLACK_1, 100);
+    Object dock = Object(WINDOWS_WIDTH/2, -WINDOWS_HEIGHT/2, 1, 0, COLOR_BLACK_3, 100);
+    Object dockWire = Object(WINDOWS_WIDTH / 2, -WINDOWS_HEIGHT / 2, 1, 0, COLOR_BLACK_1, 100);
+
+    bool isDragging = false;
+    int dockInitialX, dockInitialY;
 
     AnimState chargingAnimState = AnimState::IDLE;
     chrono::high_resolution_clock::time_point chargingAnimStartTime;

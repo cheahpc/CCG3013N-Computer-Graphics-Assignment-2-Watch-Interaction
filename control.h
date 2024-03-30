@@ -94,22 +94,57 @@ string getHeartRate()
 }
 struct Mouse
 {
-    GLint mouseX, mouseY;
+    int mouseX, mouseY;
+    int lastMouseX, lastMouseY;
+
     chrono::high_resolution_clock::time_point leftDownTime, rightDownTime;
     bool leftDown, rightDown;
-} mouse;
+} Mouse;
 
 void updateMouse(int x, int y)
 {
-    // Get mouse position, convert to canvas position
-    mouse.mouseX = x - WINDOWS_WIDTH / 2;
-    mouse.mouseY = -y + WINDOWS_HEIGHT / 2;
+    // Get Mouse position, convert to canvas position
+    Mouse.mouseX = x - WINDOWS_WIDTH / 2;
+    Mouse.mouseY = -y + WINDOWS_HEIGHT / 2;
 }
 
-bool inArea(GLint x, GLint y, GLfloat *areaX, GLfloat *areaY)
+struct ObjectArea{
+    GLfloat bodyX[2] = {-WATCH_BODY_WIDTH / 2, WATCH_BODY_WIDTH / 2};
+    GLfloat bodyY[2] = {-WATCH_BODY_HEIGHT / 2, WATCH_BODY_HEIGHT / 2};
+
+    // Button Area
+    GLfloat btnX[2] = {WATCH_BODY_WIDTH / 2, (WATCH_BODY_WIDTH / 2) + WATCH_BUTTON_WIDTH / 2};
+    GLfloat btnY[2] = {WATCH_BUTTON_CENTER_Y - WATCH_BUTTON_HEIGHT / 2, WATCH_BUTTON_CENTER_Y + WATCH_BUTTON_HEIGHT / 2};
+
+    // Dial Area
+    GLfloat dialX[2] = {WATCH_DIAL_CENTER_X - WATCH_DIAL_WIDTH / 2, WATCH_DIAL_CENTER_X + WATCH_DIAL_WIDTH / 2};
+    GLfloat dialY[2] = {WATCH_DIAL_CENTER_Y - WATCH_DIAL_HEIGHT / 2, WATCH_DIAL_CENTER_Y + WATCH_DIAL_HEIGHT / 2};
+
+    // Charging dock area
+    GLfloat dockX[2] = {ObjCharging.dock.anchorX - DOCK_WIDTH / 2, ObjCharging.dock.anchorX + DOCK_WIDTH / 2};
+    GLfloat dockY[2] = {ObjCharging.dock.anchorY - DOCK_HEIGHT / 2, ObjCharging.dock.anchorY + DOCK_HEIGHT / 2};
+} ObjArea;
+
+void updateObjArea(){
+    // Charging dock area
+    ObjArea.dockX[0] = ObjCharging.dock.anchorX - DOCK_WIDTH / 2;
+    ObjArea.dockX[1] = ObjCharging.dock.anchorX + DOCK_WIDTH / 2;
+    ObjArea.dockY[0] = ObjCharging.dock.anchorY - DOCK_HEIGHT / 2;
+    ObjArea.dockY[1] = ObjCharging.dock.anchorY + DOCK_HEIGHT / 2;
+}
+
+bool mouseInArea(GLint x, GLint y, GLfloat *areaX, GLfloat *areaY)
 {
     if (x >= areaX[0] && x <= areaX[1] && y >= areaY[0] && y <= areaY[1])
         return true;
     return false;
 }
+
+bool objInArea(GLfloat *objX, GLfloat *objY, GLfloat *areaX, GLfloat *areaY)
+{
+    if (objX[0] >= areaX[0] && objX[1] <= areaX[1] && objY[0] >= areaY[0] && objY[1] <= areaY[1])
+        return true;
+    return false;
+}
+
 #endif
