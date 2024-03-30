@@ -8,6 +8,7 @@
 #include "renderWatch.h"
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
+#include "renderCharging.h"
 #include "renderUI.h"
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
@@ -56,6 +57,9 @@ void renderMaster()
 
     // Power Off
     renderPowerOff(); // Draw the power off UI
+
+    // Charging
+    renderCharging(); // Draw the charging UI
 
     // Legend
     renderLegend(); // Draw the legend

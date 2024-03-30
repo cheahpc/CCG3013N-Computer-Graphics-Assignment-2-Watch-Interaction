@@ -43,6 +43,7 @@ void renderPowerOn()
         {
             cout << "Power on triggered..." << endl;
             ObjPowerOn.pOnAnimState = AnimState::ANIMATING;
+            System.currentScreen = Screen::POWERING_ON;
             toggleAnimationFlag(ObjPowerOn.bg, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.indicator, false, false, false, true, false);
             toggleAnimationFlag(ObjPowerOn.logo, true, false, false, true, false);
@@ -112,6 +113,7 @@ void renderPowerOn()
             {
                 // Reset animation state
                 System.state = SystemState::ON;
+                System.currentScreen = Screen::MAIN;
                 ObjPowerOn.pOnAnimState = AnimState::IDLE;
                 cout << "Boot completed..." << endl;
 

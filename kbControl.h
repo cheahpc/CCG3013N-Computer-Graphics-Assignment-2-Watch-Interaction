@@ -58,14 +58,17 @@ void kbControl_Main(unsigned char key, int x, int y)
         // System.state = SystemState::POWERING_ON;
 
         // ---- Test After Power On Animation
-        System.state = SystemState::ON;
-        ObjUI.animState = AnimState::IDLE;
+        // System.state = SystemState::ON;
+        // ObjUI.animState = AnimState::IDLE;
 
         // Test Yes on Power Off Confirmation
         // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
 
         // Test No on Power Off Confirmation
         // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
+
+        // Test Charging
+        System.isCharging = !System.isCharging;
 
         break;
 

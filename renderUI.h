@@ -35,7 +35,7 @@ void renderMainUI()
         float heartBeatScaleVal = ObjUI.isHeartBeatUp ? 0.7 : -0.7;
 
         // Color Value
-        const float *batteryLevelColor = (System.batteryLevel > 40)   ? COLOR_GREEN
+        const float *batteryLevelColor = (System.batteryLevel > 40)   ? COLOR_THEME_GREEN
                                          : (System.batteryLevel > 15) ? COLOR_ORANGE
                                                                       : COLOR_RED;
 

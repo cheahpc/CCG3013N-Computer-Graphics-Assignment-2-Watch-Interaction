@@ -35,7 +35,8 @@
 		"fstream": "cpp",
 		"sstream": "cpp",
 		"stdexcept": "cpp",
-		"string": "cpp"
+		"string": "cpp",
+		"iomanip": "cpp"
 	},
 	"cSpell.words": ["EASEINOUT", "EASEOUT", "endregion", "Opact"],
 	"cSpell.ignoreWords": ["EASEIN", "Rotatef", "Scalef", "Translatef"]
