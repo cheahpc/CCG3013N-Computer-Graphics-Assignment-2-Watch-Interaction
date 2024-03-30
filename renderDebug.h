@@ -3,7 +3,6 @@
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 
-
 void renderGrid()
 {
     // Sub 10
@@ -27,8 +26,8 @@ void renderGrid()
 
 void renderDebug()
 {
-    GLint x[4] = {-150, 150, 150, -150};
-    GLint y[4] = {150, 150, -150, -150};
+    GLfloat x[4] = {-150, 150, 150, -150};
+    GLfloat y[4] = {150, 150, -150, -150};
     // ObjDebug.test.setOpacity(40);
     // ObjDebug.test.scaleTo(0.4);
     // ObjDebug.test.rotateTo(25);
@@ -54,12 +53,12 @@ void renderDebugControlTest()
 {
     GLfloat xVal, yVal, rotateVal, scaleVal, opacityVal, orbitVal;
     renderGrid(); // For references only
-    GLint x[4] = {-10, -10, 10, 10};
-    GLint y[4] = {-10, 10, 10, -10};
+    // GLfloat x[4] = {-10, -10, 10, 10};
+    // GLfloat y[4] = {-10, 10, 10, -10};
 
     // ObjDebug.ctrlTest1.drawCircle_Line(50, 25, 330, 80);
-    ObjDebug.ctrlTest1.drawQuad_Fill(x, y);
-    ObjDebug.ctrlTest2.drawPoint(10);
+    // ObjDebug.ctrlTest1.drawQuad_Fill(x, y);
+    // ObjDebug.ctrlTest2.drawPoint(10);
 
     // if (ObjDebug.ctrlTest2.anchorX == 100 && ObjDebug.ctrlTest2.anchorY == 100)
     //     xVal = yVal = -200;

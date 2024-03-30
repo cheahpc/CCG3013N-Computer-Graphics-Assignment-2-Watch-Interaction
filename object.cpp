@@ -6,8 +6,8 @@
 #endif
 
 using namespace std;
+
 #pragma region Constructors
-// Default constructor
 Object::Object()
 {
 	this->anchorX = 0;
@@ -45,7 +45,6 @@ Object::Object()
 	this->aOpacityState = this->IDLE;
 	this->aOrbitState = this->IDLE;
 }
-
 Object::Object(GLfloat anchorX, GLfloat anchorY)
 {
 	this->anchorX = anchorX;
@@ -84,7 +83,6 @@ Object::Object(GLfloat anchorX, GLfloat anchorY)
 	this->aOpacityState = this->IDLE;
 	this->aOrbitState = this->IDLE;
 }
-
 Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity)
 {
 	this->anchorX = anchorX;
@@ -123,7 +121,6 @@ Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat or
 	this->aOpacityState = this->IDLE;
 	this->aOrbitState = this->IDLE;
 }
-
 Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat orientation, const GLfloat *color, GLfloat opacity, GLfloat orbitRadius, GLfloat orbitAngle)
 {
 	this->anchorX = anchorX;
@@ -162,88 +159,82 @@ Object::Object(GLfloat anchorX, GLfloat anchorY, GLfloat scaleFactor, GLfloat or
 	this->aOpacityState = this->IDLE;
 	this->aOrbitState = this->IDLE;
 }
-
-// Destructor
 Object::~Object()
 {
 }
-
 #pragma endregion Constructors
 
 // 2D drawing functions
 #pragma region Points
-
 void Object::drawPoint(GLfloat size)
 {
 	glStartInit();
 	glPointSize(size);
 	glBegin(GL_POINTS);
-	glVertex2i(0, 0);
+	glVertex2f(0, 0);
 	glEndReset();
 }
-
-void Object::drawPoint(GLint x, GLint y, GLfloat size)
+void Object::drawPoint(GLfloat x, GLfloat y, GLfloat size)
 {
 	glStartInit();
 	glPointSize(size);
 	glBegin(GL_POINTS);
-	glVertex2i(x, y);
+	glVertex2f(x, y);
 	glEndReset();
 }
-void Object::drawPoint(const GLint *v, GLfloat size)
+void Object::drawPoint(const GLfloat *v, GLfloat size)
 {
 	drawPoint(v[0], v[1], size);
 }
 #pragma endregion Points
 
 #pragma region Line
-void Object::drawLine(GLint x1, GLint y1, GLint x2, GLint y2, GLfloat thickness)
+void Object::drawLine(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat thickness)
 {
 	glStartInit();
 	glLineWidth(thickness);
 	glBegin(GL_LINES);
-	glVertex2i(x1, y1);
-	glVertex2i(x2, y2);
+	glVertex2f(x1, y1);
+	glVertex2f(x2, y2);
 	glEndReset();
 }
-void Object::drawLine(const GLint *v1, const GLint *v2, GLfloat thickness)
+void Object::drawLine(const GLfloat *v1, const GLfloat *v2, GLfloat thickness)
 {
 	drawLine(v1[0], v1[1], v2[0], v2[1], thickness);
 }
 #pragma endregion Line
 
 #pragma region Triangle
-void Object::drawTriangle_Fill(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3)
+void Object::drawTriangle_Fill(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3)
 {
 	glStartInit();
 	glBegin(GL_TRIANGLES);
-	glVertex2i(x1, y1);
-	glVertex2i(x2, y2);
-	glVertex2i(x3, y3);
+	glVertex2f(x1, y1);
+	glVertex2f(x2, y2);
+	glVertex2f(x3, y3);
 	glEndReset();
 }
-void Object::drawTriangle_Fill(const GLint *x, const GLint *y)
+void Object::drawTriangle_Fill(const GLfloat *x, const GLfloat *y)
 {
 	drawTriangle_Fill(x[0], y[0], x[1], y[1], x[2], y[2]);
 }
-void Object::drawTriangle_Line(GLint x1, GLint y1, GLint x2, GLint y2, GLint x3, GLint y3, GLfloat thickness)
+void Object::drawTriangle_Line(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3, GLfloat thickness)
 {
 	glStartInit();
 	glLineWidth(thickness);
 	glBegin(GL_LINE_LOOP);
-	glVertex2i(x1, y1);
-	glVertex2i(x2, y2);
-	glVertex2i(x3, y3);
+	glVertex2f(x1, y1);
+	glVertex2f(x2, y2);
+	glVertex2f(x3, y3);
 	glEndReset();
 }
-void Object::drawTriangle_Line(const GLint *x, const GLint *y, GLfloat thickness)
+void Object::drawTriangle_Line(const GLfloat *x, const GLfloat *y, GLfloat thickness)
 {
 	drawTriangle_Line(x[0], y[0], x[1], y[1], x[2], y[2], thickness);
 }
 #pragma endregion Triangle
 
 #pragma region Rectangle
-
 void Object::drawRect_Fill(GLfloat width, GLfloat height)
 {
 	GLfloat x[2] = {(-width / 2), (width / 2)};
@@ -256,7 +247,6 @@ void Object::drawRect_Fill(GLfloat width, GLfloat height)
 	glVertex2f(x[1], y[0]);
 	glEndReset();
 }
-
 void Object::drawRect_Line(GLfloat width, GLfloat height, GLfloat thickness)
 {
 	GLfloat outerX[2] = {(-width / 2) - (thickness / 2), (width / 2) + (thickness / 2)};
@@ -290,54 +280,53 @@ void Object::drawRect_Line(GLfloat width, GLfloat height, GLfloat thickness)
 	glVertex2f(innerX[1], outerY[0]);
 
 	glEndReset();
-};
-
+}
 #pragma endregion Rectangle
 
 #pragma region Quad
-void Object::drawQuad_Fill(GLint x1, GLint y1,
-						   GLint x2, GLint y2,
-						   GLint x3, GLint y3,
-						   GLint x4, GLint y4)
+void Object::drawQuad_Fill(GLfloat x1, GLfloat y1,
+						   GLfloat x2, GLfloat y2,
+						   GLfloat x3, GLfloat y3,
+						   GLfloat x4, GLfloat y4)
 {
 	glStartInit(); // Apply settings
 	glBegin(GL_QUADS);
-	glVertex2i(x1, y1);
-	glVertex2i(x2, y2);
-	glVertex2i(x3, y3);
-	glVertex2i(x4, y4);
+	glVertex2f(x1, y1);
+	glVertex2f(x2, y2);
+	glVertex2f(x3, y3);
+	glVertex2f(x4, y4);
 	glEndReset();
 }
 
-void Object::drawQuad_Fill(const GLint *x, const GLint *y)
+void Object::drawQuad_Fill(const GLfloat *x, const GLfloat *y)
 {
 	this->drawQuad_Fill(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3]);
 }
-void Object::drawQuad_Line(GLint x1, GLint y1,
-						   GLint x2, GLint y2,
-						   GLint x3, GLint y3,
-						   GLint x4, GLint y4,
+void Object::drawQuad_Line(GLfloat x1, GLfloat y1,
+						   GLfloat x2, GLfloat y2,
+						   GLfloat x3, GLfloat y3,
+						   GLfloat x4, GLfloat y4,
 						   GLfloat thickness)
 {
 	glStartInit(); // Apply settings
 
 	glLineWidth(thickness);
 	glBegin(GL_LINES);
-	glVertex2i(x1, y1);
-	glVertex2i(x2, y2);
+	glVertex2f(x1, y1);
+	glVertex2f(x2, y2);
 
-	glVertex2i(x2, y2);
-	glVertex2i(x3, y3);
+	glVertex2f(x2, y2);
+	glVertex2f(x3, y3);
 
-	glVertex2i(x3, y3);
-	glVertex2i(x4, y4);
+	glVertex2f(x3, y3);
+	glVertex2f(x4, y4);
 
-	glVertex2i(x4, y4);
-	glVertex2i(x1, y1);
+	glVertex2f(x4, y4);
+	glVertex2f(x1, y1);
 	glEndReset();
 }
-void Object::drawQuad_Line(const GLint *x,
-						   const GLint *y,
+void Object::drawQuad_Line(const GLfloat *x,
+						   const GLfloat *y,
 						   GLfloat thickness)
 {
 	drawQuad_Line(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3], thickness);
@@ -363,7 +352,6 @@ void Object::drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDeg
 		glVertex2f((radius * cos(currentAngle)),
 				   -(radius * sin(currentAngle)));
 	}
-
 	glEndReset();
 }
 void Object::drawCircle_Line(GLfloat radius, GLfloat startDegree, GLfloat endDegree, GLfloat thickness)
@@ -633,6 +621,68 @@ void Object::drawHeart_Fill(GLfloat size)
 }
 #pragma endregion Heart
 
+#pragma region Battery
+void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, const GLfloat *batColor, const GLfloat *batLvlColor)
+{
+	// Battery properties
+	GLfloat width = size, height = size * 2;
+	GLfloat thickness = size * 0.12;
+	GLfloat radius = thickness;
+
+	GLfloat capCenterX = 0;
+	GLfloat capCenterY = (height / 2) + thickness * 2;
+	GLfloat capWidth = width * 0.45;
+
+	GLfloat originalColor = this->color[0];
+
+	// Draw the battery level
+	setColor(batLvlColor);
+	GLfloat levelHeight = (height - thickness) * batteryLevel / 100;
+	translateTo(0, -height / 2 + levelHeight / 2 + thickness / 2);
+	drawRect_Fill(width - thickness, levelHeight);
+	setColor(batColor);
+
+	// Draw the battery head
+	translateTo(capCenterX, capCenterY);
+	GLfloat angle = 90 * M_PI / 180; // get the angle in radian
+	GLfloat x[2], y[2], currentAngle;
+	GLfloat capRadius = 2 * (radius * 0.75);
+	GLfloat innerRadius = 4;
+	x[0] = -capWidth / 2 + radius;
+	x[1] = capWidth / 2 - radius;
+	y[0] = -radius * 0.75;
+	y[1] = radius * 0.75;
+	// Center piece
+	drawQuad_Fill(x[0], y[0], x[0], y[1], x[1], y[1], x[1], y[0]);
+	// Cap left corner
+	glStartInit();
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x[0], y[0]); // center of circle
+	for (int i = 0; i <= 30; i++)
+	{
+		GLfloat currentAngle = i * angle / 30;
+		glVertex2f(x[0] - (capRadius * cos(currentAngle)),
+				   y[0] + (capRadius * sin(currentAngle)));
+	}
+	glEndReset();
+	// Cap right corner
+	glStartInit();
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x[1], y[0]); // center of circle
+	for (int i = 0; i <= 30; i++)
+	{
+		GLfloat currentAngle = i * angle / 30;
+		glVertex2f(x[1] + (capRadius * cos(currentAngle)),
+				   y[0] + (capRadius * sin(currentAngle)));
+	}
+	glEndReset();
+
+	// Draw the battery body
+	translateTo(0, 0);
+	drawRoundedRect_Line(width, height, radius, thickness);
+}
+#pragma endregion Battery
+
 #pragma region 2D Transformation
 // 2D Transformation
 void Object::translateTo(GLfloat x, GLfloat y)
@@ -729,7 +779,7 @@ void Object::drawText(char *string, GLfloat size)
 	this->glEndReset();
 }
 
-void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
+void Object::drawGrid(GLfloat gridSpace, GLfloat lineThickness, GLfloat length)
 {
 	glStartInit();
 	glLineWidth(lineThickness);
@@ -739,13 +789,13 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 	{
 		if (length == 0)
 		{
-			glVertex2i(i, -WINDOWS_HEIGHT / 2);
-			glVertex2i(i, WINDOWS_HEIGHT / 2);
+			glVertex2f(i, -WINDOWS_HEIGHT / 2);
+			glVertex2f(i, WINDOWS_HEIGHT / 2);
 		}
 		else
 		{
-			glVertex2i(i, -length);
-			glVertex2i(i, length);
+			glVertex2f(i, -length);
+			glVertex2f(i, length);
 		}
 	}
 	// Negative x-axis lines
@@ -753,13 +803,13 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 	{
 		if (length == 0)
 		{
-			glVertex2i(i, -WINDOWS_HEIGHT / 2);
-			glVertex2i(i, WINDOWS_HEIGHT / 2);
+			glVertex2f(i, -WINDOWS_HEIGHT / 2);
+			glVertex2f(i, WINDOWS_HEIGHT / 2);
 		}
 		else
 		{
-			glVertex2i(i, -length);
-			glVertex2i(i, length);
+			glVertex2f(i, -length);
+			glVertex2f(i, length);
 		}
 	}
 	// Positive y-axis lines
@@ -767,13 +817,13 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 	{
 		if (length == 0)
 		{
-			glVertex2i(-WINDOWS_WIDTH / 2, i);
-			glVertex2i(WINDOWS_WIDTH / 2, i);
+			glVertex2f(-WINDOWS_WIDTH / 2, i);
+			glVertex2f(WINDOWS_WIDTH / 2, i);
 		}
 		else
 		{
-			glVertex2i(-length, i);
-			glVertex2i(length, i);
+			glVertex2f(-length, i);
+			glVertex2f(length, i);
 		}
 	}
 	// Negative y-axis lines
@@ -781,13 +831,13 @@ void Object::drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length)
 	{
 		if (length == 0)
 		{
-			glVertex2i(-WINDOWS_WIDTH / 2, i);
-			glVertex2i(WINDOWS_WIDTH / 2, i);
+			glVertex2f(-WINDOWS_WIDTH / 2, i);
+			glVertex2f(WINDOWS_WIDTH / 2, i);
 		}
 		else
 		{
-			glVertex2i(-length, i);
-			glVertex2i(length, i);
+			glVertex2f(-length, i);
+			glVertex2f(length, i);
 		}
 	}
 

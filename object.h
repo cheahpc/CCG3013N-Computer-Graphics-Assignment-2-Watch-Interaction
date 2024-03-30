@@ -19,38 +19,38 @@ public:
 	// 2D primitives
 	// Points
 	void drawPoint(GLfloat size);
-	void drawPoint(GLint x, GLint y, GLfloat size);
-	void drawPoint(const GLint *v, GLfloat size);
+	void drawPoint(GLfloat x, GLfloat y, GLfloat size);
+	void drawPoint(const GLfloat *v, GLfloat size);
 	// Line
-	void drawLine(GLint x1, GLint y1,
-				  GLint x2, GLint y2,
+	void drawLine(GLfloat x1, GLfloat y1,
+				  GLfloat x2, GLfloat y2,
 				  GLfloat thickness);
-	void drawLine(const GLint *v1, const GLint *v2, GLfloat thickness);
+	void drawLine(const GLfloat *v1, const GLfloat *v2, GLfloat thickness);
 	// Triangle
-	void drawTriangle_Fill(GLint x1, GLint y1,
-						   GLint x2, GLint y2,
-						   GLint x3, GLint y3);
-	void drawTriangle_Fill(const GLint *x, const GLint *y);
-	void drawTriangle_Line(GLint x1, GLint y1,
-						   GLint x2, GLint y2,
-						   GLint x3, GLint y3,
+	void drawTriangle_Fill(GLfloat x1, GLfloat y1,
+						   GLfloat x2, GLfloat y2,
+						   GLfloat x3, GLfloat y3);
+	void drawTriangle_Fill(const GLfloat *x, const GLfloat *y);
+	void drawTriangle_Line(GLfloat x1, GLfloat y1,
+						   GLfloat x2, GLfloat y2,
+						   GLfloat x3, GLfloat y3,
 						   GLfloat thickness);
-	void drawTriangle_Line(const GLint *x, const GLint *y, GLfloat thickness);
+	void drawTriangle_Line(const GLfloat *x, const GLfloat *y, GLfloat thickness);
 	// Rectangle
 	void drawRect_Fill(GLfloat width, GLfloat height);
 	void drawRect_Line(GLfloat width, GLfloat height, GLfloat thickness);
 	// Quad
-	void drawQuad_Fill(GLint x1, GLint y1,
-					   GLint x2, GLint y2,
-					   GLint x3, GLint y3,
-					   GLint x4, GLint y4);
-	void drawQuad_Fill(const GLint *x, const GLint *y);
-	void drawQuad_Line(GLint x1, GLint y1,
-					   GLint x2, GLint y2,
-					   GLint x3, GLint y3,
-					   GLint x4, GLint y4,
+	void drawQuad_Fill(GLfloat x1, GLfloat y1,
+					   GLfloat x2, GLfloat y2,
+					   GLfloat x3, GLfloat y3,
+					   GLfloat x4, GLfloat y4);
+	void drawQuad_Fill(const GLfloat *x, const GLfloat *y);
+	void drawQuad_Line(GLfloat x1, GLfloat y1,
+					   GLfloat x2, GLfloat y2,
+					   GLfloat x3, GLfloat y3,
+					   GLfloat x4, GLfloat y4,
 					   GLfloat thickness);
-	void drawQuad_Line(const GLint *x, const GLint *y, GLfloat thickness);
+	void drawQuad_Line(const GLfloat *x, const GLfloat *y, GLfloat thickness);
 
 	// Circles
 	void drawCircle_Fill(GLfloat radius, GLfloat startDegree, GLfloat endDegree);
@@ -62,6 +62,9 @@ public:
 
 	// Heart
 	void drawHeart_Fill(GLfloat size);
+
+	// Battery
+	void drawBattery_Fill(GLfloat size, GLfloat batteryLevel, const GLfloat *batColor, const GLfloat *batLvlColor);
 
 	// 2D transformation
 	void translateTo(GLfloat x, GLfloat y);
@@ -81,7 +84,7 @@ public:
 
 	// Utilities
 	void drawText(char *string, GLfloat size);
-	void drawGrid(GLint gridSpace, GLfloat lineThickness, GLfloat length);
+	void drawGrid(GLfloat gridSpace, GLfloat lineThickness, GLfloat length);
 
 	// Other Control
 	void setOpacity(GLfloat opacity);
