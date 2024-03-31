@@ -57,7 +57,10 @@ void renderMainUI()
         strcpy(dateStr, getDate().c_str());
 
         // ---- Drawing
+        // Background
         ObjUI.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
+
+        // DateTime
         ObjUI.time.drawText(timeStr, 9);
         ObjUI.dateBox.drawRoundedRect_Fill(DATE_BOX_WIDTH, DATE_BOX_HEIGHT, DATE_BOX_ROUND_RADIUS);
         ObjUI.date.drawText(dateStr, 5);
@@ -96,7 +99,24 @@ void renderMainUI()
         ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 4);
 
-        ObjUI.comp1Battery.drawBattery_Fill(20, System.batteryLevel, System.isCharging, COLOR_WHITE, batteryLevelColor);
+        if (ObjUI.isBatteryPercentageVisible)
+        {
+            stringstream batteryLevelss;
+            batteryLevelss << (int)System.batteryLevel << "%" << endl;
+            char batteryLevelStr[5];
+            strcpy(batteryLevelStr, batteryLevelss.str().c_str());
+            if (System.batteryLevel < 10)
+                ObjUI.comp1BatteryText.translateTo(COMPLICATION_X_POS - 14, 185);
+            else if (System.batteryLevel < 100)
+                ObjUI.comp1BatteryText.translateTo(COMPLICATION_X_POS - 22, 185);
+            else
+                ObjUI.comp1BatteryText.translateTo(COMPLICATION_X_POS - 30, 185);
+            ObjUI.comp1BatteryText.drawText(batteryLevelStr, COMP1_BATTERY_TEXT_SIZE);
+        }
+        else
+        {
+            ObjUI.comp1Battery.drawBattery_Fill(20, System.batteryLevel, System.isCharging, COLOR_WHITE, batteryLevelColor);
+        }
         ObjUI.comp4Text.drawText(hrFormatStr, COMP4_TEXT_SIZE);
 
         if (ObjUI.isHeartBeating)

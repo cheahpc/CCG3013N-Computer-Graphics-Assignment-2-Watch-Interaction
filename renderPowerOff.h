@@ -352,10 +352,14 @@ void renderPowerOff()
             ObjPowerOff.pOffAnimState = AnimState::IDLE;
             System.state = SystemState::OFF;
 
-            // Reset all object
+            // Reset all object logic
             ObjUI.isHeartBeating = false;
+            ObjUI.isBatteryPercentageVisible = false;
 
+            // Reset all object opacity
+            // Bg
             ObjUI.bg.setOpacity(100);
+            // Complications
             ObjUI.complication1.setOpacity(0);
             ObjUI.complication2.setOpacity(0);
             ObjUI.complication3.setOpacity(0);
@@ -363,24 +367,36 @@ void renderPowerOff()
             ObjUI.comp1Battery.setOpacity(0);
             ObjUI.comp4Text.setOpacity(0);
 
+            // Heart rate monitor
             ObjUI.heartIcon.setOpacity(0);
             ObjUI.heartRate.setOpacity(0);
 
+            // Step counter
+            ObjUI.stepCountText.setOpacity(0);
+            ObjUI.stepStepText.setOpacity(0);
+
+            // DateTime
             ObjUI.time.setOpacity(0);
             ObjUI.dateBox.setOpacity(0);
             ObjUI.date.setOpacity(0);
 
+            // Reset all object position
+            // Bg
             ObjUI.bg.translateTo(0, 0);
+            // Complications
             ObjUI.complication1.translateTo(COMPLICATION_X_POS, COMPLICATION_Y_POS_1);
             ObjUI.complication2.translateTo(COMPLICATION_X_POS, COMPLICATION_Y_POS_1);
             ObjUI.complication3.translateTo(COMPLICATION_X_POS, COMPLICATION_Y_POS_1);
             ObjUI.complication4.translateTo(COMPLICATION_X_POS, COMPLICATION_Y_POS_1);
             ObjUI.comp4Text.translateTo(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS);
 
+            // DateTime
             ObjUI.time.translateTo(-90, 70);
             ObjUI.dateBox.translateTo(43, 20);
             ObjUI.date.translateTo(-70, 10);
 
+            // Reset all object scale
+            // Complications
             ObjUI.complication1.scaleTo(0);
             ObjUI.complication2.scaleTo(0);
             ObjUI.complication3.scaleTo(0);

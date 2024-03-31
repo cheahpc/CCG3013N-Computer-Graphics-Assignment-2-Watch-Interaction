@@ -65,9 +65,9 @@ string getHeartRate()
 {
     default_random_engine rSeed(chrono::system_clock::now().time_since_epoch().count());
 
-    uniform_int_distribution<int> distInterval(3000, 12000);
+    uniform_int_distribution<int> distInterval(4000, 7000);
     int randomInterval = distInterval(rSeed);
-    uniform_real_distribution<float> distBaseHeartRate(50, 85);
+    uniform_real_distribution<float> distBaseHeartRate(60, 75);
     int heartRate = distBaseHeartRate(rSeed);
     uniform_real_distribution<float> distHeartRateOffset(0, ObjUI.heartBeatOffset);
     int heartRateOffset = distHeartRateOffset(rSeed);
@@ -84,6 +84,7 @@ string getHeartRate()
         System.batteryLevel = System.batteryLevel - System.depletedRate;
         ObjUI.stepLastSampleTime = currentTime;
         currentStep = ObjUI.stepCount - ObjUI.stepLastSampleCount;
+        currentStep = currentStep * 1.3;
         ObjUI.stepLastSampleCount = ObjUI.stepCount;
         if (ObjUI.heartBeatOffset < currentStep)
             ObjUI.heartBeatOffset = currentStep;
@@ -128,6 +129,7 @@ void updateMouse(int x, int y)
 
 struct ObjectArea
 {
+    // Watch Area
     GLfloat bodyX[2] = {-WATCH_BODY_WIDTH / 2, WATCH_BODY_WIDTH / 2};
     GLfloat bodyY[2] = {-WATCH_BODY_HEIGHT / 2, WATCH_BODY_HEIGHT / 2};
 
@@ -146,6 +148,28 @@ struct ObjectArea
     // Strap Area
     GLfloat strapX[2] = {-WATCH_STRAP_WIDTH / 2, WATCH_STRAP_WIDTH / 2};
     GLfloat strapY[2] = {-WATCH_STRAP_HEIGHT / 2, WATCH_STRAP_HEIGHT / 2};
+
+    // Define Yes No area
+    GLfloat noX[2] = {-180, 0};
+    GLfloat yesX[2] = {0, 180};
+    GLfloat yesNoY[2] = {0, 180};
+
+    // Heart rate area
+    GLfloat heartRateX[2] = {10, 190};
+    GLfloat heartRateY[2] = {140, 210};
+
+    // Complication Area
+    GLfloat compX[2] = {COMPLICATION_X_POS - COMPLICATION_RADIUS,
+                        COMPLICATION_X_POS + COMPLICATION_RADIUS};
+    GLfloat comp1Y[2] = {COMPLICATION_Y_POS_1 - COMPLICATION_RADIUS,
+                         COMPLICATION_Y_POS_1 + COMPLICATION_RADIUS};
+    GLfloat comp2Y[2] = {COMPLICATION_Y_POS_2 - COMPLICATION_RADIUS,
+                         COMPLICATION_Y_POS_2 + COMPLICATION_RADIUS};
+    GLfloat comp3Y[2] = {COMPLICATION_Y_POS_3 - COMPLICATION_RADIUS,
+                         COMPLICATION_Y_POS_3 + COMPLICATION_RADIUS};
+    GLfloat comp4Y[2] = {COMPLICATION_Y_POS_4 - COMPLICATION_RADIUS,
+                         COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
+
 } ObjArea;
 
 void updateObjArea()

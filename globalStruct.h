@@ -40,9 +40,9 @@ struct System
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
     Screen currentScreen = Screen::NONE;
-    float batteryLevel = 2.0;
-    float chargingRate = 0.1;
-    float depletedRate = 1.5;
+    float batteryLevel = 5.0;
+    float chargingRate = 0.2;
+    float depletedRate = 0.7;
     float minimumBatteryLevel = 1;
     bool isCharging = false;
 } System;
@@ -75,36 +75,48 @@ struct Watch_Object
 
 struct UI_Object
 {
+    // BG
     Object bg = Object(0, 0, 1, 0, COLOR_THEME_GREEN_DARK_1, 100);
     Object legend = Object(0, 0, 1, 0, COLOR_BLACK, 100);
+
+    // Complication Area
     Object complication1 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_DARK_2, 0);
     Object complication2 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_DARK_2, 0);
     Object complication3 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_DARK_2, 0);
     Object complication4 = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 0, 0, COLOR_THEME_GREEN_DARK_2, 0);
 
     Object comp1Battery = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 1, 0, COLOR_WHITE, 0);
+    Object comp1BatteryText = Object(COMP1_BATTERY_TEXT_X_POS, COMP1_BATTERY_TEXT_Y_POS, 0.13, 0, COLOR_WHITE, 100);
     Object comp4Text = Object(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS, 0.2, 0, COLOR_WHITE, 0);
 
+    // DateTime Area
     Object time = Object(-90, 70, 0.5, 0, COLOR_WHITE, 0);
     Object dateBox = Object(43, 20, 0.5, 0, COLOR_THEME_GREEN_LIGHT_1, 0);
     Object date = Object(-70, 10, 0.2, 0, COLOR_THEME_GREEN_DARK_3, 0);
 
+    // Heart Rate Area
     Object heartIcon = Object(50, 170, 1, 0, COLOR_RED, 0);
     Object heartRate = Object(-20, 100, 0.2, 0, COLOR_WHITE, 0);
-    float heartRateInterval = 0;
-    float heartRateValue = 0;
 
+    // Step Counter Area
     Object stepCountText = Object(25, -150, 0.4, 0, COLOR_WHITE, 0);
     Object stepStepText = Object(-5, -200, 0.2, 0, COLOR_WHITE, 0);
+
+    // Battery Level Area
+    bool isBatteryPercentageVisible = false;
+
+    // Heart Rate variables
+    float heartRateInterval = 0;
+    float heartRateValue = 0;
     bool isHeartBeating = false;
     bool isHeartBeatUp = true;
+    int heartBeatOffset = 0;
 
+    // Step variables
     int stepCount = 0;
     int stepLastSampleCount = 0;
     bool lastStepIsLeft = false;
     float stepSamplePeriod = 5000;
-
-    int heartBeatOffset = 0;
 
     chrono::high_resolution_clock::time_point animStartTime, heartRateLastSampleTime, stepLastSampleTime;
 

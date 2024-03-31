@@ -96,40 +96,41 @@ void renderCharging()
 void renderChargingDock()
 {
     ObjCharging.dock.setOpacity(100);
-    ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_1);
-    ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH, DOCK_HEIGHT, DOCK_ROUND_RADIUS);
-    ObjCharging.dock.setOpacity(10);
     ObjCharging.dock.setColor(COLOR_THEME_GREEN_DARK_2);
+    ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH, DOCK_HEIGHT, DOCK_ROUND_RADIUS);
+    ObjCharging.dock.setOpacity(25);
+    ObjCharging.dock.setColor(COLOR_WHITE);
     for (int i = 10; i <= 90; i += 5)
         ObjCharging.dock.drawRoundedRect_Fill(DOCK_WIDTH - i, DOCK_HEIGHT - i, DOCK_ROUND_RADIUS - 10);
 
     ObjCharging.dock.setOpacity(100);
-    ObjCharging.dock.drawCircle_Fill(60, 0, 360);
-
-    ObjCharging.dock.setColor(COLOR_WHITE);
-    ObjCharging.dock.setOpacity(20);
+    ObjCharging.dock.setColor(COLOR_GRAY_4);
     ObjCharging.dock.drawCircle_Line(150, 0, 360, 30);
 
-    ObjCharging.dock.setOpacity(100);
-    ObjCharging.dock.setColor(COLOR_WHITE);
     ObjCharging.dock.drawCircle_Fill(200, 40, 50);
     ObjCharging.dock.drawCircle_Fill(200, 130, 140);
     ObjCharging.dock.drawCircle_Fill(200, 220, 230);
     ObjCharging.dock.drawCircle_Fill(200, 310, 320);
 
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN);
     ObjCharging.dock.drawCircle_Fill(20, 0, 360);
+    ObjCharging.dock.drawCircle_Line(30, 0, 360, 5);
+    ObjCharging.dock.drawCircle_Line(30, 0, 360, 5);
+    ObjCharging.dock.setColor(COLOR_THEME_GREEN);
+    ObjCharging.dock.drawCircle_Line(150, 0, 360, 2);
 
     ObjCharging.dockWire.setOpacity(100);
     ObjCharging.dockWire.translateTo(ObjCharging.dock.anchorX + WINDOWS_WIDTH / 2 + DOCK_WIDTH / 2, ObjCharging.dock.anchorY);
-    ObjCharging.dockWire.setColor(COLOR_BRONZE);
+    ObjCharging.dockWire.setColor(COLOR_BLACK_1);
     ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, 50);
 
     ObjCharging.dockWire.setOpacity(5);
-    ObjCharging.dockWire.setColor(COLOR_GOLD);
+    ObjCharging.dockWire.setColor(COLOR_GRAY_2);
     for (int i = 2; i <= 40; i += 4)
         ObjCharging.dockWire.drawRect_Fill(WINDOWS_WIDTH, i);
 
     // Charging dock text
+    ObjCharging.dockLabel.setColor(COLOR_THEME_GREEN);
     ObjCharging.dockLabel.scaleTo(0.3);
     ObjCharging.dockLabel.translateTo(ObjCharging.dock.anchorX + 50 - (DOCK_WIDTH / 2), ObjCharging.dock.anchorY - 90 + (DOCK_HEIGHT / 2));
     ObjCharging.dockLabel.drawText("240W", 7);
