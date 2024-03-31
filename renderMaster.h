@@ -58,6 +58,10 @@ void renderMaster()
     // UI
     renderMainUI(); // Draw the time
 
+    // Render Timer
+
+    // Render Alarm
+
     // Power Off
     renderPowerOff(); // Draw the power off UI
 

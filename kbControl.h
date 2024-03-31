@@ -80,7 +80,7 @@ void kbControl_Main(unsigned char key, int x, int y)
 
         // ---- Test After Power On Animation
         System.state = SystemState::ON;
-        ObjUI.animState = AnimState::IDLE;
+        
 
         // Test Yes on Power Off Confirmation
         // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;

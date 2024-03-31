@@ -3,7 +3,7 @@
 
 void renderMainUI()
 {
-    if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED)
+    if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED || System.currentScreen == Screen::MAIN)
     {
         // ---- Variables
         // Start Time
@@ -150,7 +150,7 @@ void renderMainUI()
             toggleAnimationFlag(ObjUI.comp1Battery, false, false, false, true, false);
             toggleAnimationFlag(ObjUI.comp2Timer, false, false, false, true, false);
             toggleAnimationFlag(ObjUI.comp3Alarm, false, false, false, true, false);
-                toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
+            toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
             ObjUI.animStartTime = chrono::high_resolution_clock::now();
         }
 

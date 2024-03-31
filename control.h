@@ -152,7 +152,7 @@ struct ObjectArea
     // Define Yes No area
     GLfloat noX[2] = {-180, 0};
     GLfloat yesX[2] = {0, 180};
-    GLfloat yesNoY[2] = {0, 180};
+    GLfloat yesNoY[2] = {-180, -80};
 
     // Heart rate area
     GLfloat heartRateX[2] = {10, 190};

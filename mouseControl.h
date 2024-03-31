@@ -103,13 +103,32 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 }
             }
 
+            // ! Debugging
+            // if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
+            //     cout << "Power Off Confirmation Screen" << endl;
+            // else if (System.currentScreen == Screen::MAIN)
+            //     cout << "Main Screen" << endl;
+            // else if (System.currentScreen == Screen::POWERING_ON)
+            //     cout << "Powering On Screen" << endl;
+            // else if (System.currentScreen == Screen::POWERING_OFF)
+            //     cout << "Powering Off Screen" << endl;
+            // else
+            //     cout << "None Screen" << endl;
+
             // Yes No area
             if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
             {
+
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.yesX, ObjArea.yesNoY))
+                {
+                    cout << "Yes pressed..." << endl;
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
+                }
                 else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.noX, ObjArea.yesNoY))
+                {
+                    cout << "No pressed..." << endl;
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
+                }
             }
         }
         if (state == GLUT_UP)
