@@ -15,6 +15,7 @@ enum class SystemState
     ON,
     POWERING_ON,
     POWERING_OFF_TRIGGERED,
+    POWERING_OFF_CANCELLED,
     POWERING_OFF
 };
 

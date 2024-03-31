@@ -3,8 +3,7 @@
 
 void renderMainUI()
 {
-    if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED || System.currentScreen == Screen::MAIN)
-    {
+    
         // ---- Variables
         // Start Time
         float comp1StartTime = 0;
@@ -135,7 +134,6 @@ void renderMainUI()
         if (ObjUI.animState == AnimState::IDLE)
         {
             ObjUI.animState = AnimState::ANIMATING;
-            System.currentScreen = Screen::NONE;
             toggleAnimationFlag(ObjUI.time, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.date, true, false, false, true, false);
             toggleAnimationFlag(ObjUI.dateBox, true, false, false, true, false);
@@ -222,6 +220,6 @@ void renderMainUI()
                 cout << "Welcome..." << endl;
             }
         }
-    }
+    
 }
 #endif

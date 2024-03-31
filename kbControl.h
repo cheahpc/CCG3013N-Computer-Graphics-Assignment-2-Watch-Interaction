@@ -44,13 +44,8 @@ void kbControl_Main(unsigned char key, int x, int y)
 
         // ---- Test After Power On Animation
         System.state = SystemState::ON;
-        
-
-        // Test Yes on Power Off Confirmation
-        // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
 
         // Test No on Power Off Confirmation
-        // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
 
         // Test Charging
         // System.isCharging = !System.isCharging;
@@ -58,29 +53,9 @@ void kbControl_Main(unsigned char key, int x, int y)
         break;
 
     case 'w': // Testing
-
-        // ---- Test Power On Animation
-        // System.state = SystemState::POWERING_ON;
-
-        // ---- Test Heart Beat Animation
-        ObjUI.isHeartBeating = !ObjUI.isHeartBeating;
-        toggleAnimationFlag(ObjUI.heartIcon, false, false, true, false, false); // Always animate the heart icon scale
-
-        //   ---- Test Power Off Animation
-        // System.state = SystemState::POWERING_OFF_TRIGGERED;
-
-        // ---- Test After Power On Animation
-        // System.state = SystemState::ON;
-
-        // ---- Test Power Off Animation
-        // System.state = SystemState::POWERING_OFF_TRIGGERED;
-
-        // ---- Test complication 4
-        // System.is24HrFormat = !System.is24HrFormat;
-
-        // Test No on Power Off Confirmation
-        // ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
-
+        // Test Yes on Power Off Confirmation
+        System.state = SystemState::POWERING_OFF_TRIGGERED;
+        
         break;
     case 27: // Escape key
         exit(0);

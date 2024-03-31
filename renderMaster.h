@@ -6,12 +6,12 @@
 #include "renderBackdrop.h"
 #include "renderHelp.h"
 #include "renderWatch.h"
-// #include "renderTimer.h"
-// #include "renderAlarm.h"
+#include "renderUI.h"
+#include "renderTimer.h"
+#include "renderAlarm.h" // TODO: Implement renderAlarm.h
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
 #include "renderCharging.h"
-#include "renderUI.h"
 
 // anchorX, anchorY, scaleFactor, orientation, *color, opacity, orbitRadius, orbitAngle
 void renderInit()
@@ -38,6 +38,12 @@ void renderMaster()
 {
     renderInit(); // Initialize the canvas
 
+    // Update the battery level
+    if (System.isCharging && System.batteryLevel < 100)
+        System.batteryLevel += System.chargingRate;
+
+    if (System.batteryLevel > 100)
+        System.batteryLevel = 100;
     // Backdrop
     renderBackdrop(); // Draw the backdrop
 
@@ -50,23 +56,42 @@ void renderMaster()
     renderWatchButton(); // Draw the watch button
     renderWatchBody();   // Draw the watch body
 
-    // Power On
-    renderPowerOn(); // Draw the booting up UI
-
-    // UI
-    renderMainUI(); // Draw the time
-
-    // Render Timer
-    // renderTimer(); // Draw the timer
-
-    // Render Alarm
-    // renderAlarm(); // Draw the alarm
-
-    // Power Off
-    renderPowerOff(); // Draw the power off UI
-
     // Charging
-    renderCharging(); // Draw the charging UI
+    if (System.state == SystemState::OFF && System.isCharging)
+        renderScreenOffCharging(); // Draw the charging screen
+    else if (!System.isCharging && ObjCharging.chargingAnimState != AnimState::IDLE)
+        chargingStopped(); // Stop charging
+
+    // Power On
+    if (System.state == SystemState::POWERING_ON && System.batteryLevel >= System.minimumBatteryLevel)
+        renderPowerOn(); // Draw the booting up UI
+
+    if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED || System.state == SystemState::POWERING_OFF_CANCELLED)
+    {
+        // UI
+        renderMainUI(); // Draw the time
+
+        // Render Timer
+        renderTimer(); // Draw the timer
+
+        // Render Alarm
+        renderAlarm(); // Draw the alarm
+
+        // Low battery power off
+        if (System.batteryLevel <= 0)
+        {
+            cout << "Battery running out... shutting down" << endl;
+            System.state == SystemState::POWERING_OFF_TRIGGERED;
+        }
+
+        if (System.state == SystemState::POWERING_OFF_TRIGGERED)
+            renderPowerOffConfirm();
+
+        if (System.state == SystemState::POWERING_OFF_CANCELLED)
+            renderPowerOffCancelled();
+    }
+    else if (System.state == SystemState::POWERING_OFF)
+        renderPowerOff(); // Draw the power off UI
 
     // Help
     renderHelp(); // Draw the help
