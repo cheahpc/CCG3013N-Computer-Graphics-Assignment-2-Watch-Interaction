@@ -55,7 +55,6 @@ int main()
 	glutDisplayFunc(renderMaster);	  // Load render function.
 	glutMouseFunc(mouseControl);	  // Enable mouse button function.
 	glutMotionFunc(mouseMoveControl); // Enable mouse move function.
-	// glutKeyboardFunc(kbControl_Debug_Control); // For debugging only
 	glutKeyboardFunc(kbControl_Main); // Enable keyboard function.
 	// glutSpecialFunc(kbControl);				   // Enable special key function.
 	glutMainLoop(); // Loop frame forever.

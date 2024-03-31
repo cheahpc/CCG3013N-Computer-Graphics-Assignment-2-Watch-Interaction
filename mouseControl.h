@@ -118,7 +118,6 @@ void mouseControl(GLint button, GLint state, int x, int y)
             // Yes No area
             if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
             {
-
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.yesX, ObjArea.yesNoY))
                 {
                     cout << "Yes pressed..." << endl;

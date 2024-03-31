@@ -6,6 +6,8 @@
 #include "renderBackdrop.h"
 #include "renderHelp.h"
 #include "renderWatch.h"
+// #include "renderTimer.h"
+// #include "renderAlarm.h"
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
 #include "renderCharging.h"
@@ -36,10 +38,6 @@ void renderMaster()
 {
     renderInit(); // Initialize the canvas
 
-    // Debugging
-    // renderDebug(); // For debugging only
-    // renderDebugControlTest(); // For debugging only
-
     // Backdrop
     renderBackdrop(); // Draw the backdrop
 
@@ -59,8 +57,10 @@ void renderMaster()
     renderMainUI(); // Draw the time
 
     // Render Timer
+    // renderTimer(); // Draw the timer
 
     // Render Alarm
+    // renderAlarm(); // Draw the alarm
 
     // Power Off
     renderPowerOff(); // Draw the power off UI

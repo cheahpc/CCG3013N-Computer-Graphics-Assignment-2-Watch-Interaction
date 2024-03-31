@@ -40,7 +40,7 @@ struct System
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
     Screen currentScreen = Screen::NONE;
-    float batteryLevel = 5.0;
+    float batteryLevel = 25.0;
     float chargingRate = 0.2;
     float depletedRate = 0.7;
     float minimumBatteryLevel = 1;
@@ -51,8 +51,6 @@ struct Debug_Object
 {
     Object grid = Object(0, 0, 1, 0, COLOR_BLACK, 0);
     Object test = Object(0, 0, 1, 0, COLOR_RED, 80);
-    Object ctrlTest1 = Object(100, 100, 1, -45, COLOR_BLUE, 100, 100, 120);
-    Object ctrlTest2 = Object(100, 100, 1, -45, COLOR_GREEN, 100);
 } ObjDebug;
 
 struct Backdrop_Object
@@ -76,7 +74,7 @@ struct Watch_Object
 struct UI_Object
 {
     // BG
-    Object bg = Object(0, 0, 1, 0, COLOR_THEME_GREEN_DARK_1, 100);
+    Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 100);
     Object legend = Object(0, 0, 1, 0, COLOR_BLACK, 100);
 
     // Complication Area
@@ -125,6 +123,23 @@ struct UI_Object
     AnimState animState = AnimState::IDLE;
 
 } ObjUI;
+
+struct Timer_Object
+{
+    // Todo
+    Object bg = Object(0,0,1,0,COLOR_BLACK_1,0);
+
+    chrono::high_resolution_clock::time_point animStartTime;
+    AnimState animState = AnimState::IDLE;
+} ObjTimer;
+
+struct Alarm_Object
+{
+    // Todo
+    chrono::high_resolution_clock::time_point animStartTime;
+
+    AnimState animState = AnimState::IDLE;
+} ObjAlarm;
 
 struct Help_Object
 {
