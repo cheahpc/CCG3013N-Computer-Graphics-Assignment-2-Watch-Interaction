@@ -94,9 +94,8 @@ string getHeartRate()
     chrono::duration<double, milli> elapsedTimeHeart = currentTime - ObjUI.heartRateLastSampleTime;
     if (elapsedTimeHeart.count() > ObjUI.heartRateInterval)
     {
-        cout << "Heart rate refreshed..." << endl;
         System.batteryLevel = System.batteryLevel - System.depletedRate;
-
+        cout << "Heart rate refreshed..." << endl;
         ObjUI.heartRateLastSampleTime = currentTime;
         ObjUI.heartRateInterval = randomInterval;
 

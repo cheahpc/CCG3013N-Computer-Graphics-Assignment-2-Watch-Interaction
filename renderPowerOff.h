@@ -88,7 +88,7 @@ void renderPowerOffCancelled()
         if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.separatorLineHorizontal) || isBusyAnimating(ObjPowerOff.separatorLineVertical)))
         {
             ObjPowerOff.pOffOverlayAnimState = AnimState::IDLE;
-            ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NONE;
+            ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NONE;
 
             // Reset all object
             ObjPowerOff.bg.translateTo(0, 80);
@@ -108,7 +108,7 @@ void renderPowerOffCancelled()
             ObjPowerOff.separatorLineVertical.setOpacity(0);
 
             System.state = SystemState::ON;
-            System.currentScreen = Screen::MAIN;
+            System.currentScreen = ScreenState::MAIN;
         }
     }
 }
@@ -199,17 +199,17 @@ void renderPowerOffConfirm()
         {
             cout << "Confirm power off?..." << endl;
             ObjPowerOff.pOffOverlayAnimState = AnimState::DONE;
-            System.currentScreen = Screen::POWER_OFF_CONFIRMATION;
+            System.currentScreen = ScreenState::POWER_OFF_CONFIRMATION;
         }
     }
     if (ObjPowerOff.pOffOverlayAnimState == AnimState::DONE)
     {
         switch (ObjPowerOff.pOffConfirmation)
         {
-        case PowerOffConfirmation::YES:
+        case PowerOffConfirmationState::YES:
             cout << "Powering off..." << endl;
             ObjPowerOff.pOffOverlayAnimState = AnimState::IDLE;
-            ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NONE;
+            ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NONE;
 
             // Reset all object
             ObjPowerOff.bg.translateTo(0, 80);
@@ -228,12 +228,12 @@ void renderPowerOffConfirm()
             ObjPowerOff.separatorLineHorizontal.setOpacity(0);
             ObjPowerOff.separatorLineVertical.setOpacity(0);
 
-            System.currentScreen = Screen::POWERING_OFF;
+            System.currentScreen = ScreenState::POWERING_OFF;
             System.state = SystemState::POWERING_OFF;
             break;
-        case PowerOffConfirmation::NO:
+        case PowerOffConfirmationState::NO:
             ObjPowerOff.pOffOverlayAnimState = AnimState::IDLE;
-            ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NONE;
+            ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NONE;
             cout << "Power off cancelled..." << endl;
             System.state = SystemState::POWERING_OFF_CANCELLED;
             break;
@@ -399,7 +399,7 @@ void renderPowerOff()
 
         // Update system state
         ObjUI.animState = AnimState::IDLE;
-        System.currentScreen = Screen::NONE;
+        System.currentScreen = ScreenState::NONE;
         System.state = SystemState::OFF;
     }
 }

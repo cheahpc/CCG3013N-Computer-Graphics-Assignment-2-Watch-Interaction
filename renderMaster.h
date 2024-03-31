@@ -7,7 +7,7 @@
 #include "renderHelp.h"
 #include "renderWatch.h"
 #include "renderUI.h"
-#include "renderTimer.h"
+#include "renderStopwatch.h"
 #include "renderAlarm.h" // TODO: Implement renderAlarm.h
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
@@ -41,9 +41,17 @@ void renderMaster()
     // Update the battery level
     if (System.isCharging && System.batteryLevel < 100)
         System.batteryLevel += System.chargingRate;
-
     if (System.batteryLevel > 100)
         System.batteryLevel = 100;
+
+    if (System.batteryLevel < 0)
+    {
+        System.batteryLevel = 0;
+        cout << "Battery running out... Shutting down" << endl;
+        if (System.state == SystemState::ON)
+            System.state = SystemState::POWERING_OFF;
+    }
+
     // Backdrop
     renderBackdrop(); // Draw the backdrop
 
@@ -72,17 +80,12 @@ void renderMaster()
         renderMainUI(); // Draw the time
 
         // Render Timer
-        renderTimer(); // Draw the timer
+        if (System.currentScreen == ScreenState::STOPWATCH)
+            renderStopwatch(); // Draw the timer
 
         // Render Alarm
-        renderAlarm(); // Draw the alarm
-
-        // Low battery power off
-        if (System.batteryLevel <= 0)
-        {
-            cout << "Battery running out... shutting down" << endl;
-            System.state == SystemState::POWERING_OFF_TRIGGERED;
-        }
+        if (System.currentScreen == ScreenState::TIMER)
+            renderAlarm(); // Draw the alarm
 
         if (System.state == SystemState::POWERING_OFF_TRIGGERED)
             renderPowerOffConfirm();

@@ -3,6 +3,7 @@
 
 void renderAlarm()
 {
+    float thistest = 0;
 }
 
 #endif

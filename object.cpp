@@ -714,8 +714,8 @@ void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, bool isChargin
 }
 #pragma endregion Battery
 
-#pragma region Timer
-void Object::drawTimer_Fill(GLfloat size)
+#pragma region Stopwatch
+void Object::drawStopwatch_Fill(GLfloat size)
 {
 	GLfloat innerSize = size * 0.7;
 	GLfloat lineSize = (size - innerSize) / 3;
@@ -750,12 +750,11 @@ void Object::drawTimer_Fill(GLfloat size)
 	rotateTo(-45);
 	drawRect_Fill(size / 6, size / 4);
 	translateTo(initialX, initialY);
-	// rotateTo(-45);
 }
-#pragma endregion Timer
+#pragma endregion Stopwatch
 
 #pragma region Alarm
-void Object::drawAlarm_Fill(GLfloat size)
+void Object::drawTimer_Fill(GLfloat size)
 {
 	GLfloat thickness = size * 0.15;
 	GLfloat outerRadius = size * 1.3;

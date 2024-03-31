@@ -50,12 +50,15 @@ void kbControl_Main(unsigned char key, int x, int y)
         // Test Charging
         // System.isCharging = !System.isCharging;
 
+        // Test Yes on Power Off Confirmation
+        // System.state = SystemState::POWERING_OFF_TRIGGERED;
+
         break;
 
     case 'w': // Testing
-        // Test Yes on Power Off Confirmation
-        System.state = SystemState::POWERING_OFF_TRIGGERED;
-        
+        // Stopwatch test
+        System.currentScreen = ScreenState::STOPWATCH;
+
         break;
     case 27: // Escape key
         exit(0);

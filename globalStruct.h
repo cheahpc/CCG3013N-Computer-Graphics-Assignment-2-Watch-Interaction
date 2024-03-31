@@ -19,29 +19,36 @@ enum class SystemState
     POWERING_OFF
 };
 
-enum class Screen
+enum class ScreenState
 {
     NONE,
     MAIN,
     POWERING_ON,
     POWER_OFF_CONFIRMATION,
     POWERING_OFF,
-    TIMER,
-    ALARM
+    STOPWATCH,
+    TIMER
 };
 
-enum class PowerOffConfirmation
+enum class PowerOffConfirmationState
 {
     NONE,
     YES,
     NO
 };
+
+enum class StopwatchState
+{
+    IDLE,
+    RUNNING,
+    PAUSED
+} timerState;
 struct System
 {
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
-    Screen currentScreen = Screen::NONE;
-    float batteryLevel = 25.0;
+    ScreenState currentScreen = ScreenState::NONE;
+    float batteryLevel = 5.0;
     float chargingRate = 0.2;
     float depletedRate = 0.7;
     float minimumBatteryLevel = 1;
@@ -64,10 +71,11 @@ struct Watch_Object
     Object strap = Object(0, 0, 1, 0, COLOR_THEME_GREEN_DARK_1, 100);
     Object body = Object(0, 0, 1, 0, COLOR_BLACK_4, 100);
     Object dial = Object(WATCH_DIAL_CENTER_X, WATCH_DIAL_CENTER_Y, 1, 0, COLOR_GOLD, 100);
-    Object button = Object(WATCH_BUTTON_CENTER_X, WATCH_BUTTON_CENTER_Y, 1, 0, COLOR_GOLD, 100);
     struct Button
     {
+        Object obj = Object(WATCH_BUTTON_CENTER_X, WATCH_BUTTON_CENTER_Y, 1, 0, COLOR_GOLD, 100);
         bool isDown = false;
+
         chrono::high_resolution_clock::time_point downStartTime;
     } Button;
 } ObjWatch;
@@ -125,14 +133,24 @@ struct UI_Object
 
 } ObjUI;
 
-struct Timer_Object
+struct Stopwatch_Object
 {
     // Todo
-    Object bg = Object(0,0,1,0,COLOR_BLACK_1,0);
+    Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);
+    Object stopwatchIcon = Object(0, 180, 1, 0, COLOR_WHITE, 0);
+    Object stopwatchLabel = Object(-133, 90, 0.3, 0, COLOR_WHITE, 0);
+    Object elapsedTimeText = Object(-183, -30, 0.7, 0, COLOR_WHITE, 0);
+    Object elapsedTimeMilliText = Object(-158, -180, 1, 0, COLOR_WHITE, 0);
 
-    chrono::high_resolution_clock::time_point animStartTime;
+    bool isTimerRunning = false;
+    StopwatchState stopwatchState = StopwatchState::IDLE;
+
+    string elapsedMinSec = "00:00";
+    string elapsedMilli = "000";
+
+    chrono::high_resolution_clock::time_point animStartTime, stopwatchStartTime, stopwatchPauseTime, stopwatchElapsedTime;
     AnimState animState = AnimState::IDLE;
-} ObjTimer;
+} ObjStopwatch;
 
 struct Alarm_Object
 {
@@ -186,7 +204,7 @@ struct Powering_Off_Object
 
     AnimState pOffAnimState = AnimState::IDLE;
     AnimState pOffOverlayAnimState = AnimState::IDLE;
-    PowerOffConfirmation pOffConfirmation = PowerOffConfirmation::NONE;
+    PowerOffConfirmationState pOffConfirmation = PowerOffConfirmationState::NONE;
     chrono::high_resolution_clock::time_point pOffStartTime, pOffOverlayStartTime;
 } ObjPowerOff;
 

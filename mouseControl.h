@@ -15,8 +15,67 @@ void mouseControl(GLint button, GLint state, int x, int y)
             if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.dialX, ObjArea.dialY))
             {
                 cout << "Watch dial pressed..." << endl;
-                // Toggle dial state
-                // ObjWatch.Dial.isPressed = !ObjWatch.Dial.isPressed;
+
+                switch (System.currentScreen)
+                {
+                case ScreenState::STOPWATCH:
+
+                    switch (ObjStopwatch.stopwatchState)
+                    {
+                    case StopwatchState::IDLE:
+                        cout << "Stopwatch started..." << endl;
+                        ObjStopwatch.stopwatchState = StopwatchState::RUNNING;
+                        ObjStopwatch.stopwatchStartTime = chrono::high_resolution_clock::now();
+                        break;
+                    case StopwatchState::RUNNING:
+                        cout << "Stopwatch paused..." << endl;
+                        ObjStopwatch.stopwatchState = StopwatchState::PAUSED;
+
+                        break;
+                    case StopwatchState::PAUSED:
+                        cout << "Stopwatch resumed..." << endl;
+                        ObjStopwatch.stopwatchState = StopwatchState::IDLE;
+                        ObjStopwatch.elapsedMinSec = "00:00";
+                        ObjStopwatch.elapsedMilli = "000";
+                    }
+                }
+            }
+
+            // Button Area
+            if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.btnX, ObjArea.btnY))
+            {
+
+                Mouse.leftDown = true;
+                ObjWatch.Button.isDown = true;
+                ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
+
+                cout << "Watch button pressed..." << endl;
+                switch (System.currentScreen)
+                {
+                case ScreenState::POWER_OFF_CONFIRMATION:
+                    ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NO;
+                    break;
+                case ScreenState::STOPWATCH:
+                    cout << "Stopwatch app closed..." << endl;
+                    ObjStopwatch.stopwatchState = StopwatchState::IDLE;
+                    System.currentScreen = ScreenState::MAIN;
+
+                    ObjStopwatch.bg.setOpacity(0);
+                    ObjStopwatch.stopwatchIcon.setOpacity(0);
+                    ObjStopwatch.stopwatchLabel.setOpacity(0);
+                    ObjStopwatch.elapsedTimeText.setOpacity(0);
+                    ObjStopwatch.elapsedTimeMilliText.setOpacity(0);
+                    ObjStopwatch.elapsedMinSec = "00:00";
+                    ObjStopwatch.elapsedMilli = "000";
+                    ObjStopwatch.animState = AnimState::IDLE;
+                    break;
+                case ScreenState::NONE:
+                case ScreenState::MAIN:
+                case ScreenState::POWERING_ON:
+                case ScreenState::POWERING_OFF:
+                default:
+                    break;
+                }
             }
 
             // Dock Area, !Button Area, !Body Area
@@ -31,44 +90,9 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 ObjCharging.dockInitialY = ObjCharging.dock.anchorY;
             }
 
-            // Button Area
-            if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.btnX, ObjArea.btnY))
-            {
-                cout << "Watch button pressed..." << endl;
-                // Check if the button is animating
-                switch (System.currentScreen)
-                {
-                case Screen::POWER_OFF_CONFIRMATION:
-                    ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
-                    if (!isBusyAnimating(ObjWatch.button))
-                    {
-                        Mouse.leftDown = true;
-                        ObjWatch.Button.isDown = true;
-                        toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-                        ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
-                    }
-                    break;
-                case Screen::NONE:
-                case Screen::MAIN:
-                case Screen::POWERING_ON:
-                case Screen::POWERING_OFF:
-                default:
-                    if (!isBusyAnimating(ObjWatch.button))
-                    {
-                        Mouse.leftDown = true;
-                        ObjWatch.Button.isDown = true;
-                        toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-                        ObjWatch.Button.downStartTime = chrono::high_resolution_clock::now();
-                    }
-
-                    break;
-                }
-            }
-
             // Complication Area
-            if (System.currentScreen == Screen::MAIN)
+            if (System.currentScreen == ScreenState::MAIN)
             {
-                // ! complication implementation for 2 and 3
                 // Comp 1 Area
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.compX, ObjArea.comp1Y))
                 {
@@ -78,23 +102,21 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 // Comp 2 Area
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.compX, ObjArea.comp2Y))
                 {
-                    cout << "Complication 2 pressed, switching screen..." << endl;
-                    // System.currentScreen = Screen::ALARM;
+                    cout << "Complication 2 pressed, starting stopwatch app..." << endl;
+                    System.currentScreen = ScreenState::STOPWATCH;
                 }
                 // Comp 3 Area
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.compX, ObjArea.comp3Y))
                 {
-                    cout << "Complication 3 pressed, switching screen..." << endl;
-                    // System.currentScreen = Screen::NONE;
+                    cout << "Complication 3 pressed, starting timer app..." << endl;
+                    System.currentScreen = ScreenState::TIMER;
                 }
-
                 // Comp 4 Area
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.compX, ObjArea.comp4Y))
                 {
                     cout << "Complication 4 pressed, switching time format..." << endl;
                     System.is24HrFormat = !System.is24HrFormat;
                 }
-
                 // Heart Rate Monitor Area
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.heartRateX, ObjArea.heartRateY))
                 {
@@ -103,41 +125,26 @@ void mouseControl(GLint button, GLint state, int x, int y)
                 }
             }
 
-            // ! Debugging
-            // if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
-            //     cout << "Power Off Confirmation Screen" << endl;
-            // else if (System.currentScreen == Screen::MAIN)
-            //     cout << "Main Screen" << endl;
-            // else if (System.currentScreen == Screen::POWERING_ON)
-            //     cout << "Powering On Screen" << endl;
-            // else if (System.currentScreen == Screen::POWERING_OFF)
-            //     cout << "Powering Off Screen" << endl;
-            // else
-            //     cout << "None Screen" << endl;
-
             // Yes No area
-            if (System.currentScreen == Screen::POWER_OFF_CONFIRMATION)
+            if (System.currentScreen == ScreenState::POWER_OFF_CONFIRMATION)
             {
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.yesX, ObjArea.yesNoY))
                 {
                     cout << "Yes pressed..." << endl;
-                    ObjPowerOff.pOffConfirmation = PowerOffConfirmation::YES;
+                    ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::YES;
                 }
                 else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.noX, ObjArea.yesNoY))
                 {
                     cout << "No pressed..." << endl;
-                    ObjPowerOff.pOffConfirmation = PowerOffConfirmation::NO;
+                    ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NO;
                 }
             }
         }
+
         if (state == GLUT_UP)
         {
             Mouse.leftDown = false;
-            // Reset button state
             ObjWatch.Button.isDown = false;
-            toggleAnimationFlag(ObjWatch.button, true, false, false, false, false);
-
-            // Charging dock area
             ObjCharging.isDragging = false;
         }
         break;
@@ -151,6 +158,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
         break;
     }
 }
+
 void mouseMoveControl(GLint x, GLint y)
 {
     // Update Mouse position & object area

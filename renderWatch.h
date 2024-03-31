@@ -58,55 +58,47 @@ void renderWatchDial()
 void renderWatchButton()
 {
     // ---- Variables
-    GLfloat btnXval = (ObjWatch.Button.isDown) ? -5 : 5;
-    GLfloat buttonPressAnimationDuration = 100;
-    const GLfloat *btnEasing = EASEINOUT5;
+    // Duration
+    GLfloat buttonPressAnimationDuration = 10;
+
+    // Easing
+    const GLfloat *btnEasing = EASEINOUT1;
 
     // ---- Drawing
+    ObjWatch.Button.obj.setOpacity(100);
+    ObjWatch.Button.obj.setColor(COLOR_BLACK);
+    ObjWatch.Button.obj.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH, WATCH_BUTTON_HEIGHT, WATCH_BUTTON_ROUND_RADIUS);
 
-    ObjWatch.button.setOpacity(100);
-    ObjWatch.button.setColor(COLOR_BLACK);
-    ObjWatch.button.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH, WATCH_BUTTON_HEIGHT, WATCH_BUTTON_ROUND_RADIUS);
-
-    ObjWatch.button.setOpacity(25);
-    ObjWatch.button.setColor(COLOR_GREEN);
+    ObjWatch.Button.obj.setOpacity(25);
+    ObjWatch.Button.obj.setColor(COLOR_GREEN);
     for (int i = 2; i < 10; i += 2)
-        ObjWatch.button.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH - i, WATCH_BUTTON_HEIGHT - i, WATCH_BUTTON_ROUND_RADIUS - i);
+        ObjWatch.Button.obj.drawRoundedRect_Fill(WATCH_BUTTON_WIDTH - i, WATCH_BUTTON_HEIGHT - i, WATCH_BUTTON_ROUND_RADIUS - i);
 
     // ---- Animation
-    animateTranslate(ObjWatch.button, buttonPressAnimationDuration, btnEasing, btnXval, 0);
-
-    // reset button position when release too early
-    if (ObjWatch.button.anchorX > WATCH_BUTTON_CENTER_X)
-    {
-        ObjWatch.button.anchorX = WATCH_BUTTON_CENTER_X;
-        toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
-    }
-
     if (ObjWatch.Button.isDown)
     {
-        // Booting up animation
+        ObjWatch.Button.obj.translateTo(WATCH_BUTTON_CENTER_X - 7, WATCH_BUTTON_CENTER_Y);
+
         chrono::high_resolution_clock::time_point currentTime = chrono::high_resolution_clock::now();
-        chrono::duration<double, milli> pressTime = currentTime - ObjWatch.Button.downStartTime;
+        chrono::duration<double, milli> elapsedTime = currentTime - ObjWatch.Button.downStartTime;
 
-        if (pressTime.count() >= SYS_P_ON_OFF_BTN_HOLD_TIME)
+        if (elapsedTime.count() >= SYS_P_ON_OFF_BTN_HOLD_TIME)
         {
-            // Reset button states
-            ObjWatch.Button.isDown = false;
-            toggleAnimationFlag(ObjWatch.button, false, false, false, false, false);
-
-            // Check current system state
             if (System.state == SystemState::ON)
             {
                 System.state = SystemState::POWERING_OFF_TRIGGERED;
-                System.currentScreen = Screen::POWER_OFF_CONFIRMATION;
+                System.currentScreen = ScreenState::POWER_OFF_CONFIRMATION;
             }
             else if (System.state == SystemState::OFF && System.batteryLevel >= System.minimumBatteryLevel)
             {
                 System.state = SystemState::POWERING_ON;
-                System.currentScreen = Screen::POWERING_ON;
+                System.currentScreen = ScreenState::POWERING_ON;
             }
         }
+    }
+    else
+    {
+        ObjWatch.Button.obj.translateTo(WATCH_BUTTON_CENTER_X, WATCH_BUTTON_CENTER_Y);
     }
 }
 
