@@ -714,6 +714,83 @@ void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, bool isChargin
 }
 #pragma endregion Battery
 
+#pragma region Timer
+void Object::drawTimer_Fill(GLfloat size)
+{
+	GLfloat innerSize = size * 0.7;
+	GLfloat lineSize = (size - innerSize) / 3;
+	GLfloat initialX = this->anchorX;
+	GLfloat initialY = this->anchorY;
+
+	rotateTo(0);
+	// Draw the outer circle
+	translateTo(initialX, initialY - size * 0.2);
+	drawCircle_Line(size, 0, 360, lineSize);
+
+	// Draw the inner circle
+	translateTo(initialX, initialY - size * 0.2);
+	drawCircle_Fill(innerSize, 0, 270);
+
+	// Draw the buttons
+	orbitTo(initialX, initialY - size * 0.2, size + size / 6, 45);
+	rotateTo(45);
+	drawRect_Fill(size / 6, size / 4);
+	translateTo(initialX, initialY);
+
+	orbitTo(initialX, initialY - size * 0.2, size + size / 5, 90);
+	rotateTo(0);
+	drawRect_Fill(size / 4, size / 3);
+
+	// Draw the cap
+	translateTo(initialX, initialY + size + (size / 3) - size * 0.2);
+	drawRect_Fill(size, size / 4);
+	translateTo(initialX, initialY + size);
+
+	orbitTo(initialX, initialY - size * 0.2, size + size / 6, 135);
+	rotateTo(-45);
+	drawRect_Fill(size / 6, size / 4);
+	translateTo(initialX, initialY);
+	// rotateTo(-45);
+}
+#pragma endregion Timer
+
+#pragma region Alarm
+void Object::drawAlarm_Fill(GLfloat size)
+{
+	GLfloat thickness = size * 0.15;
+	GLfloat outerRadius = size * 1.3;
+	GLfloat hourHandLength = size * 0.5;
+	GLfloat minuteHandLength = size * 0.8;
+	GLfloat bellWidth = 15;
+	GLfloat intialX = this->anchorX;
+	GLfloat intialY = this->anchorY;
+
+	// Draw the circle
+	translateTo(intialX, intialY - thickness);
+	drawCircle_Line(size, 0, 360, thickness);
+
+	// Draw the bell
+	translateTo(intialX, intialY - thickness);
+	drawCircle_Line(outerRadius, 20, 45, thickness);
+	translateTo(intialX, intialY - thickness);
+	drawCircle_Line(outerRadius, 315, 340, thickness);
+
+	// Draw the hand
+	// Minute hand
+	translateTo(intialX, intialY + minuteHandLength / 2 - thickness);
+	drawRect_Fill(thickness, minuteHandLength);
+
+	// Hour hand
+	translateTo(intialX, intialY + hourHandLength / 2 - thickness);
+	glTranslatef(intialX, intialY - thickness, 0);
+	glRotatef(-135, 0.0f, 0.0f, 1.0f);
+	glTranslatef(-intialX, -intialY + thickness, 0);
+	drawRect_Fill(thickness, hourHandLength);
+
+	translateTo(intialX, intialY);
+}
+#pragma endregion Alarm
+
 #pragma region 2D Transformation
 // 2D Transformation
 void Object::translateTo(GLfloat x, GLfloat y)

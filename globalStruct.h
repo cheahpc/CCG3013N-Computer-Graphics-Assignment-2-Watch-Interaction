@@ -87,6 +87,8 @@ struct UI_Object
 
     Object comp1Battery = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 1, 0, COLOR_WHITE, 0);
     Object comp1BatteryText = Object(COMP1_BATTERY_TEXT_X_POS, COMP1_BATTERY_TEXT_Y_POS, 0.13, 0, COLOR_WHITE, 100);
+    Object comp2Timer = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_2, 1, 0, COLOR_WHITE, 0);
+    Object comp3Alarm = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_3, 1, 0, COLOR_WHITE, 0);
     Object comp4Text = Object(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS, 0.2, 0, COLOR_WHITE, 0);
 
     // DateTime Area

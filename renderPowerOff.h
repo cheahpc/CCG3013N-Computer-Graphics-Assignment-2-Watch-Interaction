@@ -365,6 +365,8 @@ void renderPowerOff()
             ObjUI.complication3.setOpacity(0);
             ObjUI.complication4.setOpacity(0);
             ObjUI.comp1Battery.setOpacity(0);
+            ObjUI.comp2Timer.setOpacity(0);
+            ObjUI.comp3Alarm.setOpacity(0);
             ObjUI.comp4Text.setOpacity(0);
 
             // Heart rate monitor

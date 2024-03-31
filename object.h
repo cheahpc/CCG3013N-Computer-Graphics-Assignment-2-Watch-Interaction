@@ -66,6 +66,12 @@ public:
 	// Battery
 	void drawBattery_Fill(GLfloat size, GLfloat batteryLevel, bool isCharging, const GLfloat *batColor, const GLfloat *batLvlColor);
 
+	// Timer
+	void drawTimer_Fill(GLfloat size);
+
+	// Alarm
+	void drawAlarm_Fill(GLfloat size);
+
 	// 2D transformation
 	void translateTo(GLfloat x, GLfloat y);
 	void translateTo(GLfloat *p);

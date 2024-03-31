@@ -90,7 +90,6 @@ void renderMainUI()
         ObjUI.stepStepText.drawText("STEPS", 5);
 
         // Complications
-        // ObjUI.complication1.setColor(COLOR_THEME_GREEN);
         ObjUI.complication1.setColor(COLOR_THEME_GREEN_DARK_2);
         ObjUI.complication1.drawCircle_Fill(COMPLICATION_RADIUS - 8, 0, 360);
         ObjUI.complication1.setColor(batteryLevelColor);
@@ -98,7 +97,7 @@ void renderMainUI()
         ObjUI.complication2.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
         ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 4);
-
+        // Complications Content
         if (ObjUI.isBatteryPercentageVisible)
         {
             stringstream batteryLevelss;
@@ -117,6 +116,8 @@ void renderMainUI()
         {
             ObjUI.comp1Battery.drawBattery_Fill(20, System.batteryLevel, System.isCharging, COLOR_WHITE, batteryLevelColor);
         }
+        ObjUI.comp2Timer.drawTimer_Fill(20);
+        ObjUI.comp3Alarm.drawAlarm_Fill(20);
         ObjUI.comp4Text.drawText(hrFormatStr, COMP4_TEXT_SIZE);
 
         if (ObjUI.isHeartBeating)
@@ -147,7 +148,9 @@ void renderMainUI()
             toggleAnimationFlag(ObjUI.complication3, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.complication4, true, false, true, true, false);
             toggleAnimationFlag(ObjUI.comp1Battery, false, false, false, true, false);
-            toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
+            toggleAnimationFlag(ObjUI.comp2Timer, false, false, false, true, false);
+            toggleAnimationFlag(ObjUI.comp3Alarm, false, false, false, true, false);
+                toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
             ObjUI.animStartTime = chrono::high_resolution_clock::now();
         }
 
@@ -181,7 +184,6 @@ void renderMainUI()
             {
                 animateScale(ObjUI.complication1, comp1Duration, compRingEasing, 1);
                 animateOpacity(ObjUI.complication1, comp1Duration, ui_OpactEasing, 100);
-                // animateTranslate(ObjUI.complication1, comp1Duration, compRingEasing, 0, comp1YTranslateVal);
             }
             if (elapsedTime.count() >= comp2StartTime) // Complication 2
             {
@@ -206,6 +208,8 @@ void renderMainUI()
             if (elapsedTime.count() >= compContentStartTime)
             {
                 animateOpacity(ObjUI.comp1Battery, compContentDuration, ui_OpactEasing, 100);
+                animateOpacity(ObjUI.comp2Timer, compContentDuration, ui_OpactEasing, 100);
+                animateOpacity(ObjUI.comp3Alarm, compContentDuration, ui_OpactEasing, 100);
                 animateOpacity(ObjUI.comp4Text, compContentDuration, ui_OpactEasing, 100);
             }
 
