@@ -378,6 +378,7 @@ void renderPowerOff()
         // Reset all object position
         // Bg
         ObjUI.bg.translateTo(0, 0);
+
         // Complications
         ObjUI.complication1.translateTo(COMPLICATION_X_POS, COMPLICATION_Y_POS_1);
         ObjUI.complication2.translateTo(COMPLICATION_X_POS, COMPLICATION_Y_POS_1);
@@ -396,6 +397,19 @@ void renderPowerOff()
         ObjUI.complication2.scaleTo(0);
         ObjUI.complication3.scaleTo(0);
         ObjUI.complication4.scaleTo(0);
+
+        // App 1 - Stopwatch
+        ObjStopwatch.bg.setOpacity(0);
+        ObjStopwatch.stopwatchIcon.setOpacity(0);
+        ObjStopwatch.stopwatchLabel.setOpacity(0);
+        ObjStopwatch.elapsedTimeText.setOpacity(0);
+        ObjStopwatch.elapsedTimeMilliText.setOpacity(0);
+        ObjStopwatch.elapsedMinSec = "00:00";
+        ObjStopwatch.elapsedMilli = "000";
+        ObjStopwatch.animState = AnimState::IDLE;
+
+        // App 2 - Timer
+        // TODO
 
         // Update system state
         ObjUI.animState = AnimState::IDLE;

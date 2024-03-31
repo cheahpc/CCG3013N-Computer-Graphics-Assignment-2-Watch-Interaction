@@ -135,7 +135,6 @@ struct UI_Object
 
 struct Stopwatch_Object
 {
-    // Todo
     Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);
     Object stopwatchIcon = Object(0, 180, 1, 0, COLOR_WHITE, 0);
     Object stopwatchLabel = Object(-133, 90, 0.3, 0, COLOR_WHITE, 0);
