@@ -63,6 +63,8 @@ string getAMPM()
 
 string getHeartRate()
 {
+    stringstream hr;
+
     default_random_engine rSeed(chrono::system_clock::now().time_since_epoch().count());
 
     uniform_int_distribution<int> distInterval(4000, 7000);
@@ -84,7 +86,7 @@ string getHeartRate()
         System.batteryLevel = System.batteryLevel - System.depletedRate;
         ObjUI.stepLastSampleTime = currentTime;
         currentStep = ObjUI.stepCount - ObjUI.stepLastSampleCount;
-        currentStep = currentStep * 1.3;
+        currentStep = currentStep * 1.4;
         ObjUI.stepLastSampleCount = ObjUI.stepCount;
         if (ObjUI.heartBeatOffset < currentStep)
             ObjUI.heartBeatOffset = currentStep;
@@ -100,16 +102,10 @@ string getHeartRate()
 
         ObjUI.heartRateValue = heartRate + ObjUI.heartBeatOffset;
         ObjUI.heartBeatOffset = ObjUI.heartBeatOffset - heartRateOffsetDecay;
-        stringstream hr;
-        hr << heartRate << " bpm";
-        return hr.str();
     }
-    else
-    {
-        stringstream hr;
-        hr << ObjUI.heartRateValue << " bpm";
-        return hr.str();
-    }
+
+    hr << ObjUI.heartRateValue << " bpm";
+    return hr.str();
 }
 struct Mouse
 {
