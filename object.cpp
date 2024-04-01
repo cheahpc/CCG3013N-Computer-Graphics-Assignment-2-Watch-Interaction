@@ -647,18 +647,18 @@ void Object::drawBattery_Fill(GLfloat size, GLfloat batteryLevel, bool isChargin
 	if (isCharging)
 	{
 		// Define 7 point of the lightning
-		GLfloat x[5] = {-(size / 2) * 0.75,
-						-(size / 2) * 0.4,
-						-(size / 2) * 0.25,
-						(size / 2) * 0.1,
-						(size / 2) * 0.75};
+		GLdouble x[5] = {-(size / 2) * 0.75,
+						 -(size / 2) * 0.4,
+						 -(size / 2) * 0.25,
+						 (size / 2) * 0.1,
+						 (size / 2) * 0.75};
 
-		GLfloat y[6] = {-size * 0.8,
-						-size * 0.1,
-						-size * 0.05,
-						size * 0.15,
-						size * 0.2,
-						size * 0.7};
+		GLdouble y[6] = {-size * 0.8,
+						 -size * 0.1,
+						 -size * 0.05,
+						 size * 0.15,
+						 size * 0.2,
+						 size * 0.7};
 		translateTo(originalX, originalY);
 		glStartInit();
 		glBegin(GL_POLYGON);
@@ -877,7 +877,7 @@ void Object::scale(GLfloat scaleFactor)
 // Utilities
 void Object::drawText(const char string[], GLfloat size)
 {
-	const char* p;
+	const char *p;
 	glStartInit();
 	glLineWidth(size);
 	for (p = string; *p; p++)
