@@ -89,7 +89,7 @@ public:
 	void scale(GLfloat scale);
 
 	// Utilities
-	void drawText(char *string, GLfloat size);
+	void drawText(const char string[], GLfloat size);
 	void drawGrid(GLfloat gridSpace, GLfloat lineThickness, GLfloat length);
 
 	// Other Control

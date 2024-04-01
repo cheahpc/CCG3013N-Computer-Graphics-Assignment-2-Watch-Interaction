@@ -875,9 +875,9 @@ void Object::scale(GLfloat scaleFactor)
 #pragma endregion 2D Transformation
 
 // Utilities
-void Object::drawText(char *string, GLfloat size)
+void Object::drawText(const char string[], GLfloat size)
 {
-	char *p;
+	const char* p;
 	glStartInit();
 	glLineWidth(size);
 	for (p = string; *p; p++)
