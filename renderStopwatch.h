@@ -1,6 +1,6 @@
 #ifndef RENDERSTOPWATCH_H
 #define RENDERSTOPWATCH_H
-void timerFunction()
+void stopwatchFunction()
 {
     if (ObjStopwatch.stopwatchState == StopwatchState::RUNNING)
     {
@@ -20,9 +20,7 @@ void timerFunction()
 
 void renderStopwatch()
 {
-
     // variables
-
     // Duration
     float uiDuration = 400;
 
@@ -38,12 +36,13 @@ void renderStopwatch()
         ObjStopwatch.stopwatchIcon.setColor(COLOR_ORANGE);
 
     // Drawing
-    ObjStopwatch.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
-    ObjStopwatch.stopwatchIcon.drawStopwatch_Fill(30);
-    ObjStopwatch.stopwatchLabel.drawText("STOPWATCH", 7);
     char cMinSec[6], cMilli[4];
     strcpy(cMinSec, ObjStopwatch.elapsedMinSec.c_str());
     strcpy(cMilli, ObjStopwatch.elapsedMilli.c_str());
+
+    ObjStopwatch.bg.drawRoundedRect_Fill(UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT, UI_SCREEN_ROUND_RADIUS);
+    ObjStopwatch.stopwatchIcon.drawStopwatch_Fill(30);
+    ObjStopwatch.stopwatchLabel.drawText("STOPWATCH", 7);
     ObjStopwatch.elapsedTimeText.drawText(cMinSec, 10);
     ObjStopwatch.elapsedTimeMilliText.drawText(cMilli, 10);
 
@@ -75,7 +74,7 @@ void renderStopwatch()
     }
 
     if (ObjStopwatch.animState == AnimState::DONE)
-        timerFunction();
+        stopwatchFunction();
 }
 
 #endif

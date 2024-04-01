@@ -1,7 +1,7 @@
-#ifndef MOUSECONTROL_H
-#define MOUSECONTROL_H
+#ifndef CONTROLMOUSE_H
+#define CONTROLMOUSE_H
 
-void mouseControl(GLint button, GLint state, int x, int y)
+void ctrlMouse(GLint button, GLint state, int x, int y)
 {
     // Update Mouse position & object area
     updateMouse(x, y);
@@ -38,6 +38,16 @@ void mouseControl(GLint button, GLint state, int x, int y)
                         ObjStopwatch.elapsedMinSec = "00:00";
                         ObjStopwatch.elapsedMilli = "000";
                     }
+                    break;
+                case ScreenState::TIMER: // Todo: Implement timer
+                    Mouse.leftDown = true;
+                    ObjTimer.isDragging = true;
+                    Mouse.lastMouseX = Mouse.mouseX;
+                    Mouse.lastMouseY = Mouse.mouseY;
+                    ObjTimer.initialHour = ObjTimer.timerHour;
+                    ObjTimer.initialMinute = ObjTimer.timerMinute;
+                    ObjTimer.initialSecond = ObjTimer.timerSecond;
+                    break;
                 }
             }
 
@@ -81,7 +91,6 @@ void mouseControl(GLint button, GLint state, int x, int y)
             // Dock Area, !Button Area, !Body Area
             if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.dockX, ObjArea.dockY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.btnX, ObjArea.btnY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.bodyX, ObjArea.bodyY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.dialX, ObjArea.dialY) && !mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.strapX, ObjArea.strapY))
             {
-                // Toggle charging state
                 Mouse.leftDown = true;
                 ObjCharging.isDragging = true;
                 Mouse.lastMouseX = Mouse.mouseX;
@@ -139,6 +148,46 @@ void mouseControl(GLint button, GLint state, int x, int y)
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NO;
                 }
             }
+
+            // Timer selector area
+            if (System.currentScreen == ScreenState::TIMER)
+            {
+                if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.timerSecX, ObjArea.timerSecY))
+                {
+                    cout << "Timer second selector pressed..." << endl;
+                    ObjTimer.timerSelectorState = TimerSelectorState::SECOND;
+                }
+                else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.timerMinX, ObjArea.timerMinY))
+                {
+                    cout << "Timer minute selector pressed..." << endl;
+                    ObjTimer.timerSelectorState = TimerSelectorState::MINUTE;
+                }
+                else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.timerHourX, ObjArea.timerHourY))
+                {
+                    cout << "Timer hour selector pressed..." << endl;
+                    ObjTimer.timerSelectorState = TimerSelectorState::HOUR;
+                }
+                else if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.startBtnX, ObjArea.startBtnY))
+                {
+                    cout << "Timer start button pressed..." << endl;
+                    switch (ObjTimer.timerState)
+                    {
+                    case TimerState::IDLE:
+                        ObjTimer.timerState = TimerState::RUNNING;
+                        ObjTimer.initialHour = ObjTimer.timerHour;
+                        ObjTimer.initialMinute = ObjTimer.timerMinute;
+                        ObjTimer.initialSecond = ObjTimer.timerSecond;
+                        ObjTimer.timerStartTime = chrono::high_resolution_clock::now();
+                        break;
+                    case TimerState::RUNNING:
+                        ObjTimer.timerState = TimerState::PAUSED;
+                        break;
+                    case TimerState::PAUSED:
+                        ObjTimer.timerState = TimerState::IDLE;
+                        break;
+                    }
+                }
+            }
         }
 
         if (state == GLUT_UP)
@@ -146,14 +195,7 @@ void mouseControl(GLint button, GLint state, int x, int y)
             Mouse.leftDown = false;
             ObjWatch.Button.isDown = false;
             ObjCharging.isDragging = false;
-        }
-        break;
-    case GLUT_RIGHT_BUTTON:
-        if (state == GLUT_DOWN)
-        {
-        }
-        if (state == GLUT_UP)
-        {
+            ObjTimer.isDragging = false;
         }
         break;
     }
@@ -164,27 +206,58 @@ void mouseMoveControl(GLint x, GLint y)
     // Update Mouse position & object area
     updateMouse(x, y);
     updateObjArea();
-    if (Mouse.leftDown && ObjCharging.isDragging)
+    if (Mouse.leftDown)
     {
-        int dX = Mouse.mouseX - Mouse.lastMouseX;
-        int dY = Mouse.mouseY - Mouse.lastMouseY;
-        ObjCharging.dock.translateTo(ObjCharging.dockInitialX + dX, ObjCharging.dockInitialY + dY);
+        if (ObjCharging.isDragging)
+        {
+            int dX = Mouse.mouseX - Mouse.lastMouseX;
+            int dY = Mouse.mouseY - Mouse.lastMouseY;
+            ObjCharging.dock.translateTo(ObjCharging.dockInitialX + dX, ObjCharging.dockInitialY + dY);
 
-        // Check if out of bound
-        if ((ObjCharging.dock.anchorX < -WINDOWS_WIDTH / 2))
-            ObjCharging.dock.translateTo(-WINDOWS_WIDTH / 2, ObjCharging.dock.anchorY);
-        if ((ObjCharging.dock.anchorX > WINDOWS_WIDTH / 2))
-            ObjCharging.dock.translateTo(WINDOWS_WIDTH / 2, ObjCharging.dock.anchorY);
-        if ((ObjCharging.dock.anchorY < -WINDOWS_HEIGHT / 2))
-            ObjCharging.dock.translateTo(ObjCharging.dock.anchorX, -WINDOWS_HEIGHT / 2);
-        if ((ObjCharging.dock.anchorY > WINDOWS_HEIGHT / 2))
-            ObjCharging.dock.translateTo(ObjCharging.dock.anchorX, WINDOWS_HEIGHT / 2);
+            // Check if out of bound
+            if ((ObjCharging.dock.anchorX < -WINDOWS_WIDTH / 2))
+                ObjCharging.dock.translateTo(-WINDOWS_WIDTH / 2, ObjCharging.dock.anchorY);
+            if ((ObjCharging.dock.anchorX > WINDOWS_WIDTH / 2))
+                ObjCharging.dock.translateTo(WINDOWS_WIDTH / 2, ObjCharging.dock.anchorY);
+            if ((ObjCharging.dock.anchorY < -WINDOWS_HEIGHT / 2))
+                ObjCharging.dock.translateTo(ObjCharging.dock.anchorX, -WINDOWS_HEIGHT / 2);
+            if ((ObjCharging.dock.anchorY > WINDOWS_HEIGHT / 2))
+                ObjCharging.dock.translateTo(ObjCharging.dock.anchorX, WINDOWS_HEIGHT / 2);
 
-        // Toggle charging state
-        if (objInArea(ObjArea.bodyX, ObjArea.bodyY, ObjArea.dockX, ObjArea.dockY))
-            System.isCharging = true;
-        else
-            System.isCharging = false;
+            // Toggle charging state
+            if (objInArea(ObjArea.bodyX, ObjArea.bodyY, ObjArea.dockX, ObjArea.dockY))
+                System.isCharging = true;
+            else
+                System.isCharging = false;
+        }
+        if (ObjTimer.isDragging)
+        {
+            int dY = (Mouse.mouseY - Mouse.lastMouseY) / 25;
+            switch (ObjTimer.timerSelectorState)
+            {
+            case TimerSelectorState::HOUR:
+                ObjTimer.timerHour = ObjTimer.initialHour + dY;
+                if (ObjTimer.timerHour < 0)
+                    ObjTimer.timerHour = 0;
+                if (ObjTimer.timerHour > 99)
+                    ObjTimer.timerHour = 99;
+                break;
+            case TimerSelectorState::MINUTE:
+                ObjTimer.timerMinute = ObjTimer.initialMinute + dY;
+                if (ObjTimer.timerMinute < 0)
+                    ObjTimer.timerMinute = 0;
+                if (ObjTimer.timerMinute > 59)
+                    ObjTimer.timerMinute = 59;
+                break;
+            case TimerSelectorState::SECOND:
+                ObjTimer.timerSecond = ObjTimer.initialSecond + dY;
+                if (ObjTimer.timerSecond < 0)
+                    ObjTimer.timerSecond = 0;
+                if (ObjTimer.timerSecond > 59)
+                    ObjTimer.timerSecond = 59;
+                break;
+            }
+        }
     }
 
     glutPostRedisplay();

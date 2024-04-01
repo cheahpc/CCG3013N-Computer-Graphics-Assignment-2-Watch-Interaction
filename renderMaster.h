@@ -8,7 +8,7 @@
 #include "renderWatch.h"
 #include "renderUI.h"
 #include "renderStopwatch.h"
-#include "renderAlarm.h" // TODO: Implement renderAlarm.h
+#include "renderTimer.h" 
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
 #include "renderCharging.h"
@@ -77,15 +77,15 @@ void renderMaster()
     if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED || System.state == SystemState::POWERING_OFF_CANCELLED)
     {
         // UI
-        renderMainUI(); // Draw the time
+        renderMainUI(); // Draw the main ui
+
+        // Render Stopwatch
+        if (System.currentScreen == ScreenState::STOPWATCH)
+            renderStopwatch(); // Draw the stopwatch
 
         // Render Timer
-        if (System.currentScreen == ScreenState::STOPWATCH)
-            renderStopwatch(); // Draw the timer
-
-        // Render Alarm
         if (System.currentScreen == ScreenState::TIMER)
-            renderAlarm(); // Draw the alarm
+            renderTimer(); // Draw the timer
 
         if (System.state == SystemState::POWERING_OFF_TRIGGERED)
             renderPowerOffConfirm();
@@ -98,6 +98,9 @@ void renderMaster()
 
     // Help
     renderHelp(); // Draw the help
+
+    // !Debug
+    renderTimer();
 
     // Grid Overlay
     renderGrid(); // Draw the grid

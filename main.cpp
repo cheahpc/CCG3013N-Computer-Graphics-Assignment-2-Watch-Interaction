@@ -27,8 +27,8 @@
 // renders and controls
 #include "control.h"
 #include "renderMaster.h"
-#include "kbControl.h"
-#include "mouseControl.h"
+#include "controlKeyboard.h"
+#include "controlMouse.h"
 
 void init()
 {
@@ -53,9 +53,9 @@ int main()
 	init(); // Load settings.
 
 	glutDisplayFunc(renderMaster);	  // Load render function.
-	glutMouseFunc(mouseControl);	  // Enable mouse button function.
+	glutMouseFunc(ctrlMouse);		  // Enable mouse button function.
 	glutMotionFunc(mouseMoveControl); // Enable mouse move function.
-	glutKeyboardFunc(kbControl_Main); // Enable keyboard function.
+	glutKeyboardFunc(ctrlKeyboard);	  // Enable keyboard function.
 	// glutSpecialFunc(kbControl);				   // Enable special key function.
 	glutMainLoop(); // Loop frame forever.
 

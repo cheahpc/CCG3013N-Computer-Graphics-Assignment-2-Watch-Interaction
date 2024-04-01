@@ -1,14 +1,14 @@
-#ifndef KBCONTROL_H
-#define KBCONTROL_H
+#ifndef CONTROLKEYBOARD_H
+#define CONTROLKEYBOARD_H
 
-void kbControl_Main(unsigned char key, int x, int y)
+void ctrlKeyboard(unsigned char key, int x, int y)
 {
     switch (key)
     {
     case 'g': // Toggle grid
         ObjDebug.grid.opacity = (ObjDebug.grid.opacity == 100) ? 0 : 100;
-
         break;
+        
     case 'h': // Help - legend
         if (!isBusyAnimating(ObjHelp.hintText) || !isBusyAnimating(ObjHelp.bg))
         {
@@ -43,23 +43,20 @@ void kbControl_Main(unsigned char key, int x, int y)
         // System.state = SystemState::POWERING_ON;
 
         // ---- Test After Power On Animation
-        System.state = SystemState::ON;
+        // System.state = SystemState::ON;
 
-        // Test No on Power Off Confirmation
+        // Test timer
+        System.currentScreen = ScreenState::TIMER;
 
         // Test Charging
         // System.isCharging = !System.isCharging;
 
         // Test Yes on Power Off Confirmation
         // System.state = SystemState::POWERING_OFF_TRIGGERED;
-
-        break;
-
-    case 'w': // Testing
         // Stopwatch test
-        System.currentScreen = ScreenState::STOPWATCH;
-
+        // System.currentScreen = ScreenState::STOPWATCH;
         break;
+
     case 27: // Escape key
         exit(0);
         break;

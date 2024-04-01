@@ -68,7 +68,15 @@ const float COMP4_TEXT_SIZE = 4;
 const float COMP4_TEXT_X_POS = COMPLICATION_X_POS - 22;
 const float COMP4_TEXT_Y_POS = -202;
 
-// - Powering On
+// Apps - Timer
+const float TIMER_SELECTOR_WIDTH = 100;
+const float TIMER_SELECTOR_HEIGHT = 80;
+const float TIMER_SELECTOR_ROUND_RADIUS = 10;
+const float TIMER_HOUR_POS_X = -127;
+const float TIMER_MIN_POS_X = 0;
+const float TIMER_SEC_POS_X = 127;
+const float TIMER_SELECTOR_POS_Y = -10;
+
 
 // - Powering Off
 const float PO_CONFIRM_DIAG_WIDTH = UI_SCREEN_WIDTH - 50;

@@ -42,7 +42,23 @@ enum class StopwatchState
     IDLE,
     RUNNING,
     PAUSED
+} stopwatchState;
+
+enum class TimerState
+{
+    IDLE,
+    RUNNING,
+    PAUSED
 } timerState;
+
+enum class TimerSelectorState
+{
+    HOUR,
+    MINUTE,
+    SECOND,
+    NONE
+} timerSelectorState;
+
 struct System
 {
     bool is24HrFormat = false;
@@ -141,7 +157,6 @@ struct Stopwatch_Object
     Object elapsedTimeText = Object(-183, -30, 0.7, 0, COLOR_WHITE, 0);
     Object elapsedTimeMilliText = Object(-158, -180, 1, 0, COLOR_WHITE, 0);
 
-    bool isTimerRunning = false;
     StopwatchState stopwatchState = StopwatchState::IDLE;
 
     string elapsedMinSec = "00:00";
@@ -151,13 +166,28 @@ struct Stopwatch_Object
     AnimState animState = AnimState::IDLE;
 } ObjStopwatch;
 
-struct Alarm_Object
+struct Timer_Object
 {
-    // Todo
-    chrono::high_resolution_clock::time_point animStartTime;
+    Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 100);
+    Object timerIcon = Object(0, 180, 1, 0, COLOR_WHITE, 100);
+    Object timerLabel = Object(-80, 90, 0.3, 0, COLOR_WHITE, 100);
+    Object timerText = Object(-168, -30, 0.4, 0, COLOR_WHITE, 100);
+    Object selector = Object(0, -10, 1, 0, COLOR_THEME_GREEN, 100);
+    Object divider = Object(0, -100, 1, 0, COLOR_WHITE, 100);
+    Object startBtnText = Object(-130, -200, 0.5, 0, COLOR_WHITE, 100);
 
+    string timerHourMinSec = "00:00:00";
+    int timerHour = 0, timerMinute = 0, timerSecond = 0;
+    int initialHour = 0, initialMinute = 0, initialSecond = 0;
+
+    bool isDragging = false;
+
+    TimerState timerState = TimerState::IDLE;
+    TimerSelectorState timerSelectorState = TimerSelectorState::HOUR;
+
+    chrono::high_resolution_clock::time_point animStartTime, timerStartTime, timerPauseTime, timerElapsedTime;
     AnimState animState = AnimState::IDLE;
-} ObjAlarm;
+} ObjTimer;
 
 struct Help_Object
 {

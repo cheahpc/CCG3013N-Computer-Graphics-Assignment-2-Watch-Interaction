@@ -165,6 +165,21 @@ struct ObjectArea
     GLfloat comp4Y[2] = {COMPLICATION_Y_POS_4 - COMPLICATION_RADIUS,
                          COMPLICATION_Y_POS_4 + COMPLICATION_RADIUS};
 
+    //  Timmer Area
+    //  - Hour
+    GLfloat timerHourX[2] = {TIMER_HOUR_POS_X - TIMER_SELECTOR_WIDTH / 2, TIMER_HOUR_POS_X + TIMER_SELECTOR_WIDTH / 2};
+    GLfloat timerHourY[2] = {TIMER_SELECTOR_POS_Y - TIMER_SELECTOR_HEIGHT / 2, TIMER_SELECTOR_POS_Y + TIMER_SELECTOR_HEIGHT / 2};
+    //  - Minute
+    GLfloat timerMinX[2] = {TIMER_MIN_POS_X - TIMER_SELECTOR_WIDTH / 2, TIMER_MIN_POS_X + TIMER_SELECTOR_WIDTH / 2};
+    GLfloat timerMinY[2] = {TIMER_SELECTOR_POS_Y - TIMER_SELECTOR_HEIGHT / 2, TIMER_SELECTOR_POS_Y + TIMER_SELECTOR_HEIGHT / 2};
+    //  - Second
+    GLfloat timerSecX[2] = {TIMER_SEC_POS_X - TIMER_SELECTOR_WIDTH / 2, TIMER_SEC_POS_X + TIMER_SELECTOR_WIDTH / 2};
+    GLfloat timerSecY[2] = {TIMER_SELECTOR_POS_Y - TIMER_SELECTOR_HEIGHT / 2, TIMER_SELECTOR_POS_Y + TIMER_SELECTOR_HEIGHT / 2};
+
+    // - Start Button
+    GLfloat startBtnX[2] = {-UI_SCREEN_WIDTH / 2, UI_SCREEN_WIDTH / 2};
+    GLfloat startBtnY[2] = {-UI_SCREEN_HEIGHT / 2, -100};
+
 } ObjArea;
 
 void updateObjArea()
