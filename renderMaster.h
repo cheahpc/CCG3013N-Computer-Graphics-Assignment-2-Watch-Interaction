@@ -8,7 +8,7 @@
 #include "renderWatch.h"
 #include "renderUI.h"
 #include "renderStopwatch.h"
-#include "renderTimer.h" 
+#include "renderTimer.h"
 #include "renderPowerOn.h"
 #include "renderPowerOff.h"
 #include "renderCharging.h"
@@ -59,7 +59,7 @@ void renderMaster()
     renderChargingDock(); // Draw the charging dock
 
     // Watch
-    renderWatchStrap();
+    renderWatchStrap();  // Draw the watch strap
     renderWatchDial();   // Draw the watch dial
     renderWatchButton(); // Draw the watch button
     renderWatchBody();   // Draw the watch body
@@ -77,35 +77,42 @@ void renderMaster()
     if (System.state == SystemState::ON || System.state == SystemState::POWERING_OFF_TRIGGERED || System.state == SystemState::POWERING_OFF_CANCELLED)
     {
         // UI
-        renderMainUI(); // Draw the main ui
+        renderMainUI(); // Draw the main UI
 
         // Render Stopwatch
         if (System.currentScreen == ScreenState::STOPWATCH)
-            renderStopwatch(); // Draw the stopwatch
+            renderStopwatch(); // Draw the stopwatch screen
+
+        // Run stopwatch calculations
+        if (ObjStopwatch.stopwatchState == StopwatchState::RUNNING)
+            stopwatchFunction();
 
         // Render Timer
         if (System.currentScreen == ScreenState::TIMER)
-            renderTimer(); // Draw the timer
+            renderTimer(); // Draw the timer screen
 
+        // Run timer calculations
+        if (ObjTimer.timerState == TimerState::RUNNING)
+            timerFunction();
+
+        // Power Off Confirmation
         if (System.state == SystemState::POWERING_OFF_TRIGGERED)
-            renderPowerOffConfirm();
+            renderPowerOffConfirm(); // Draw the power off confirmation screen
 
+        // Power Off Cancelled
         if (System.state == SystemState::POWERING_OFF_CANCELLED)
-            renderPowerOffCancelled();
+            renderPowerOffCancelled(); // Draw the power off cancelled animation
     }
     else if (System.state == SystemState::POWERING_OFF)
-        renderPowerOff(); // Draw the power off UI
+        renderPowerOff(); // Draw the power off animation
 
     // Help
-    renderHelp(); // Draw the help
-
-    // !Debug
-    renderTimer();
+    renderHelp(); // Draw the help overlay
 
     // Grid Overlay
-    renderGrid(); // Draw the grid
+    renderGrid(); // Draw the grid overlay
 
-    renderFinish(); // Finish the rendering
+    renderFinish(); // Finish rendering
 }
 
 #endif

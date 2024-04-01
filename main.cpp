@@ -43,9 +43,6 @@ void init()
 	glEnable(GL_BLEND);								   // Enable for proper transparency render.
 	glDisable(GL_DEPTH_TEST);						   // Disable depth testing for overlap object. Use for transparency object involved.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Enable transparency.
-
-	// Control Settings
-	// glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); // Disable key repeat.
 }
 
 int main()
@@ -56,8 +53,7 @@ int main()
 	glutMouseFunc(ctrlMouse);		  // Enable mouse button function.
 	glutMotionFunc(mouseMoveControl); // Enable mouse move function.
 	glutKeyboardFunc(ctrlKeyboard);	  // Enable keyboard function.
-	// glutSpecialFunc(kbControl);				   // Enable special key function.
-	glutMainLoop(); // Loop frame forever.
+	glutMainLoop();					  // Loop frame forever.
 
 	system("PAUSE");
 	return 0;

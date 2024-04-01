@@ -35,8 +35,8 @@ void renderPowerOffCancelled()
     ObjPowerOff.message.drawText("Are you sure?", 3);
     ObjPowerOff.yesText.drawText("Yes", 3);
     ObjPowerOff.noText.drawText("No", 3);
-    ObjPowerOff.separatorLineHorizontal.drawRect_Fill(PO_CONFIRM_DIAG_WIDTH - 20, 2);
-    ObjPowerOff.separatorLineVertical.drawRect_Fill(2, 40);
+    ObjPowerOff.dividerLineHorizontal.drawRect_Fill(PO_CONFIRM_DIAG_WIDTH - 20, 2);
+    ObjPowerOff.dividerLineVertical.drawRect_Fill(2, 40);
 
     // Initiate animation
     if (ObjPowerOff.pOffOverlayAnimState == AnimState::IDLE)
@@ -49,8 +49,8 @@ void renderPowerOffCancelled()
         toggleAnimationFlag(ObjPowerOff.message, true, false, false, true, false);
         toggleAnimationFlag(ObjPowerOff.yesText, true, false, false, true, false);
         toggleAnimationFlag(ObjPowerOff.noText, true, false, false, true, false);
-        toggleAnimationFlag(ObjPowerOff.separatorLineHorizontal, true, false, false, true, false);
-        toggleAnimationFlag(ObjPowerOff.separatorLineVertical, true, false, false, true, false);
+        toggleAnimationFlag(ObjPowerOff.dividerLineHorizontal, true, false, false, true, false);
+        toggleAnimationFlag(ObjPowerOff.dividerLineVertical, true, false, false, true, false);
         ObjPowerOff.pOffOverlayStartTime = chrono::high_resolution_clock::now();
     }
     // ---- Animate
@@ -78,14 +78,14 @@ void renderPowerOffCancelled()
         animateTranslate(ObjPowerOff.noText, poOverlay_Text_Duration, poOverlay_Tittle_Easing, 0, -poOverlay_Text_TranslateYVal);
         animateOpacity(ObjPowerOff.noText, poOverlay_Text_Duration, poOverlay_Tittle_Easing, -100);
         // 7 - Power off overlay Separator Line Horizontal
-        animateTranslate(ObjPowerOff.separatorLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, -poOverlay_Separator_TranslateYVal);
-        animateOpacity(ObjPowerOff.separatorLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, -poOverlay_Separator_Opacity);
+        animateTranslate(ObjPowerOff.dividerLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, -poOverlay_Separator_TranslateYVal);
+        animateOpacity(ObjPowerOff.dividerLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, -poOverlay_Separator_Opacity);
         // 8 - Power off overlay Separator Line Vertical
-        animateTranslate(ObjPowerOff.separatorLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, -poOverlay_Separator_TranslateYVal);
-        animateOpacity(ObjPowerOff.separatorLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, -poOverlay_Separator_Opacity);
+        animateTranslate(ObjPowerOff.dividerLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, -poOverlay_Separator_TranslateYVal);
+        animateOpacity(ObjPowerOff.dividerLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, -poOverlay_Separator_Opacity);
 
         // (Too long || Animation is done) == End
-        if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.separatorLineHorizontal) || isBusyAnimating(ObjPowerOff.separatorLineVertical)))
+        if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.dividerLineHorizontal) || isBusyAnimating(ObjPowerOff.dividerLineVertical)))
         {
             ObjPowerOff.pOffOverlayAnimState = AnimState::IDLE;
             ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NONE;
@@ -96,16 +96,16 @@ void renderPowerOffCancelled()
             ObjPowerOff.message.translateTo(-140, 80);
             ObjPowerOff.yesText.translateTo(60, -50);
             ObjPowerOff.noText.translateTo(-115, -50);
-            ObjPowerOff.separatorLineHorizontal.translateTo(0, 10);
-            ObjPowerOff.separatorLineVertical.translateTo(0, -40);
+            ObjPowerOff.dividerLineHorizontal.translateTo(0, 10);
+            ObjPowerOff.dividerLineVertical.translateTo(0, -40);
             ObjPowerOff.bgBlur.setOpacity(0);
             ObjPowerOff.bg.setOpacity(0);
             ObjPowerOff.title.setOpacity(0);
             ObjPowerOff.message.setOpacity(0);
             ObjPowerOff.yesText.setOpacity(0);
             ObjPowerOff.noText.setOpacity(0);
-            ObjPowerOff.separatorLineHorizontal.setOpacity(0);
-            ObjPowerOff.separatorLineVertical.setOpacity(0);
+            ObjPowerOff.dividerLineHorizontal.setOpacity(0);
+            ObjPowerOff.dividerLineVertical.setOpacity(0);
 
             System.state = SystemState::ON;
             System.currentScreen = ScreenState::MAIN;
@@ -145,8 +145,8 @@ void renderPowerOffConfirm()
     ObjPowerOff.message.drawText("Are you sure?", 3);
     ObjPowerOff.yesText.drawText("Yes", 3);
     ObjPowerOff.noText.drawText("No", 3);
-    ObjPowerOff.separatorLineHorizontal.drawRect_Fill(PO_CONFIRM_DIAG_WIDTH - 20, 2);
-    ObjPowerOff.separatorLineVertical.drawRect_Fill(2, 40);
+    ObjPowerOff.dividerLineHorizontal.drawRect_Fill(PO_CONFIRM_DIAG_WIDTH - 20, 2);
+    ObjPowerOff.dividerLineVertical.drawRect_Fill(2, 40);
 
     // Initiate animation
     if (ObjPowerOff.pOffOverlayAnimState == AnimState::IDLE)
@@ -159,8 +159,8 @@ void renderPowerOffConfirm()
         toggleAnimationFlag(ObjPowerOff.message, true, false, false, true, false);
         toggleAnimationFlag(ObjPowerOff.yesText, true, false, false, true, false);
         toggleAnimationFlag(ObjPowerOff.noText, true, false, false, true, false);
-        toggleAnimationFlag(ObjPowerOff.separatorLineHorizontal, true, false, false, true, false);
-        toggleAnimationFlag(ObjPowerOff.separatorLineVertical, true, false, false, true, false);
+        toggleAnimationFlag(ObjPowerOff.dividerLineHorizontal, true, false, false, true, false);
+        toggleAnimationFlag(ObjPowerOff.dividerLineVertical, true, false, false, true, false);
         ObjPowerOff.pOffOverlayStartTime = chrono::high_resolution_clock::now();
     }
     // ---- Animate
@@ -188,14 +188,14 @@ void renderPowerOffConfirm()
         animateTranslate(ObjPowerOff.noText, poOverlay_Text_Duration, poOverlay_Tittle_Easing, 0, poOverlay_Text_TranslateYVal);
         animateOpacity(ObjPowerOff.noText, poOverlay_Text_Duration, poOverlay_Tittle_Easing, 100);
         // 7 - Power off overlay Separator Line Horizontal
-        animateTranslate(ObjPowerOff.separatorLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, poOverlay_Separator_TranslateYVal);
-        animateOpacity(ObjPowerOff.separatorLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, poOverlay_Separator_Opacity);
+        animateTranslate(ObjPowerOff.dividerLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, poOverlay_Separator_TranslateYVal);
+        animateOpacity(ObjPowerOff.dividerLineHorizontal, poOverlay_Separator_Duration, poOverlay_Separator_Easing, poOverlay_Separator_Opacity);
         // 8 - Power off overlay Separator Line Vertical
-        animateTranslate(ObjPowerOff.separatorLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, poOverlay_Separator_TranslateYVal);
-        animateOpacity(ObjPowerOff.separatorLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, poOverlay_Separator_Opacity);
+        animateTranslate(ObjPowerOff.dividerLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, 0, poOverlay_Separator_TranslateYVal);
+        animateOpacity(ObjPowerOff.dividerLineVertical, poOverlay_Separator_Duration, poOverlay_Separator_Easing, poOverlay_Separator_Opacity);
 
         // (Too long || Animation is done) == End
-        if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.separatorLineHorizontal) || isBusyAnimating(ObjPowerOff.separatorLineVertical)))
+        if (elapsedTime.count() >= poOverlay_TotalDuration && !(isBusyAnimating(ObjPowerOff.bg) || isBusyAnimating(ObjPowerOff.title) || isBusyAnimating(ObjPowerOff.message) || isBusyAnimating(ObjPowerOff.yesText) || isBusyAnimating(ObjPowerOff.noText) || isBusyAnimating(ObjPowerOff.dividerLineHorizontal) || isBusyAnimating(ObjPowerOff.dividerLineVertical)))
         {
             cout << "Confirm power off?..." << endl;
             ObjPowerOff.pOffOverlayAnimState = AnimState::DONE;
@@ -217,16 +217,16 @@ void renderPowerOffConfirm()
             ObjPowerOff.message.translateTo(-140, 80);
             ObjPowerOff.yesText.translateTo(60, -50);
             ObjPowerOff.noText.translateTo(-115, -50);
-            ObjPowerOff.separatorLineHorizontal.translateTo(0, 10);
-            ObjPowerOff.separatorLineVertical.translateTo(0, -40);
+            ObjPowerOff.dividerLineHorizontal.translateTo(0, 10);
+            ObjPowerOff.dividerLineVertical.translateTo(0, -40);
             ObjPowerOff.bgBlur.setOpacity(0);
             ObjPowerOff.bg.setOpacity(0);
             ObjPowerOff.title.setOpacity(0);
             ObjPowerOff.message.setOpacity(0);
             ObjPowerOff.yesText.setOpacity(0);
             ObjPowerOff.noText.setOpacity(0);
-            ObjPowerOff.separatorLineHorizontal.setOpacity(0);
-            ObjPowerOff.separatorLineVertical.setOpacity(0);
+            ObjPowerOff.dividerLineHorizontal.setOpacity(0);
+            ObjPowerOff.dividerLineVertical.setOpacity(0);
 
             System.currentScreen = ScreenState::POWERING_OFF;
             System.state = SystemState::POWERING_OFF;
@@ -358,8 +358,8 @@ void renderPowerOff()
         ObjUI.complication3.setOpacity(0);
         ObjUI.complication4.setOpacity(0);
         ObjUI.comp1Battery.setOpacity(0);
-        ObjUI.comp2Timer.setOpacity(0);
-        ObjUI.comp3Alarm.setOpacity(0);
+        ObjUI.comp2Stopwatch.setOpacity(0);
+        ObjUI.comp3Timer.setOpacity(0);
         ObjUI.comp4Text.setOpacity(0);
 
         // Heart rate monitor
@@ -404,12 +404,19 @@ void renderPowerOff()
         ObjStopwatch.stopwatchLabel.setOpacity(0);
         ObjStopwatch.elapsedTimeText.setOpacity(0);
         ObjStopwatch.elapsedTimeMilliText.setOpacity(0);
-        ObjStopwatch.elapsedMinSec = "00:00";
-        ObjStopwatch.elapsedMilli = "000";
+
         ObjStopwatch.animState = AnimState::IDLE;
 
         // App 2 - Timer
-        // TODO
+        ObjTimer.bg.setOpacity(0);
+        ObjTimer.timerIcon.setOpacity(0);
+        ObjTimer.timerLabel.setOpacity(0);
+        ObjTimer.timerText.setOpacity(0);
+        ObjTimer.selector.setOpacity(0);
+        ObjTimer.divider.setOpacity(0);
+        ObjTimer.startBtnText.setOpacity(0);
+
+        ObjTimer.animState = AnimState::IDLE;
 
         // Update system state
         ObjUI.animState = AnimState::IDLE;

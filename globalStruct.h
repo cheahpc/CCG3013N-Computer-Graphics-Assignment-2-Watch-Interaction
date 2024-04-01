@@ -110,8 +110,8 @@ struct UI_Object
 
     Object comp1Battery = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_1, 1, 0, COLOR_WHITE, 0);
     Object comp1BatteryText = Object(COMP1_BATTERY_TEXT_X_POS, COMP1_BATTERY_TEXT_Y_POS, 0.13, 0, COLOR_WHITE, 100);
-    Object comp2Timer = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_2, 1, 0, COLOR_WHITE, 0);
-    Object comp3Alarm = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_3, 1, 0, COLOR_WHITE, 0);
+    Object comp2Stopwatch = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_2, 1, 0, COLOR_WHITE, 0);
+    Object comp3Timer = Object(COMPLICATION_X_POS, COMPLICATION_Y_POS_3, 1, 0, COLOR_WHITE, 0);
     Object comp4Text = Object(COMP4_TEXT_X_POS, COMP4_TEXT_Y_POS, 0.2, 0, COLOR_WHITE, 0);
 
     // DateTime Area
@@ -168,22 +168,30 @@ struct Stopwatch_Object
 
 struct Timer_Object
 {
-    Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 100);
-    Object timerIcon = Object(0, 180, 1, 0, COLOR_WHITE, 100);
-    Object timerLabel = Object(-80, 90, 0.3, 0, COLOR_WHITE, 100);
-    Object timerText = Object(-168, -30, 0.4, 0, COLOR_WHITE, 100);
-    Object selector = Object(0, -10, 1, 0, COLOR_THEME_GREEN, 100);
-    Object divider = Object(0, -100, 1, 0, COLOR_WHITE, 100);
-    Object startBtnText = Object(-130, -200, 0.5, 0, COLOR_WHITE, 100);
+    Object bg = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);
+    Object timerIcon = Object(0, 180, 1, 0, COLOR_WHITE, 0);
+    Object timerLabel = Object(-80, 90, 0.3, 0, COLOR_WHITE, 0);
+    Object timerText = Object(-168, -30, 0.4, 0, COLOR_WHITE, 0);
+    Object selector = Object(0, -10, 1, 0, COLOR_THEME_GREEN, 0);
+    Object divider = Object(0, -100, 1, 0, COLOR_WHITE, 0);
+    Object startBtnText = Object(-130, -200, 0.5, 0, COLOR_WHITE, 0);
+
+    Object notiBg = Object(0, 0, 1, 0, COLOR_BLACK, 0);
+    Object notiTitle = Object(-140, 180, 0.3, 0, COLOR_WHITE, 0);
+    Object notiMessage = Object(-140, 80, 0.2, 0, COLOR_WHITE, 0);
+    Object notiDivider = Object(0, 10, 1, 0, COLOR_WHITE, 0);
+    Object notiOkText = Object(60, -50, 0.2, 0, COLOR_WHITE, 0);
 
     string timerHourMinSec = "00:00:00";
     int timerHour = 0, timerMinute = 0, timerSecond = 0;
     int initialHour = 0, initialMinute = 0, initialSecond = 0;
+    int totalTimerDuration;
 
     bool isDragging = false;
+    bool isTimesUp = false;
 
     TimerState timerState = TimerState::IDLE;
-    TimerSelectorState timerSelectorState = TimerSelectorState::HOUR;
+    TimerSelectorState timerSelectorState = TimerSelectorState::SECOND;
 
     chrono::high_resolution_clock::time_point animStartTime, timerStartTime, timerPauseTime, timerElapsedTime;
     AnimState animState = AnimState::IDLE;
@@ -220,8 +228,8 @@ struct Powering_Off_Object
     Object message = Object(-140, 80, 0.2, 0, COLOR_WHITE, 0);
     Object yesText = Object(60, -50, 0.2, 0, COLOR_RED, 0);
     Object noText = Object(-115, -50, 0.2, 0, COLOR_WHITE, 0);
-    Object separatorLineHorizontal = Object(0, 10, 1, 0, COLOR_WHITE, 0);
-    Object separatorLineVertical = Object(0, -40, 1, 0, COLOR_WHITE, 0);
+    Object dividerLineHorizontal = Object(0, 10, 1, 0, COLOR_WHITE, 0);
+    Object dividerLineVertical = Object(0, -40, 1, 0, COLOR_WHITE, 0);
 
     // For power off
     Object offBg = Object(0, 0, 1, 0, COLOR_BLACK_1, 0);

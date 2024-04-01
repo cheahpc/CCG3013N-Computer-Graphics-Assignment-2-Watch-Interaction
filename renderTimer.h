@@ -3,43 +3,38 @@
 
 void timerFunction()
 {
-}
-
-void renderTimer()
-{
-    // Start countdown
-    // !Working
     if (ObjTimer.timerState == TimerState::RUNNING)
     {
         auto currentTime = chrono::system_clock::now();
         auto elapsedTime = chrono::duration_cast<chrono::seconds>(currentTime - ObjTimer.timerStartTime).count();
-        cout << "elapsedTime: " << elapsedTime << endl;
-        ObjTimer.timerSecond = ObjTimer.initialSecond - elapsedTime;
-        if (ObjTimer.timerSecond < 0)
+
+        auto currentTimerValue = ObjTimer.totalTimerDuration - elapsedTime;
+
+        ObjTimer.timerSecond = currentTimerValue % 60;
+        ObjTimer.timerMinute = (currentTimerValue / 60) % 60;
+        ObjTimer.timerHour = (currentTimerValue / 3600);
+
+        if (currentTimerValue <= 0)
         {
-            ObjTimer.timerSecond = 59;
-            ObjTimer.timerMinute--;
-        }
-        if (ObjTimer.timerMinute < 0)
-        {
-            ObjTimer.timerMinute = 59;
-            ObjTimer.timerHour--;
-        }
-        if (ObjTimer.timerHour < 0)
-        {
-            ObjTimer.timerHour = 0;
-            ObjTimer.timerMinute = 0;
-            ObjTimer.timerSecond = 0;
-            ObjTimer.timerState = TimerState::IDLE;
             cout << "Timer ended" << endl;
-            // TODO ring the alarm
+            ObjTimer.timerSecond = 0;
+            ObjTimer.timerMinute = 0;
+            ObjTimer.timerHour = 0;
+            ObjTimer.isTimesUp = true;
+            ObjTimer.timerState = TimerState::PAUSED;
         }
     }
+}
+
+void renderTimer()
+{
+    timerFunction();
 
     // Process timer
     stringstream hourMinSec;
     hourMinSec << setfill('0') << setw(2) << ObjTimer.timerHour << ":" << setw(2) << ObjTimer.timerMinute << ":" << setw(2) << ObjTimer.timerSecond;
     ObjTimer.timerHourMinSec = hourMinSec.str();
+
     // variables
     // Duration
     float uiDuration = 400;
@@ -80,6 +75,37 @@ void renderTimer()
         ObjTimer.startBtnText.drawText("PAUSE", 7);
     else if (ObjTimer.timerState == TimerState::PAUSED)
         ObjTimer.startBtnText.drawText("RESET", 7);
+
+    // Initialize animation
+    if (ObjTimer.animState == AnimState::IDLE)
+    {
+        ObjTimer.animState = AnimState::ANIMATING;
+        toggleAnimationFlag(ObjTimer.bg, false, false, false, true, false);
+        toggleAnimationFlag(ObjTimer.timerIcon, false, false, false, true, false);
+        toggleAnimationFlag(ObjTimer.timerLabel, false, false, false, true, false);
+        toggleAnimationFlag(ObjTimer.timerText, false, false, false, true, false);
+        toggleAnimationFlag(ObjTimer.selector, false, false, false, true, false);
+        toggleAnimationFlag(ObjTimer.divider, false, false, false, true, false);
+        toggleAnimationFlag(ObjTimer.startBtnText, false, false, false, true, false);
+        ObjTimer.animStartTime = chrono::high_resolution_clock::now();
+    }
+
+    if (ObjTimer.animState == AnimState::ANIMATING)
+    {
+        auto currentTime = chrono::high_resolution_clock::now();
+        auto elapsedTime = chrono::duration_cast<chrono::milliseconds>(currentTime - ObjTimer.animStartTime).count();
+        animateOpacity(ObjTimer.bg, uiDuration, ui_OpactEasing, 100);
+        animateOpacity(ObjTimer.timerIcon, uiDuration, ui_OpactEasing, 100);
+        animateOpacity(ObjTimer.timerLabel, uiDuration, ui_OpactEasing, 100);
+        animateOpacity(ObjTimer.timerText, uiDuration, ui_OpactEasing, 100);
+        animateOpacity(ObjTimer.selector, uiDuration, ui_OpactEasing, 100);
+        animateOpacity(ObjTimer.divider, uiDuration, ui_OpactEasing, 100);
+        animateOpacity(ObjTimer.startBtnText, uiDuration, ui_OpactEasing, 100);
+
+        if (elapsedTime > uiDuration && !(isBusyAnimating(ObjTimer.bg) || isBusyAnimating(ObjTimer.timerIcon) || isBusyAnimating(ObjTimer.timerLabel) || isBusyAnimating(ObjTimer.timerText) || isBusyAnimating(ObjTimer.selector) || isBusyAnimating(ObjTimer.divider) || isBusyAnimating(ObjTimer.startBtnText)))
+            ObjTimer.animState = AnimState::DONE;
+    }
+
 }
 
 #endif

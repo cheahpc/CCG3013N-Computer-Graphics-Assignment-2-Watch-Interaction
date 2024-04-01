@@ -37,6 +37,15 @@ void renderMainUI()
     const float *batteryLevelColor = (System.batteryLevel > 40)   ? COLOR_THEME_GREEN
                                      : (System.batteryLevel > 15) ? COLOR_ORANGE
                                                                   : COLOR_RED;
+    const float *stopwatchColor = (ObjStopwatch.stopwatchState == StopwatchState::IDLE)      ? COLOR_WHITE
+                                  : (ObjStopwatch.stopwatchState == StopwatchState::RUNNING) ? COLOR_THEME_GREEN
+                                                                                             : COLOR_ORANGE;
+    const float *timerColor = (ObjTimer.timerState == TimerState::IDLE)      ? COLOR_WHITE
+                              : (ObjTimer.timerState == TimerState::RUNNING) ? COLOR_THEME_GREEN
+                                                                             : COLOR_ORANGE;
+
+    ObjUI.comp2Stopwatch.setColor(stopwatchColor);
+    ObjUI.comp3Timer.setColor(timerColor);
 
     // Easing
     float ui_AnimTotalDuration = 10000;
@@ -93,8 +102,10 @@ void renderMainUI()
     ObjUI.complication1.drawCircle_Fill(COMPLICATION_RADIUS - 8, 0, 360);
     ObjUI.complication1.setColor(batteryLevelColor);
     ObjUI.complication1.drawCircle_Line(COMPLICATION_RADIUS, 0, System.batteryLevel * 3.6, 8);
-    ObjUI.complication2.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
-    ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
+    if (ObjStopwatch.stopwatchState == StopwatchState::IDLE)
+        ObjUI.complication2.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
+    if (ObjTimer.timerState == TimerState::IDLE)
+        ObjUI.complication3.drawCircle_Fill(COMPLICATION_RADIUS, 0, 360);
     ObjUI.complication4.drawCircle_Line(COMPLICATION_RADIUS, 0, 360, 4);
     // Complications Content
     if (ObjUI.isBatteryPercentageVisible)
@@ -112,11 +123,10 @@ void renderMainUI()
         ObjUI.comp1BatteryText.drawText(batteryLevelStr, COMP1_BATTERY_TEXT_SIZE);
     }
     else
-    {
         ObjUI.comp1Battery.drawBattery_Fill(20, System.batteryLevel, System.isCharging, COLOR_WHITE, batteryLevelColor);
-    }
-    ObjUI.comp2Timer.drawStopwatch_Fill(20);
-    ObjUI.comp3Alarm.drawTimer_Fill(20);
+
+    ObjUI.comp2Stopwatch.drawStopwatch_Fill(20);
+    ObjUI.comp3Timer.drawTimer_Fill(20);
     ObjUI.comp4Text.drawText(hrFormatStr, COMP4_TEXT_SIZE);
 
     if (ObjUI.isHeartBeating)
@@ -146,8 +156,8 @@ void renderMainUI()
         toggleAnimationFlag(ObjUI.complication3, true, false, true, true, false);
         toggleAnimationFlag(ObjUI.complication4, true, false, true, true, false);
         toggleAnimationFlag(ObjUI.comp1Battery, false, false, false, true, false);
-        toggleAnimationFlag(ObjUI.comp2Timer, false, false, false, true, false);
-        toggleAnimationFlag(ObjUI.comp3Alarm, false, false, false, true, false);
+        toggleAnimationFlag(ObjUI.comp2Stopwatch, false, false, false, true, false);
+        toggleAnimationFlag(ObjUI.comp3Timer, false, false, false, true, false);
         toggleAnimationFlag(ObjUI.comp4Text, false, false, false, true, false);
         ObjUI.animStartTime = chrono::high_resolution_clock::now();
     }
@@ -206,8 +216,8 @@ void renderMainUI()
         if (elapsedTime.count() >= compContentStartTime)
         {
             animateOpacity(ObjUI.comp1Battery, compContentDuration, ui_OpactEasing, 100);
-            animateOpacity(ObjUI.comp2Timer, compContentDuration, ui_OpactEasing, 100);
-            animateOpacity(ObjUI.comp3Alarm, compContentDuration, ui_OpactEasing, 100);
+            animateOpacity(ObjUI.comp2Stopwatch, compContentDuration, ui_OpactEasing, 100);
+            animateOpacity(ObjUI.comp3Timer, compContentDuration, ui_OpactEasing, 100);
             animateOpacity(ObjUI.comp4Text, compContentDuration, ui_OpactEasing, 100);
         }
 

@@ -37,9 +37,10 @@ void ctrlMouse(GLint button, GLint state, int x, int y)
                         ObjStopwatch.stopwatchState = StopwatchState::IDLE;
                         ObjStopwatch.elapsedMinSec = "00:00";
                         ObjStopwatch.elapsedMilli = "000";
+                        break;
                     }
                     break;
-                case ScreenState::TIMER: // Todo: Implement timer
+                case ScreenState::TIMER: 
                     Mouse.leftDown = true;
                     ObjTimer.isDragging = true;
                     Mouse.lastMouseX = Mouse.mouseX;
@@ -67,23 +68,33 @@ void ctrlMouse(GLint button, GLint state, int x, int y)
                     break;
                 case ScreenState::STOPWATCH:
                     cout << "Stopwatch app closed..." << endl;
-                    ObjStopwatch.stopwatchState = StopwatchState::IDLE;
                     System.currentScreen = ScreenState::MAIN;
-
                     ObjStopwatch.bg.setOpacity(0);
                     ObjStopwatch.stopwatchIcon.setOpacity(0);
                     ObjStopwatch.stopwatchLabel.setOpacity(0);
                     ObjStopwatch.elapsedTimeText.setOpacity(0);
                     ObjStopwatch.elapsedTimeMilliText.setOpacity(0);
-                    ObjStopwatch.elapsedMinSec = "00:00";
-                    ObjStopwatch.elapsedMilli = "000";
                     ObjStopwatch.animState = AnimState::IDLE;
+                    break;
+                case ScreenState::TIMER:
+                    cout << "Timer app closed..." << endl;
+                    System.currentScreen = ScreenState::MAIN;
+                    ObjTimer.bg.setOpacity(0);
+                    ObjTimer.timerIcon.setOpacity(0);
+                    ObjTimer.timerLabel.setOpacity(0);
+                    ObjTimer.timerText.setOpacity(0);
+                    ObjTimer.selector.setOpacity(0);
+                    ObjTimer.divider.setOpacity(0);
+                    ObjTimer.startBtnText.setOpacity(0);
+
+                    ObjTimer.animState = AnimState::IDLE;
                     break;
                 case ScreenState::NONE:
                 case ScreenState::MAIN:
                 case ScreenState::POWERING_ON:
                 case ScreenState::POWERING_OFF:
                 default:
+                    // do nothing !
                     break;
                 }
             }
@@ -133,10 +144,9 @@ void ctrlMouse(GLint button, GLint state, int x, int y)
                     ObjUI.isHeartBeating = !ObjUI.isHeartBeating;
                 }
             }
-
-            // Yes No area
-            if (System.currentScreen == ScreenState::POWER_OFF_CONFIRMATION)
+            else if (System.currentScreen == ScreenState::POWER_OFF_CONFIRMATION)
             {
+                // Yes No area
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.yesX, ObjArea.yesNoY))
                 {
                     cout << "Yes pressed..." << endl;
@@ -148,10 +158,9 @@ void ctrlMouse(GLint button, GLint state, int x, int y)
                     ObjPowerOff.pOffConfirmation = PowerOffConfirmationState::NO;
                 }
             }
-
-            // Timer selector area
-            if (System.currentScreen == ScreenState::TIMER)
+            else if (System.currentScreen == ScreenState::TIMER)
             {
+                // Timer
                 if (mouseInArea(Mouse.mouseX, Mouse.mouseY, ObjArea.timerSecX, ObjArea.timerSecY))
                 {
                     cout << "Timer second selector pressed..." << endl;
@@ -177,6 +186,7 @@ void ctrlMouse(GLint button, GLint state, int x, int y)
                         ObjTimer.initialHour = ObjTimer.timerHour;
                         ObjTimer.initialMinute = ObjTimer.timerMinute;
                         ObjTimer.initialSecond = ObjTimer.timerSecond;
+                        ObjTimer.totalTimerDuration = (ObjTimer.initialHour * 3600) + (ObjTimer.initialMinute * 60) + ObjTimer.initialSecond;
                         ObjTimer.timerStartTime = chrono::high_resolution_clock::now();
                         break;
                     case TimerState::RUNNING:
@@ -184,6 +194,10 @@ void ctrlMouse(GLint button, GLint state, int x, int y)
                         break;
                     case TimerState::PAUSED:
                         ObjTimer.timerState = TimerState::IDLE;
+                        ObjTimer.timerHour = ObjTimer.initialHour;
+                        ObjTimer.timerMinute = ObjTimer.initialMinute;
+                        ObjTimer.timerSecond = ObjTimer.initialSecond;
+
                         break;
                     }
                 }

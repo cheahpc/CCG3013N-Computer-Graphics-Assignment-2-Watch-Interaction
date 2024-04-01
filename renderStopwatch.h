@@ -2,10 +2,10 @@
 #define RENDERSTOPWATCH_H
 void stopwatchFunction()
 {
-    if (ObjStopwatch.stopwatchState == StopwatchState::RUNNING)
-    {
+  
         auto elapsedTime = chrono::high_resolution_clock::now() - ObjStopwatch.stopwatchStartTime;
-        auto elapsedTimeSec = chrono::duration_cast<chrono::seconds>(elapsedTime).count();
+
+        auto elapsedTimeSec = chrono::duration_cast<chrono::seconds>(elapsedTime).count() % 60;
         auto elapsedTimeMin = chrono::duration_cast<chrono::minutes>(elapsedTime).count();
         auto elapsedTimeMilli = chrono::duration_cast<chrono::milliseconds>(elapsedTime).count() % 1000;
 
@@ -15,7 +15,10 @@ void stopwatchFunction()
 
         ObjStopwatch.elapsedMinSec = minSecss.str();
         ObjStopwatch.elapsedMilli = milliss.str();
-    }
+
+        if (elapsedTimeMin >= 99 && elapsedTimeSec >= 59 && elapsedTimeMilli >= 999)
+            ObjStopwatch.stopwatchState = StopwatchState::PAUSED;
+    
 }
 
 void renderStopwatch()
@@ -72,9 +75,6 @@ void renderStopwatch()
         if (elapsedTime.count() >= uiDuration && (!isBusyAnimating(ObjStopwatch.bg) && !isBusyAnimating(ObjStopwatch.elapsedTimeText)))
             ObjStopwatch.animState = AnimState::DONE;
     }
-
-    if (ObjStopwatch.animState == AnimState::DONE)
-        stopwatchFunction();
 }
 
 #endif
