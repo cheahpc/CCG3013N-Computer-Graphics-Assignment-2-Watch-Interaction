@@ -55,6 +55,9 @@ void renderMaster()
     // Backdrop
     renderBackdrop(); // Draw the backdrop
 
+    // Help
+    renderHelp(); // Draw the help overlay
+
     // Charging Dock
     renderChargingDock(); // Draw the charging dock
 
@@ -105,9 +108,6 @@ void renderMaster()
     }
     else if (System.state == SystemState::POWERING_OFF)
         renderPowerOff(); // Draw the power off animation
-
-    // Help
-    renderHelp(); // Draw the help overlay
 
     // Grid Overlay
     renderGrid(); // Draw the grid overlay

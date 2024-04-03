@@ -28,11 +28,11 @@ void renderHelp()
     ObjHelp.helpText.drawText("Watch", HELP_LABEL_TEXT_SIZE);
     ObjHelp.helpText.translateTo(120, -350);
     ObjHelp.helpText.drawText("Watch strap", HELP_LABEL_TEXT_SIZE);
-    ObjHelp.helpText.translateTo(600, -90);
+    ObjHelp.helpText.translateTo(540, -100);
     ObjHelp.helpText.drawText("(The Charger)", HELP_LABEL_TEXT_SIZE);
     ObjHelp.helpText.translateTo(270, 100);
     ObjHelp.helpText.drawText("(Watch Dial)", HELP_LABEL_TEXT_SIZE);
-    ObjHelp.helpText.translateTo(260, -90);
+    ObjHelp.helpText.translateTo(250, 0);
     ObjHelp.helpText.drawText("(Watch Button)", HELP_LABEL_TEXT_SIZE);
 
     // Helps
@@ -65,7 +65,7 @@ void renderHelp()
     ObjHelp.helpText.translateTo(HELP_TEXT_INIT_X, HELP_TEXT_INIT_Y - HELP_TEXT_Y_OFFSET * 14);
     ObjHelp.helpText.drawText("4) Simulate walking:", HELP_POINT_TEXT_SIZE);
     ObjHelp.helpText.translateTo(HELP_TEXT_INIT_X, HELP_TEXT_INIT_Y - HELP_TEXT_Y_OFFSET * 15);
-    ObjHelp.helpText.drawText(" - Press 'a' and 'b' in alternating pattern.", HELP_TEXT_SIZE);
+    ObjHelp.helpText.drawText(" - Press 'a' and 'd' in alternating pattern.", HELP_TEXT_SIZE);
 
     ObjHelp.helpText.translateTo(HELP_TEXT_INIT_X, HELP_TEXT_INIT_Y - HELP_TEXT_Y_OFFSET * 17);
     ObjHelp.helpText.drawText("5) Increase heart rate:", HELP_POINT_TEXT_SIZE);

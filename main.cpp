@@ -33,9 +33,9 @@
 void init()
 {
 	// Initialize the windows
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);						  // Set the display mode to single buffer and RGBA.
-	glutInitWindowSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);					  // Set the windows size.
-	glutInitWindowPosition(WINDOWS_INITIAL_POS_X, WINDOWS_INITIAL_POS_Y); // Set the windows position.
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);								 // Set the display mode to single buffer and RGBA.
+	glutInitWindowSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);							 // Set the windows size.
+	glutInitWindowPosition(WINDOWS_INITIAL_POS_X, WINDOWS_INITIAL_POS_Y);		 // Set the windows position.
 	glutCreateWindow("CCG3013N Assignment 2 (OppsOS Simulator) by: Group Opps"); // Set the windows title.
 
 	// Context Settings
