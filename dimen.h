@@ -15,12 +15,21 @@ const float SCREEN_CENTER_Y = glutGet(GLUT_SCREEN_HEIGHT) / 2;
 const float WINDOWS_INITIAL_POS_X = SCREEN_CENTER_X - (WINDOWS_WIDTH / 2);
 const float WINDOWS_INITIAL_POS_Y = SCREEN_CENTER_Y - (WINDOWS_HEIGHT / 2);
 
-// Legend
-const float HELP_HINT_TEXT_SIZE = 2;
-const float HELP_BOX_WIDTH = 200;
-const float HELP_BOX_HEIGHT = 200;
-const float HELP_BOX_ROUND_RADIUS = 25;
-const float HELP_BOX_OUTLINE_SIZE = 25;
+// Help
+const float HELP_HINT_TEXT_SIZE = 4;
+const float HELP_BOX_WIDTH = WINDOWS_WIDTH * 0.52;
+const float HELP_BOX_HEIGHT = WINDOWS_HEIGHT * 0.85;
+const float HELP_BOX_ROUND_RADIUS = 15;
+const float HELP_BOX_OUTLINE_SIZE = 15;
+const float HELP_LABEL_TEXT_SCALE = 0.17;
+const float HELP_LABEL_TEXT_SIZE = 3;
+const float HELP_TEXT_SCALE = 0.10;
+const float HELP_TEXT_SIZE = 0.7;
+const float HELP_POINT_TEXT_SIZE = 1.7;
+
+const float HELP_TEXT_INIT_X = -790;
+const float HELP_TEXT_INIT_Y = 345;
+const float HELP_TEXT_Y_OFFSET = 20;
 
 // Watch
 // - Strap
@@ -76,7 +85,6 @@ const float TIMER_HOUR_POS_X = -127;
 const float TIMER_MIN_POS_X = 0;
 const float TIMER_SEC_POS_X = 127;
 const float TIMER_SELECTOR_POS_Y = -10;
-
 
 // - Powering Off
 const float PO_CONFIRM_DIAG_WIDTH = UI_SCREEN_WIDTH - 50;

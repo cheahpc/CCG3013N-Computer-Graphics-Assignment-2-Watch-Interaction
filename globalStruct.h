@@ -64,10 +64,10 @@ struct System
     bool is24HrFormat = false;
     SystemState state = SystemState::OFF;
     ScreenState currentScreen = ScreenState::NONE;
-    float batteryLevel = 5.0;
+    float batteryLevel = 15.0;
     float chargingRate = 0.2;
     float depletedRate = 0.7;
-    float minimumBatteryLevel = 1;
+    float minimumBatteryLevel = 10.0;
     bool isCharging = false;
 } System;
 
@@ -200,8 +200,8 @@ struct Timer_Object
 struct Help_Object
 {
     Object bg = Object(-650, 0, 1, 0, COLOR_THEME_GREEN_DARK_2, 0);
-    Object hintText = Object(-700, 160, 0.10, 0, COLOR_THEME_GREEN_DARK_1, 100);
-    Object text = Object();
+    Object hintText = Object(-780, 160, 0.25, 0, COLOR_THEME_GREEN_DARK_1, 100);
+    Object helpText = Object(0, 0, 0.18, 0, COLOR_WHITE, 0);
 
     bool isHelpVisible = false;
 } ObjHelp;
