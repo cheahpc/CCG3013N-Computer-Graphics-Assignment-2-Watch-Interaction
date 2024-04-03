@@ -5,16 +5,17 @@ void ctrlKeyboard(unsigned char key, int x, int y)
 {
     switch (key)
     {
-    case 'g': // Toggle grid
-        ObjDebug.grid.opacity = (ObjDebug.grid.opacity == 100) ? 0 : 100;
-        break;
+    // case 'g': // Toggle grid
+    //     ObjDebug.grid.opacity = (ObjDebug.grid.opacity == 100) ? 0 : 100;
+    //     break;
 
     case 'h': // Help - legend
         if (!isBusyAnimating(ObjHelp.hintText) || !isBusyAnimating(ObjHelp.bg))
         {
             ObjHelp.isHelpVisible = ObjHelp.isHelpVisible ? false : true;
-            toggleAnimationFlag(ObjHelp.hintText, true, false, false, true, false);
-            toggleAnimationFlag(ObjHelp.bg, true, false, false, true, false);
+            toggleAnimationFlag(ObjHelp.bg, false, false, false, true, false);
+            toggleAnimationFlag(ObjHelp.helpText, false, false, false, true, false);
+            toggleAnimationFlag(ObjHelp.hintText, false, false, false, true, false);
         }
         break;
 
